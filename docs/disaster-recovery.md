@@ -14,7 +14,7 @@ The files land under ignored `.secrets/backups/` on your controller workstation.
 Restore is **destructive**; first stop writes to the target database, verify the selected database and backup, and export a current backup. After selecting the right file:
 ```bash
 kubectl -n liora-dev scale deployment/backend --replicas=0
-kubectl -n liora-dev exec -i postgres-0 -- pg_restore -U app -d app --clean --if-exists < .secrets/backups/SELECTED-l iora-dev.dump
+kubectl -n liora-dev exec -i postgres-0 -- pg_restore -U app -d app --clean --if-exists < .secrets/backups/SELECTED-liora-dev.dump
 kubectl -n liora-dev scale deployment/backend --replicas=1
 ```
 Replace the *example filename* with a real backup (without any spaces). Restore into a **fresh temporary database first** before restoring production.
