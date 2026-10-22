@@ -5,9 +5,9 @@ resources:
   - ../../base
 images:
   - name: ghcr.io/dionis1/liora-devops-platform-backend
-    newTag: sha-bootstrap
+    newTag: sha-1e5085c9ccffa98ae7ea364690b40c6e00e6b55e
   - name: ghcr.io/dionis1/liora-devops-platform-frontend
-    newTag: sha-bootstrap
+    newTag: sha-1e5085c9ccffa98ae7ea364690b40c6e00e6b55e
 patches:
   - target:
       kind: ConfigMap
