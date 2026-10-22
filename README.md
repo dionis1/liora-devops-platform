@@ -1,18 +1,23 @@
 # Liora DevOps Platform
 
-Infrastructure and CI/CD project for the **DataScientest FastAPI + Traefik application**.
+**End-to-end DevOps engineering around the existing [DataScientest FastAPI + Traefik project](https://github.com/DataScientest/fastapi-traefik-datascientest-project).** This repo is the course project's infrastructure and delivery layer, not a replacement web application.
 
-**Application source:** [DataScientest/fastapi-traefik-datascientest-project](https://github.com/DataScientest/fastapi-traefik-datascientest-project) (MIT License). The course application is tracked as a Git submodule at `course-app/`, pinned to a reviewed commit. We are not developing a different API.
+> Status: Code-first infrastructure / Kubernetes / GitOps manifests are in development. No live Hetzner deployment has been performed.
 
-## Application components
+## Architecture
 
-- FastAPI backend (Python, SQLModel, PostgreSQL, Alembic, pytest)
-- React + TypeScript frontend
-- Traefik reverse proxy and Docker Compose for local development
-- GitHub Actions: backend lint and tests, Docker build, and GHCR publication on main
-- Planned DevOps work: Terraform, Ansible, k3s, Argo CD, Prometheus, Grafana, security and backups
+See [architecture diagram](docs/architecture.md): GitHub Actions CI tests the DataScientest FastAPI/PostgreSQL/React application, publishes backend/frontend SHA-tagged images to GHCR, updates the dev GitOps branch, and Argo CD reconciles k3s. Terraform provisions the future Hetzner host and firewall; Ansible bootstraps k3s. Prometheus and Grafana monitor the cluster.
 
-## Clone, including application
+## Tech stack
+
+- **Application:** existing DataScientest FastAPI + React + PostgreSQL + Traefik, tracked in `course-app/` as an upstream Git submodule (MIT license).
+- **CI:** GitHub Actions with upstream Ruff, pytest/PostgreSQL tests, container builds and GHCR.
+- **CD:** Argo CD + Kustomize overlays, dev automatic, prod manual approval.
+- **Infrastructure:** Terraform (Hetzner Cloud), Ansible (Ubuntu / pinned k3s).
+- **Observability:** kube-prometheus-stack + Grafana, lightweight values for one node.
+- **Security/DR:** restricted SSH firewall, GHCR private package credentials, namespace secrets, Trivy scan, etcd/SQL backups and rollback runbooks.
+
+## Clone the real application
 
 ```bash
 git clone --recurse-submodules https://github.com/dionis1/liora-devops-platform.git
@@ -20,9 +25,9 @@ cd liora-devops-platform
 git submodule status
 ```
 
-If already cloned: `git pull --ff-only && git submodule update --init --recursive`.
+Already cloned? `git pull --ff-only && git submodule update --init --recursive`.
 
-## Run the original application
+## Run the upstream app locally
 
 ```bash
 cd course-app
@@ -30,29 +35,30 @@ docker compose build
 docker compose up -d --wait backend frontend
 ```
 
-The original template's development environment uses `course-app/.env` containing **example-only credentials**. Never use those unchanged in a publicly accessible deployment.
+Try http://localhost:5173 for React and http://localhost:8000/docs for FastAPI. This Compose configuration contains example local credentials. Do not expose it publicly without reconfiguration.
 
-- Backend interactive API: http://localhost:8000/docs
-- Frontend: http://localhost:5173
-- Stop the stack: `docker compose down`
+## Repository structure
 
-If a port is already in use, stop the conflicting service before starting Compose.
+```text
+course-app/                       Upstream application submodule
+.github/workflows/ci.yml          Tests, image builds, GHCR, dev promotion
+.github/workflows/security.yml    Trivy source and configuration scan
+.github/workflows/validate-platform.yml  Static Terraform/Ansible/Kustomize checks
+infrastructure/terraform/         Single Hetzner server + firewall + private network
+ansible/                           Server preparation and k3s installation
+kubernetes/base/                  Backend, frontend, PostgreSQL, Ingress
+kubernetes/overlays/dev/          Development namespace and image selection
+kubernetes/overlays/prod/         Production namespace and image selection
+gitops/applications.yaml          Argo CD applications
+monitoring/                       Prometheus and Grafana chart values
+scripts/                          Inventory, secret template, SQL backup
+docs/                             Architecture, deployment and DR runbooks
+```
 
-## CI/CD
+## Before purchasing a server
 
-The workflow `.github/workflows/ci.yml` runs on PRs and pushes to `main`:
+Review [deferred deployment runbook](docs/deployment.md). Terraform will **not** execute automatically in CI and neither will Ansible installation. GitHub CI only validates and packages code. Hosted deployments start when you explicitly run the provisioning steps and supply your own credentials and DNS configuration.
 
-1. Checkout with submodules
-2. Lint the **original backend** with its locked uv dependencies
-3. Start a temporary PostgreSQL DB and run the upstream migrations and pytest tests
-4. Build the original backend and frontend Docker images
-5. Publish SHA-tagged backend and frontend images to GHCR only on successful `main` runs
+## Recovery and limits
 
-The workflow does **not** deploy to Kubernetes yet. GitOps deployment is the next phase.
-
-See [Phase 1 instructions](docs/phase-1.md) and the [original application README](course-app/README.md).
-
-## Provenance
-
-The application is maintained by DataScientest and retains its upstream MIT license.
-This repository demonstrates our DevOps delivery and infrastructure implementation, not authorship of the upstream application.
+See [DR runbook](docs/disaster-recovery.md). One-node k3s is not HA; local PVCs have one failure domain, and no restore drill has been completed. TLS, live alert testing, durable off-site backup automation and hardening are additional gates before claiming real production readiness.

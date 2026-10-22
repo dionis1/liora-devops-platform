@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: course-app-config
+data:
+  PROJECT_NAME: "DataScientest FastAPI"
+  ENVIRONMENT: "staging"
+  POSTGRES_SERVER: "postgres"
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER: "app"
+  POSTGRES_DB: "app"
+  FRONTEND_HOST: "http://dev.example.invalid"
+  BACKEND_CORS_ORIGINS: "http://dev.example.invalid"
+  SMTP_HOST: ""
+  SENTRY_DSN: ""

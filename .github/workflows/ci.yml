@@ -1,4 +1,4 @@
-name: FastAPI Course Project CI
+name: FastAPI course application CI
 
 on:
   pull_request:
@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   backend-lint:
-    name: Lint upstream FastAPI backend
+    name: Backend lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,12 +31,12 @@ jobs:
           version: "0.4.15"
           enable-cache: true
           cache-dependency-glob: "course-app/backend/uv.lock"
-      - name: Run upstream linting
+      - name: Run upstream lint
         working-directory: course-app/backend
         run: uv run --frozen bash scripts/lint.sh
 
   backend-tests:
-    name: PostgreSQL integration and API tests
+    name: PostgreSQL and pytest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,22 +51,49 @@ jobs:
           version: "0.4.15"
           enable-cache: true
           cache-dependency-glob: "course-app/backend/uv.lock"
-      - name: Start temporary database and mailcatcher
+      - name: Start test dependencies
         working-directory: course-app
         run: docker compose up -d --wait db mailcatcher
-      - name: Run database migrations and initial data
+      - name: Run upstream migrations
         working-directory: course-app/backend
         run: uv run --frozen bash scripts/prestart.sh
-      - name: Execute upstream pytest suite
+      - name: Execute API tests
         working-directory: course-app/backend
-        run: uv run --frozen bash scripts/tests-start.sh "Coverage for ${{ github.sha }}"
-      - name: Stop test services
+        run: uv run --frozen bash scripts/tests-start.sh "CI coverage"
+      - name: Clean up
         if: always()
         working-directory: course-app
         run: docker compose down -v --remove-orphans
 
-  docker-images:
-    name: Build course frontend and backend
+  build-pr:
+    name: Validate Docker images
+    if: github.event_name == 'pull_request'
+    needs: [backend-lint, backend-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: course-app/backend
+          push: false
+          cache-from: type=gha,scope=backend
+          cache-to: type=gha,mode=max,scope=backend
+      - uses: docker/build-push-action@v6
+        with:
+          context: course-app/frontend
+          push: false
+          build-args: |
+            VITE_API_URL=
+          cache-from: type=gha,scope=frontend
+          cache-to: type=gha,mode=max,scope=frontend
+
+  publish:
+    name: Publish backend and frontend to GHCR
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [backend-lint, backend-tests]
     runs-on: ubuntu-latest
     permissions:
@@ -78,28 +105,56 @@ jobs:
           submodules: true
           persist-credentials: false
       - uses: docker/setup-buildx-action@v3
-      - name: Log in to GHCR (main only)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Authenticate to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build upstream backend and optionally publish
+      - name: Publish backend
         uses: docker/build-push-action@v6
         with:
-          context: ./course-app/backend
-          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          context: course-app/backend
+          push: true
           tags: ghcr.io/dionis1/liora-devops-platform-backend:sha-${{ github.sha }}
           cache-from: type=gha,scope=backend
           cache-to: type=gha,mode=max,scope=backend
-      - name: Build upstream frontend and optionally publish
+      - name: Publish frontend
         uses: docker/build-push-action@v6
         with:
-          context: ./course-app/frontend
-          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          context: course-app/frontend
+          push: true
           build-args: |
-            VITE_API_URL=/api
+            VITE_API_URL=
           tags: ghcr.io/dionis1/liora-devops-platform-frontend:sha-${{ github.sha }}
           cache-from: type=gha,scope=frontend
           cache-to: type=gha,mode=max,scope=frontend
+
+  promote-dev:
+    name: Promote published images to dev GitOps branch
+    needs: [publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Update dev image tags in Git (not direct cluster access)
+        env:
+          IMAGE_TAG: sha-${{ github.sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin deploy/dev >/dev/null; then
+            git fetch origin deploy/dev
+            git switch -c deploy/dev --track origin/deploy/dev
+          else
+            git switch -c deploy/dev
+          fi
+          sed -i -E "s/(newTag: )sha-[a-z0-9]+/\\1${IMAGE_TAG}/g" kubernetes/overlays/dev/kustomization.yaml
+          git add kubernetes/overlays/dev/kustomization.yaml
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(gitops): promote dev images to ${IMAGE_TAG}"
+            git push origin HEAD:refs/heads/deploy/dev
+          fi

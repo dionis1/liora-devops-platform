@@ -1,0 +1,64 @@
+name: Validate platform manifests
+on:
+  pull_request:
+    paths:
+      - "infrastructure/**"
+      - "ansible/**"
+      - "kubernetes/**"
+      - "gitops/**"
+      - "monitoring/**"
+      - ".github/workflows/validate-platform.yml"
+  push:
+    branches: [main]
+    paths:
+      - "infrastructure/**"
+      - "ansible/**"
+      - "kubernetes/**"
+      - "gitops/**"
+      - "monitoring/**"
+      - ".github/workflows/validate-platform.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.14.6"
+      - name: Format configuration
+        run: terraform -chdir=infrastructure/terraform fmt -recursive
+      - name: Initialize without connecting to Hetzner
+        run: terraform -chdir=infrastructure/terraform init -backend=false
+      - name: Validate Terraform configuration offline
+        run: terraform -chdir=infrastructure/terraform validate
+
+  kustomize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-kubectl@v4
+        with:
+          version: "v1.34.0"
+      - name: Render development
+        run: kubectl kustomize kubernetes/overlays/dev > /tmp/dev.yaml
+      - name: Render production
+        run: kubectl kustomize kubernetes/overlays/prod > /tmp/prod.yaml
+
+  ansible:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Ansible
+        run: python -m pip install "ansible-core==2.19.2"
+      - name: Syntax validation
+        run: |
+          ansible-playbook -i ansible/inventory/hosts.ini.example --syntax-check ansible/playbooks/prepare.yml
+          ansible-playbook -i ansible/inventory/hosts.ini.example --syntax-check ansible/playbooks/k3s.yml
+          ansible-playbook -i ansible/inventory/hosts.ini.example --syntax-check ansible/playbooks/kubeconfig.yml

@@ -1,0 +1,27 @@
+---
+- name: Install k3s on provisioned Ubuntu host
+  hosts: k3s_servers
+  become: true
+  tasks:
+    - name: Check k3s binary
+      ansible.builtin.stat:
+        path: /usr/local/bin/k3s
+      register: binary
+    - name: Download k3s installer
+      ansible.builtin.get_url:
+        url: https://get.k3s.io
+        dest: /usr/local/src/install-k3s.sh
+        mode: "0755"
+      when: not binary.stat.exists
+    - name: Install pinned k3s release
+      ansible.builtin.command: /usr/local/src/install-k3s.sh
+      environment:
+        INSTALL_K3S_VERSION: "{{ k3s_version }}"
+        INSTALL_K3S_EXEC: "server --cluster-init --secrets-encryption --write-kubeconfig-mode=600"
+      changed_when: true
+      when: not binary.stat.exists
+    - name: Ensure service started
+      ansible.builtin.systemd:
+        name: k3s
+        state: started
+        enabled: true

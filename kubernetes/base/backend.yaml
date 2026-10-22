@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull
+      initContainers:
+        # Single replica only: migrations run before serving; a dedicated Job
+        # is required before scaling to multiple replicas.
+        - name: migrate
+          image: ghcr.io/dionis1/liora-devops-platform-backend:sha-bootstrap
+          command: ["bash", "scripts/prestart.sh"]
+          envFrom:
+            - configMapRef:
+                name: course-app-config
+            - secretRef:
+                name: course-app-secrets
+      containers:
+        - name: backend
+          image: ghcr.io/dionis1/liora-devops-platform-backend:sha-bootstrap
+          command: ["fastapi", "run", "--workers", "1", "app/main.py"]
+          ports:
+            - name: http
+              containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: course-app-config
+            - secretRef:
+                name: course-app-secrets
+          readinessProbe:
+            httpGet:
+              path: /api/v1/utils/health-check/
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/v1/utils/health-check/
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1Gi

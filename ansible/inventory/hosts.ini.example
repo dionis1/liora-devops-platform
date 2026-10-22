@@ -1,0 +1,2 @@
+[k3s_servers]
+k3s-01 ansible_host=REPLACE_WITH_SERVER_IPV4 ansible_user=root
