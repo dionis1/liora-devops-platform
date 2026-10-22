@@ -1,0 +1,5 @@
+project_name = "liora-devops"
+location = "nbg1"
+server_type = "cx43"
+ssh_public_key = "ssh-ed25519 REPLACE_WITH_PUBLIC_KEY"
+ssh_allowed_cidrs = ["198.51.100.42/32"]

@@ -1,0 +1,17 @@
+---
+- name: Configure server prerequisites
+  hosts: k3s_servers
+  become: true
+  tasks:
+    - name: Install required OS packages
+      ansible.builtin.apt:
+        name: [curl, ca-certificates, python3, jq]
+        update_cache: true
+        state: present
+    - name: Verify whether k3s is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/k3s
+      register: installed
+    - name: Display status
+      ansible.builtin.debug:
+        msg: "k3s binary present: {{ installed.stat.exists }}"

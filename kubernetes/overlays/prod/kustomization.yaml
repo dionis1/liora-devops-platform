@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: liora-prod
+resources:
+  - ../../base
+images:
+  - name: ghcr.io/dionis1/liora-devops-platform-backend
+    newTag: sha-bootstrap
+  - name: ghcr.io/dionis1/liora-devops-platform-frontend
+    newTag: sha-bootstrap
+patches:
+  - target:
+      kind: ConfigMap
+      name: course-app-config
+    patch: |-
+      - op: replace
+        path: /data/ENVIRONMENT
+        value: production
+      - op: replace
+        path: /data/FRONTEND_HOST
+        value: https://app.example.invalid
+      - op: replace
+        path: /data/BACKEND_CORS_ORIGINS
+        value: https://app.example.invalid
+  - target:
+      kind: Ingress
+      name: course-app
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: app.example.invalid

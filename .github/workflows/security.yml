@@ -1,0 +1,28 @@
+name: Security audit
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: "19 6 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  trivy-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Scan dependencies and configuration for vulnerabilities
+        uses: aquasecurity/trivy-action@0.35.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,misconfig,secret
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          format: table
+          exit-code: "0" # visibility-first for course upstream; hard fail after triage
