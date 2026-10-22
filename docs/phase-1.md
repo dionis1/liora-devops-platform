@@ -1,49 +1,54 @@
-# Phase 1 - GitHub Actions CI and local development
+# Phase 1: Adopt the course application and establish GitHub Actions CI
 
-## Clone the repository
+## Why the application changed
+
+The course assigns an existing application, [DataScientest FastAPI + Traefik](https://github.com/DataScientest/fastapi-traefik-datascientest-project). An earlier custom TaskFlow demo was an incorrect choice and has been removed in this change. The source stays pinned at a known upstream commit using a Git submodule.
+
+## Clone the complete project
 
 ```bash
-git clone https://github.com/dionis1/liora-devops-platform.git
+git clone --recurse-submodules https://github.com/dionis1/liora-devops-platform.git
 cd liora-devops-platform
+git submodule status
 ```
 
-This repository is private. Sign into GitHub when prompted, or use `gh auth login` and `gh auth setup-git` beforehand. Never paste access tokens into source files.
-
-## Run locally (Ubuntu)
+Existing local clones:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements-dev.txt
-ruff check app tests
-python -m pytest -q
-uvicorn app.main:app --reload
+git pull --ff-only
+git submodule update --init --recursive
 ```
 
-Open http://127.0.0.1:8000/docs to try the API.
+The Git submodule contents appear in `course-app/`. A normal `git clone` without `--recurse-submodules` does **not** populate them.
 
-## Build and run with Docker
+## Local application
+
+Prerequisites: Docker Engine with Compose plugin, suitable free ports and disk capacity.
 
 ```bash
-docker build -t taskflow-api:local .
-docker run --rm -p 8000:8000 taskflow-api:local
+cd course-app
+docker compose build
+docker compose up -d --wait backend frontend
+curl -fsS http://localhost:8000/api/v1/utils/health-check/
+docker compose down
 ```
 
-Try `curl http://localhost:8000/health/live`.
+The original app includes PostgreSQL and a React frontend. Do not copy the upstream `.env` placeholder secrets into production.
 
-## CI workflow
+## GitHub Actions workflow
 
-`.github/workflows/ci.yml` runs on PRs and pushes to `main` and can be started manually. It checks out the code, installs pinned dependencies, runs Ruff and pytest, and builds the Docker image. A successful push to main also authenticates with `GITHUB_TOKEN` and publishes a SHA-tagged image to GitHub Container Registry:
+The root `.github/workflows/ci.yml` checks out submodules and runs original backend linting, migrations, PostgreSQL-dependent pytest tests, and Docker image builds. Once code is merged into `main`, passing builds publish to:
 
-```text
-ghcr.io/dionis1/liora-devops-platform:sha-<full-git-commit-sha>
-```
+- `ghcr.io/dionis1/liora-devops-platform-backend:sha-<commit>`
+- `ghcr.io/dionis1/liora-devops-platform-frontend:sha-<commit>`
 
-Look for status under **GitHub repository > Actions > CI - Test and Docker**. If the repository is private, the GHCR package may also be private; Kubernetes image pull credentials will be configured in a later phase.
+Package visibility may remain private, requiring an image pull secret when deploying k3s. The built frontend currently expects a same-origin `/api` ingress route in the future Kubernetes setup.
 
-## Deliberate Phase 1 limitations
+Inspect status under GitHub > Actions. Do not merge a PR with failing checks. On private repositories check the settings for workflow permissions and GitHub-hosted runners.
 
-- Tasks are in memory, so a restart erases them; PostgreSQL and migrations come next.
-- Readiness only checks the web process until PostgreSQL is integrated.
-- This phase provides CI and image publishing, not a live Kubernetes deployment; Argo CD CD comes later.
-- Before production use: upgrade from action version tags to pinned commit SHAs, enforce branch protection, add image/dependency scanning, restrict permissions, and deploy persistent storage.
+## Limitations and next phase
+
+- CI builds and publishes but does not deploy to k3s yet. Argo CD will handle CD.
+- Upstream submodule is pinned intentionally: update with a reviewed PR, do not blindly follow main.
+- No real production credentials have been configured; Kubernetes Secrets and recovery come later.
+- Harden upstream images and add dependency/image scanning before calling the system production-ready.

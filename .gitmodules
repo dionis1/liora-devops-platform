@@ -1,0 +1,3 @@
+[submodule "course-app"]
+    path = course-app
+    url = https://github.com/DataScientest/fastapi-traefik-datascientest-project.git
