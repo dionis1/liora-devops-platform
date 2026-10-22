@@ -76,13 +76,13 @@ jobs:
           submodules: true
           persist-credentials: false
       - uses: docker/setup-buildx-action@v4
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: course-app/backend
           push: false
           cache-from: type=gha,scope=backend
           cache-to: type=gha,mode=max,scope=backend
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: course-app/frontend
           push: false
@@ -112,7 +112,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish backend
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: course-app/backend
           push: true
@@ -120,7 +120,7 @@ jobs:
           cache-from: type=gha,scope=backend
           cache-to: type=gha,mode=max,scope=backend
       - name: Publish frontend
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: course-app/frontend
           push: true
