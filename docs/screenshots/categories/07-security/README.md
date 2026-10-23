@@ -12,3 +12,7 @@ Screenshots (with full metadata in the [main index](../../README.md)):
 - [E30 — Container security controls configured](../../08-think-about-security-devsecops/E30.jpg) — PARTIALLY VALIDATED; configuration.
 - [E31 — Default-deny policy and explicit database traffic](../../08-think-about-security-devsecops/E31.jpg) — PARTIALLY VALIDATED; configuration.
 - [E32 — Temporary credential access removed](../../08-think-about-security-devsecops/E32.jpg) — PASSED; archived-output.
+
+## Latest Argo validation evidence
+
+- [E51 — Anonymous registry reads match the actual running image digests](../../01-dockerize-your-application/E51.jpg) — PASSED; archived-output; captured 2026-10-23.

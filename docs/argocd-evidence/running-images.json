@@ -1,0 +1,77 @@
+[
+  {
+    "pod": "backend-5ddd687669-czl2l",
+    "node": "k3d-liora-argocd-priority2-20261023-server-0",
+    "security_context": {
+      "runAsGroup": 10001,
+      "runAsNonRoot": true,
+      "runAsUser": 10001,
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "image_pull_secrets": [
+      {
+        "name": "ghcr-pull"
+      }
+    ],
+    "containers": [
+      {
+        "name": "backend",
+        "image": "ghcr.io/dionis1/liora-devops-platform-backend:sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2",
+        "imageID": "ghcr.io/dionis1/liora-devops-platform-backend@sha256:e03a323897fc77aa932293e91e3fbc21dcdb9e4d7ea06b325c5c0f46b8f3c841",
+        "ready": true,
+        "restartCount": 0
+      }
+    ]
+  },
+  {
+    "pod": "frontend-6965bbf59c-l486n",
+    "node": "k3d-liora-argocd-priority2-20261023-server-0",
+    "security_context": {
+      "runAsGroup": 101,
+      "runAsNonRoot": true,
+      "runAsUser": 101,
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "image_pull_secrets": [
+      {
+        "name": "ghcr-pull"
+      }
+    ],
+    "containers": [
+      {
+        "name": "frontend",
+        "image": "ghcr.io/dionis1/liora-devops-platform-frontend:sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2",
+        "imageID": "ghcr.io/dionis1/liora-devops-platform-frontend@sha256:1acc82944a365383dabf765b4556045519958b756eceb5d5307d3fa02ebfe75b",
+        "ready": true,
+        "restartCount": 0
+      }
+    ]
+  },
+  {
+    "pod": "postgres-0",
+    "node": "k3d-liora-argocd-priority2-20261023-server-0",
+    "security_context": {
+      "fsGroup": 999,
+      "runAsGroup": 999,
+      "runAsNonRoot": true,
+      "runAsUser": 999,
+      "seccompProfile": {
+        "type": "RuntimeDefault"
+      }
+    },
+    "image_pull_secrets": [],
+    "containers": [
+      {
+        "name": "postgres",
+        "image": "docker.io/library/postgres:16.10",
+        "imageID": "docker.io/library/postgres@sha256:21f6013073bc6b92830a2129570e2f5ec42a6c734b5a985a41e83aa58f54c3c1",
+        "ready": true,
+        "restartCount": 0
+      }
+    ]
+  }
+]

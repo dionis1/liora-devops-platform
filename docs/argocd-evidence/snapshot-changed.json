@@ -1,0 +1,36 @@
+{
+  "phase": "changed",
+  "marker": "changed",
+  "template_sha256": "ae3a9c7384579977c906cbfe5f25af57595d3e5bfc7f94e301a3c7cebe8c4aa6",
+  "deployment_revision": "3",
+  "ready_replicas": 1,
+  "image_pull_secrets": [],
+  "replica_sets": [
+    {
+      "name": "backend-5b5ddfb8cc",
+      "replicas": 0,
+      "ready": 0
+    },
+    {
+      "name": "backend-5ddd687669",
+      "replicas": 0,
+      "ready": 0
+    },
+    {
+      "name": "backend-79d7cfd95b",
+      "replicas": 1,
+      "ready": 1
+    }
+  ],
+  "pods": [
+    {
+      "name": "backend-79d7cfd95b-kg7gd",
+      "uid": "c5cac8e0-d959-4b0b-8713-09f5a5322830",
+      "phase": "Running",
+      "ready": true,
+      "images": [
+        "ghcr.io/dionis1/liora-devops-platform-backend:sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2"
+      ]
+    }
+  ]
+}

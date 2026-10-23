@@ -1,0 +1,28 @@
+2026-10-23T11:53:48+02:00	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-10-23T11:53:48+02:00	INFO	[checks-client] Using existing checks from cache	path="/tmp/liora-validation/trivy-cache/policy/content"
+2026-10-23T11:53:50+02:00	INFO	Detected config files	num=8
+
+Report Summary
+
+┌──────────────────────────────┬────────────┬───────────────────┐
+│            Target            │    Type    │ Misconfigurations │
+├──────────────────────────────┼────────────┼───────────────────┤
+│ base/backend.yaml            │ kubernetes │         0         │
+├──────────────────────────────┼────────────┼───────────────────┤
+│ base/configmap.yaml          │ kubernetes │         0         │
+├──────────────────────────────┼────────────┼───────────────────┤
+│ base/database.yaml           │ kubernetes │         0         │
+├──────────────────────────────┼────────────┼───────────────────┤
+│ base/frontend.yaml           │ kubernetes │         0         │
+├──────────────────────────────┼────────────┼───────────────────┤
+│ base/ingress.yaml            │ kubernetes │         0         │
+├──────────────────────────────┼────────────┼───────────────────┤
+│ base/networkpolicy.yaml      │ kubernetes │         0         │
+├──────────────────────────────┼────────────┼───────────────────┤
+│ overlays/dev/namespace.yaml  │ kubernetes │         0         │
+├──────────────────────────────┼────────────┼───────────────────┤
+│ overlays/prod/namespace.yaml │ kubernetes │         0         │
+└──────────────────────────────┴────────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)

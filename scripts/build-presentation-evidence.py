@@ -139,6 +139,31 @@ add('E42',5,'Complete Alpine fix CI workflow succeeds',p,'Open successful CI run
 CATALOG[-1]['source_commit']='34bf33ecc47e0490a144a75974df08f64992fdc2'
 
 
+
+# Priority 2: real public GitHub -> GHCR -> Argo reconciliation and Git revert.
+p='docs/argocd-evidence/dev-sync.json'
+add('E43',5,'Argo development Application is Synced and Healthy',p,'Apply gitops/applications.yaml dev Application; wait for exact promoted revision',kind='actual-ui',version='Argo CD 3.5.5 / chart 10.10.5 / k3s 1.35.5-k3s1',also=[1,4,5],scope='Actual disposable local Argo UI, public GitHub deploy/dev at 1b0ffd5, real anonymous GHCR pulls; not a production/cloud deployment.')
+p='docs/argocd-evidence/final-dev-sync.json'
+add('E44',5,'Canonical dev branch restored after successful rollback test',p,'Restore targetRevision deploy/dev; check exact 1b0ffd5 Synced/Healthy/Succeeded',kind='actual-ui',version='Argo CD 3.5.5 / dev revision 1b0ffd5',also=[4,5,9],scope='Actual final dev state after the isolated Git-revert drill. Auto-sync enabled; rollback test did not modify deploy/dev. Cluster removed after evidence capture.')
+p='docs/argocd-evidence/ready-summary.txt'
+add('E45',4,'Current hardened dev workloads, node and PVC are ready',p,'kubectl get nodes; kubectl -n liora-dev get pods,deploy,sts,pvc,ingress',version='k3d 5.9.0 / k3s 1.35.5-k3s1 / PostgreSQL 16.10',also=[2,4,5],scope='Real local output: node Ready, all three app pods 1/1, deployments/statefulset ready, 8 GiB PVC Bound and Traefik Ingress. No cloud/production claim.',content=read(p))
+p='docs/argocd-evidence/rollback-changed.json'
+add('E46',5,'Argo rolls out the controlled changed Git revision',p,'Push 0c279d4 to isolated rollback branch; hard refresh; auto-sync and readiness checks',kind='actual-ui',version='Argo CD 3.5.5 / changed revision 0c279d4',also=[4,5,9],scope='Actual changed backend template reached Synced/Healthy with a new ReplicaSet. Secure image tag unchanged; same database record remained accessible.')
+p='docs/argocd-evidence/rollback-reverted.json'
+add('E47',9,'Git revert restores a healthy backend deployment',[p,'docs/argocd-evidence/rollback-proof.txt'],'git revert 0c279d4; push bf1a495; Argo auto-sync; compare template hashes',kind='actual-ui',version='Argo CD 3.5.5 / revert bf1a495 / PostgreSQL 16.10',also=[4,5,9],scope='Actual configuration rollback on isolated GitHub branch: original template hash and ReplicaSet restored; record unchanged. Not an image-version or schema downgrade.')
+add('E48',9,'Argo history records changed revision and Git revert',p,'Argo HISTORY AND ROLLBACK after successful Git revert',kind='actual-ui',version='Argo CD 3.5.5 / baseline 1107506, change 0c279d4, revert bf1a495',also=[5,9],scope='Actual auto-sync history, with revert and prior change visible. Full baseline/change/revert history is preserved in JSON; native rollback button was not used.')
+p='docs/argocd-evidence/registry-proof.json'
+add('E49',1,'Public GHCR package exposes the secure release tag',p,'Open public backend GHCR package page',kind='actual-ui',version='Backend release sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2',also=[1,5],scope='Actual signed-out GitHub package UI: Public badge and current secure image tag. Both backend and frontend anonymous access and running digests are proved separately in E51.',url='https://github.com/dionis1/liora-devops-platform/pkgs/container/liora-devops-platform-backend')
+p='docs/argocd-evidence/release-jobs.json'
+add('E50',5,'Secure image publication succeeds; promotion initially fails',p,'Open successful Publish only scanned images job',kind='actual-ui',environment='GitHub Actions',version='Main db2efa8 / workflow run 39931016209',also=[1,5],scope='Publication job PASSED. Overall run FAILED on the later merge conflict; reviewed script recovered promotion separately. This screenshot does not claim the complete main workflow passed.',url='https://github.com/dionis1/liora-devops-platform/actions/runs/39931016209/job/120340274170')
+p='docs/argocd-evidence/registry-proof.json'
+x=json.loads(read(p));rows=['Anonymous GHCR access: PASSED (no account credential supplied)','Released tag: '+x['tag']]
+for v in x['images']:
+    rows+=['',v['repository'],'HTTP '+str(v['http_status'])+'; registry digest '+v['digest'],'Kubernetes imageID: '+v['kubernetes_image_id'],'Running digest matches registry: '+str(v['matches_registry_digest'])]
+rows+=['','Actual Git repository credential secrets: 0','Actual namespace registry credential secrets: 0','Fresh k3d cluster pulled images from GHCR; no local image imports.']
+add('E51',1,'Anonymous registry reads match the actual running image digests',[p,'docs/argocd-evidence/running-images.json','docs/argocd-evidence/credential-scope.json'],'Anonymous GHCR manifest GET; compare with Kubernetes containerStatuses.imageID',version='GHCR / k3s 1.35.5-k3s1',also=[1,5,8],scope='Actual HTTP 200 for both released SHA tags; published digests exactly match running pods. Public Git repository visibility and GHCR package visibility were checked independently.',content='\n'.join(rows))
+
+
 CSS = '''*{box-sizing:border-box}body{margin:0;background:#f0f3f7;color:#142338;font-family:Arial,sans-serif}main{max-width:1400px;margin:auto;padding:24px 32px}header{border-top:7px solid #176b8a;background:white;padding:18px 24px}h1{font-size:26px;line-height:1.15;margin:9px 0}h2{font-size:19px;margin:10px 0}.eyebrow{font-size:12px;font-weight:bold;letter-spacing:1.3px;color:#176b8a}.status{font-size:13px;font-weight:bold;color:#8a4200}.scope{font-size:15px;line-height:1.4;margin:10px 0}.command{font:13px monospace;overflow-wrap:anywhere}.panel{background:white;padding:18px 24px;margin-top:12px;border:1px solid #d4dee8}pre{font:15px/1.42 'DejaVu Sans Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#142338}footer{font-size:11px;line-height:1.5;overflow-wrap:anywhere;padding:12px 4px;color:#47566a}.flow{display:flex;gap:12px;align-items:stretch;margin:15px 0}.box{background:#e9f2f7;border:1px solid #9dbbcb;flex:1;padding:15px;font-size:16px;line-height:1.45}.future{background:#fff4e0;border-color:#dcb568}a{color:#176b8a}img{max-width:100%;border:1px solid #d4dee8}.card{background:white;margin:18px 0;padding:20px}.metadata{font-size:14px;line-height:1.5}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px}@media print{.card{break-inside:avoid}}'''
 
 (OUT/'views').mkdir(exist_ok=True)
@@ -157,11 +182,31 @@ for item in CATALOG:
     page=f'''<!doctype html><html lang="en"><meta charset="utf-8"><title>{html.escape(title)}</title><style>{CSS}</style><main><header><div class="eyebrow">{mode}</div><h1>{html.escape(title)}</h1><div class="status">{item['result'].replace('_',' ')} · {html.escape(item['environment'])}</div><p class="scope">{html.escape(item['scope'])}</p><div class="command">{html.escape(item['command'])}</div></header><section class="panel">{body}</section><footer>Requirement {req['number']}. {html.escape(req['title'])}<br>Observed: {item['observed_date']} · Screenshot capture: {DATE} · Software: {html.escape(item['software'])}<br>{sources}</footer></main></html>'''
     (OUT/item['view']).write_text(page)
 
+
+# Later observations have their own exact manifest/code revisions.
+OBSERVED_REVISIONS = {
+    'E39': '34bf33ecc47e0490a144a75974df08f64992fdc2',
+    'E40': '34bf33ecc47e0490a144a75974df08f64992fdc2',
+    'E43': '1b0ffd5c5dddbc88f5286d96e653858f2e525b20',
+    'E44': '1b0ffd5c5dddbc88f5286d96e653858f2e525b20',
+    'E45': '1b0ffd5c5dddbc88f5286d96e653858f2e525b20',
+    'E46': '0c279d4f4fbbf64f3a48c6fce8bb7f6f1b228ad2',
+    'E47': 'bf1a495ae11be36f88bd0aeb9513dd02da102b16',
+    'E48': 'bf1a495ae11be36f88bd0aeb9513dd02da102b16',
+    'E49': 'db2efa81c1037f3b38c4cc615fb7f65d958259c2',
+    'E50': 'db2efa81c1037f3b38c4cc615fb7f65d958259c2',
+    'E51': '1b0ffd5c5dddbc88f5286d96e653858f2e525b20',
+}
+for item in CATALOG:
+    if item['id'] in OBSERVED_REVISIONS:
+        item['source_commit'] = OBSERVED_REVISIONS[item['id']]
+
+
 # Hashes are attached after capture; existing images remain unmodified.
 for item in CATALOG:
     p=SHOTS/item['file']
     item['sha256']=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None
-manifest={'capture_date':DATE,'timezone':'Europe/Tirane','source_commit':'211199da8c52caf07199b155fb6baf28deb5b1f4','requirements':REQUIREMENTS,'status_legend':{'PASSED':'The narrow observed check passed, not the entire requirement.','FAILED':'The shown policy/integration failed; no success is implied.','PARTIALLY_VALIDATED':'Configuration/static evidence, with stated runtime gaps.','NOT_YET_TESTED':'No execution proof; use the missing-evidence register.'},'screenshots':CATALOG}
+manifest={'capture_date':DATE,'timezone':'Europe/Tirane','source_commit':'211199da8c52caf07199b155fb6baf28deb5b1f4','source_commit_scope':'Initial remediation baseline only; later entries carry source_commit overrides and exact revisions in their source artifacts.','requirements':REQUIREMENTS,'status_legend':{'PASSED':'The narrow observed check passed, not the entire requirement.','FAILED':'The shown policy/integration failed; no success is implied.','PARTIALLY_VALIDATED':'Configuration/static evidence, with stated runtime gaps.','NOT_YET_TESTED':'No execution proof; use the missing-evidence register.'},'screenshots':CATALOG}
 (SHOTS/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 
 index=['# Visual evidence index','',f'Capture date: {DATE} (Europe/Tirane). Original observation dates and software versions are recorded for every image.','', '**Actual UI** screenshots show real application, monitoring or GitHub pages. **Archived-output** screenshots show real saved command/API output in a labeled evidence viewer; they are not screenshots taken during the original run. **Configuration/design** views never prove deployment success. All full source artifacts and hashes are preserved.','', 'The exact ten official headings below are the primary organization. [Presentation plans](../presentation-evidence.md) · [Validation checklist](../requirements-validation-checklist.md) · [Machine-readable provenance](manifest.json) · [Offline gallery](../presentation-evidence/index.html) · [Capture protocol](capture-protocol.md)','']

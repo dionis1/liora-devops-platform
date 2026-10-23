@@ -5,8 +5,10 @@
     "directory": "01-dockerize-your-application",
     "status": "PASSED",
     "implemented": "Multi-stage, non-root platform images around the original pinned DataScientest application; digest-pinned Alpine backend, health checks and a reviewed dependency patch.",
-    "tested": "Sequential builds, actual API/database readiness, authenticated browser login, item creation and persistence after reload. Historical main publication succeeded. The Docker fixture used a temporary same-origin Nginx API proxy.",
+    "tested": "Sequential builds and authenticated application tests passed. Secure release db2efa8 was published to GHCR; both public SHA tags returned anonymous HTTP 200 and their digests matched actual running Kubernetes pods. Frontend and authenticated API routing through Traefik passed.",
     "evidence": [
+      "E49",
+      "E51",
       "E07",
       "E08",
       "E13",
@@ -14,9 +16,10 @@
       "E15",
       "E10",
       "E40",
-      "E41"
+      "E41",
+      "E50"
     ],
-    "gaps": "Publication and authenticated registry pulls for the new Alpine backend are NOT YET TESTED. PR checks do not publish; publication/promotion require a validated push to main. Historical publication evidence is retained.",
+    "gaps": "No Docker/registry blocker remains for tested release db2efa8. Production/cloud availability and public ingress/TLS remain separate untested work.",
     "engineering": "I can package an existing application reproducibly and validate the complete UI\u2013API\u2013database path."
   },
   {
@@ -25,13 +28,15 @@
     "directory": "02-deploy-the-application-in-multiple-environments-dev-prod",
     "status": "PARTIALLY_VALIDATED",
     "implemented": "Separate dev/prod namespaces, overlays, host settings, credentials references and a production TLS Secret reference.",
-    "tested": "Both overlays render; first-pass dev deployment and routing ran locally.",
+    "tested": "Both overlays render. Current hardened dev workloads were actually synchronized by Argo from public GitHub and pulled the secure release from GHCR; Traefik routing, authentication and database item access passed. Production remains static configuration only.",
     "evidence": [
+      "E45",
+      "E43",
       "E19",
       "E20",
       "E21"
     ],
-    "gaps": "Production deployment and public TLS are NOT YET TESTED; final hardened dev manifests were not redeployed.",
+    "gaps": "Production deployment and public TLS are NOT YET TESTED. The successful dev deployment was a disposable local validation, not a running Hetzner service.",
     "engineering": "I separate configuration and release policies while being explicit about shared-node failure domains."
   },
   {
@@ -59,14 +64,16 @@
     "directory": "04-container-orchestration-with-kubernetes",
     "status": "PARTIALLY_VALIDATED",
     "implemented": "Deployments, StatefulSet, PVC, Services, ConfigMap, Ingress, namespace policy and resource/security settings.",
-    "tested": "Historical local dev pods reached 1/1 Ready, PVC Bound, rollouts completed, and frontend/backend/Traefik HTTP routing passed; new manifests render.",
+    "tested": "Current hardened dev: Ready k3s node, all three pods 1/1, Deployments/StatefulSet ready, 8 GiB PVC Bound, healthy Ingress, authenticated Traefik routing, real image pulls, Argo reconciliation and Git-revert rollout passed.",
     "evidence": [
+      "E45",
+      "E44",
       "E20",
       "E21",
       "E37",
       "E19"
     ],
-    "gaps": "Historical cluster was deleted. Current hardened cluster, policy enforcement, node-readiness screenshot and cloud deployment are NOT YET TESTED.",
+    "gaps": "Hetzner-hosted orchestration, production deployment and negative NetworkPolicy enforcement tests are NOT YET TESTED. The local cluster was removed after evidence capture.",
     "engineering": "I translate application dependencies into orchestrated resources and verify readiness, storage and routing."
   },
   {
@@ -74,18 +81,22 @@
     "title": "Automate Deployment (CI/CD Pipeline)",
     "directory": "05-automate-deployment-ci-cd-pipeline",
     "status": "PARTIALLY_VALIDATED",
-    "implemented": "Tests/build/scan gates, exact-scanned-image publication, dev manifest promotion and manual production sync policy; Argo Application manifests.",
-    "tested": "Historical main publication/promotion passed. Debian at 211199d failed with 44 HIGH findings. The Alpine fix at 34bf33e passed hosted CI: backend tests/lint, platform validation, exact-image PostgreSQL integration, and both strict image scans. Source security audit also passed. PR publication/promotion intentionally skip; historical Argo comparison failed.",
+    "implemented": "Tests/build/strict-scan gates, exact-scanned-image publication, guarded dev promotion, automatic Argo dev reconciliation and manual production sync policy.",
+    "tested": "Main db2efa8 passed scans and publication; its promotion failed on a generated-tag merge conflict. The reviewed helper recovered real deploy/dev at 1b0ffd5 and three Git regression tests passed. Argo reached exact-revision Synced/Healthy/Succeeded from public GitHub with real GHCR images; an isolated Git revert restored the prior template and ReplicaSet.",
     "evidence": [
+      "E43",
+      "E44",
+      "E50",
+      "E46",
+      "E42",
       "E09",
       "E10",
       "E22",
       "E23",
       "E38",
-      "E39",
-      "E42"
+      "E39"
     ],
-    "gaps": "Successful Argo Synced/Healthy application, public-repo reconciliation and rollback are NOT YET TESTED. The repository became public on 2026-10-23; historical private auth errors do not establish a current public auth failure.",
+    "gaps": "The new promotion helper still needs its first hosted main-branch execution after merge. Production manual-sync policy passed static review; production deployment/manual synchronization is NOT YET TESTED. The historical main run remains failed at promotion; local recovery is documented separately.",
     "engineering": "I design a delivery chain that blocks unsafe releases and keep Git promotion distinct from successful deployment."
   },
   {
@@ -126,19 +137,21 @@
     "directory": "08-think-about-security-devsecops",
     "status": "PARTIALLY_VALIDATED",
     "implemented": "Dependency remediation, strict source/image gates, non-root/read-only controls, dropped capabilities, NetworkPolicies and safe temporary credential cleanup.",
-    "tested": "Backend progressed from 4 critical/67 high to Debian 0 critical/44 high, then Alpine 0 critical/0 high locally. At 34bf33e, hosted source security and both strict image scans passed. The exact Alpine image passed migrations, login/JWT, authenticated CRUD, health/readiness and metrics under non-root/read-only restrictions. Historical failures are preserved.",
+    "tested": "Backend reached 0 HIGH/CRITICAL locally and passed hosted strict image scanning at db2efa8 before publication. Source/configuration gates passed. Current non-root/read-only/drop-all Kubernetes workloads ran successfully. Public Git/GHCR needed no repository or registry credential; obsolete public imagePullSecrets references were removed and tested on the isolated branch.",
     "evidence": [
+      "E41",
+      "E39",
+      "E45",
+      "E51",
       "E28",
       "E29",
       "E12",
       "E30",
       "E31",
       "E32",
-      "E39",
-      "E40",
-      "E41"
+      "E40"
     ],
-    "gaps": "Publication for the Alpine fix is NOT YET TESTED; CI publishes only on a validated main push. Live Kubernetes NetworkPolicy enforcement remains NOT YET TESTED; public HTTPS repository access needs no deploy key. The temporary account SSH key was removed.",
+    "gaps": "Negative-path Kubernetes NetworkPolicy enforcement and production security/TLS are NOT YET TESTED. Public Git/GHCR reads are verified independently; the previous temporary account SSH key remains removed.",
     "engineering": "I quantify security improvement, keep failing policy checks enabled, and distinguish configuration from enforcement."
   },
   {
@@ -147,14 +160,16 @@
     "directory": "09-think-about-disaster-recovery",
     "status": "PARTIALLY_VALIDATED",
     "implemented": "Atomic compressed PostgreSQL backups, recovery/rollback runbooks and off-node snapshot/token guidance.",
-    "tested": "PG16 backup mode 0600, fresh database restore, same browser-created item ID/title, and failed-dump cleanup passed; previous three-row restore also passed.",
+    "tested": "PG16 backup/restore and failed-dump cleanup previously passed. A real public-GitHub controlled rollout followed by Git revert returned Argo to Synced/Healthy, restored the exact backend template hash and ReplicaSet, and preserved the same API/database record after both rollouts.",
     "evidence": [
-      "E33",
+      "E47",
+      "E48",
       "E34",
+      "E33",
       "E35",
       "E07"
     ],
-    "gaps": "GitOps/deployment rollback, actual k3s snapshot/restore, off-site durability and replacement-server recovery are NOT YET TESTED. The kubectl-to-Docker adapter is documented explicitly.",
+    "gaps": "Image-version/schema downgrade, actual k3s snapshot/restore, off-site durability and replacement-server/cloud recovery are NOT YET TESTED. The earlier database backup used its documented kubectl-to-Docker adapter; the new GitOps rollback used real Kubernetes and Argo.",
     "engineering": "I prove recovery with restored data and failure-path checks while stating the boundary of the drill."
   },
   {

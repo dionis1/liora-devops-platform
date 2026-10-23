@@ -1,0 +1,32 @@
+# Local validation only: one disposable cluster, no monitoring stack.
+# Access the ClusterIP server through a loopback-only port-forward.
+dex:
+  enabled: false
+notifications:
+  enabled: false
+applicationSet:
+  # Chart 10.10.5 has no applicationSet.enabled switch.
+  replicas: 0
+configs:
+  params:
+    server.insecure: true
+    controller.status.processors: "2"
+    controller.operation.processors: "1"
+    reposerver.parallelism.limit: "1"
+controller:
+  resources:
+    requests: {cpu: 100m, memory: 96Mi}
+    limits: {memory: 256Mi}
+server:
+  service: {type: ClusterIP}
+  resources:
+    requests: {cpu: 50m, memory: 48Mi}
+    limits: {memory: 128Mi}
+repoServer:
+  resources:
+    requests: {cpu: 50m, memory: 96Mi}
+    limits: {memory: 256Mi}
+redis:
+  resources:
+    requests: {cpu: 25m, memory: 16Mi}
+    limits: {memory: 64Mi}

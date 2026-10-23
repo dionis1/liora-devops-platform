@@ -1,0 +1,2 @@
+PASS final-dev Traefik / frontend / API health / bcrypt login / JWT / persisted database item
+Synthetic record: 7d879341-88f9-4049-9c20-3b589306b40d GitOps rollback continuity record

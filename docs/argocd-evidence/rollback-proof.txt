@@ -1,0 +1,20 @@
+PASS GitOps rollback through real public GitHub + Argo CD automatic sync
+Branch: testing/argocd-rollback-2026-10-23
+Baseline Git revision: 11075069eb775789de7eefd4a63861751c3b90ef
+Changed Git revision: 0c279d4f4fbbf64f3a48c6fce8bb7f6f1b228ad2
+Git revert revision: bf1a495ae11be36f88bd0aeb9513dd02da102b16
+Argo: Synced / Healthy / Succeeded at each exact revision
+baseline template SHA256 529ae98d5c29f81940bfe95fabdd6d8a70f897c78011c3d6c219033c7c842b4b deployment revision 2 active ReplicaSet backend-5b5ddfb8cc
+changed template SHA256 ae3a9c7384579977c906cbfe5f25af57595d3e5bfc7f94e301a3c7cebe8c4aa6 deployment revision 3 active ReplicaSet backend-79d7cfd95b
+reverted template SHA256 529ae98d5c29f81940bfe95fabdd6d8a70f897c78011c3d6c219033c7c842b4b deployment revision 4 active ReplicaSet backend-5b5ddfb8cc
+PASS baseline template hash restored exactly; changed ReplicaSet scaled to zero
+Image tag stayed sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2 throughout; this is a deployment-configuration rollback, not an image-version or schema downgrade.
+PASS same database record accessible through Traefik after both rollouts:
+PASS initial Traefik / frontend / API health / bcrypt login / JWT / persisted database item
+Synthetic record: 7d879341-88f9-4049-9c20-3b589306b40d GitOps rollback continuity record
+PASS baseline Traefik / frontend / API health / bcrypt login / JWT / persisted database item
+Synthetic record: 7d879341-88f9-4049-9c20-3b589306b40d GitOps rollback continuity record
+PASS changed Traefik / frontend / API health / bcrypt login / JWT / persisted database item
+Synthetic record: 7d879341-88f9-4049-9c20-3b589306b40d GitOps rollback continuity record
+PASS reverted Traefik / frontend / API health / bcrypt login / JWT / persisted database item
+Synthetic record: 7d879341-88f9-4049-9c20-3b589306b40d GitOps rollback continuity record

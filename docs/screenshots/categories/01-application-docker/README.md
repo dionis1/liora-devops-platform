@@ -14,3 +14,8 @@ Screenshots (with full metadata in the [main index](../../README.md)):
 - [E13 — Backend image build completed](../../01-dockerize-your-application/E13.jpg) — PASSED; archived-output.
 - [E14 — Frontend TypeScript and production bundle completed](../../01-dockerize-your-application/E14.jpg) — PASSED; archived-output.
 - [E15 — Running containers and health checks](../../01-dockerize-your-application/E15.jpg) — PASSED; archived-output.
+
+## Latest Argo validation evidence
+
+- [E49 — Public GHCR package exposes the secure release tag](../../01-dockerize-your-application/E49.jpg) — PASSED; actual-ui; captured 2026-10-23.
+- [E51 — Anonymous registry reads match the actual running image digests](../../01-dockerize-your-application/E51.jpg) — PASSED; archived-output; captured 2026-10-23.

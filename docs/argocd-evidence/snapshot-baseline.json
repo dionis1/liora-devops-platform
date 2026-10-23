@@ -1,0 +1,31 @@
+{
+  "phase": "baseline",
+  "marker": "baseline",
+  "template_sha256": "529ae98d5c29f81940bfe95fabdd6d8a70f897c78011c3d6c219033c7c842b4b",
+  "deployment_revision": "2",
+  "ready_replicas": 1,
+  "image_pull_secrets": [],
+  "replica_sets": [
+    {
+      "name": "backend-5b5ddfb8cc",
+      "replicas": 1,
+      "ready": 1
+    },
+    {
+      "name": "backend-5ddd687669",
+      "replicas": 0,
+      "ready": 0
+    }
+  ],
+  "pods": [
+    {
+      "name": "backend-5b5ddfb8cc-d5dt2",
+      "uid": "8e5819d2-1c8b-4714-8a33-5dadd3965f35",
+      "phase": "Running",
+      "ready": true,
+      "images": [
+        "ghcr.io/dionis1/liora-devops-platform-backend:sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2"
+      ]
+    }
+  ]
+}

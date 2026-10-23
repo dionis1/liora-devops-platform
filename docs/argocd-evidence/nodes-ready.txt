@@ -1,0 +1,2 @@
+NAME                                           STATUS   ROLES           AGE   VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE           KERNEL-VERSION      CONTAINER-RUNTIME
+k3d-liora-argocd-priority2-20261023-server-0   Ready    control-plane   23m   v1.35.5+k3s1   172.28.0.2    <none>        K3s v1.35.5+k3s1   6.8.0-147-generic   containerd://2.2.3-k3s1

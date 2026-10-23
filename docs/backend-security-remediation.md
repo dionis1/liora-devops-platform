@@ -48,3 +48,7 @@ bash scripts/scan-security.sh
 ```
 
 Full Kubernetes NetworkPolicy enforcement, Argo sync/rollback and production deployment remain NOT YET TESTED. Older screenshots E09/E28/E29 deliberately retain the previous failing result; use the newer evidence alongside them.
+
+## Later publication and Argo execution
+
+The secure main release db2efa8 was subsequently published and pulled anonymously into real Kubernetes. Argo Synced + Healthy and a controlled configuration rollback passed. The later promotion merge failure and guarded recovery are recorded separately in [the Argo validation report](argocd-validation.md); the historical main run remains failed at promotion.

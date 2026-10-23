@@ -1,0 +1,4 @@
+Promote validated manifests and scanned images	Update dev in Git; production remains manual	2026-10-23T09:23:13.5571284Z Auto-merging kubernetes/overlays/dev/kustomization.yaml
+Promote validated manifests and scanned images	Update dev in Git; production remains manual	2026-10-23T09:23:13.5572051Z CONFLICT (content): Merge conflict in kubernetes/overlays/dev/kustomization.yaml
+Promote validated manifests and scanned images	Update dev in Git; production remains manual	2026-10-23T09:23:13.5575144Z Automatic merge failed; fix conflicts and then commit the result.
+Promote validated manifests and scanned images	Update dev in Git; production remains manual	2026-10-23T09:23:13.5596298Z ##[error]Process completed with exit code 1.

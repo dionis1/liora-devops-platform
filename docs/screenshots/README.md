@@ -88,6 +88,26 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Software: Docker 29.1.3 / PostgreSQL 16.10.
 - Command/page: `docker ps; docker inspect (selected health/security fields only)`
 
+**E49 — Public GHCR package exposes the secure release tag** · **PASSED** · `actual-ui`
+
+[Screenshot](01-dockerize-your-application/E49.jpg) · [registry-proof.json](../../docs/argocd-evidence/registry-proof.json)
+
+- Demonstrates: Actual signed-out GitHub package UI: Public badge and current secure image tag. Both backend and frontend anonymous access and running digests are proved separately in E51.
+- Supports official requirement(s): 1, 5.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Backend release sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2.
+- Command/page: `Open public backend GHCR package page` · [workflow](https://github.com/dionis1/liora-devops-platform/pkgs/container/liora-devops-platform-backend)
+
+**E51 — Anonymous registry reads match the actual running image digests** · **PASSED** · `archived-output`
+
+[Screenshot](01-dockerize-your-application/E51.jpg) · [registry-proof.json](../../docs/argocd-evidence/registry-proof.json); [running-images.json](../../docs/argocd-evidence/running-images.json); [credential-scope.json](../../docs/argocd-evidence/credential-scope.json)
+
+- Demonstrates: Actual HTTP 200 for both released SHA tags; published digests exactly match running pods. Public Git repository visibility and GHCR package visibility were checked independently.
+- Supports official requirement(s): 1, 5, 8.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: GHCR / k3s 1.35.5-k3s1.
+- Command/page: `Anonymous GHCR manifest GET; compare with Kubernetes containerStatuses.imageID`
+
 ## 2. Deploy the Application in Multiple Environments (Dev & Prod)
 
 **E19 — Dev and prod separation: static manifests** · **PARTIALLY VALIDATED** · `archived-output`
@@ -164,6 +184,16 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Software: k3d 5.9.0 / original first-pass images.
 - Command/page: `kubectl apply local-dev.yaml; rollout status postgres/backend/frontend`
 
+**E45 — Current hardened dev workloads, node and PVC are ready** · **PASSED** · `archived-output`
+
+[Screenshot](04-container-orchestration-with-kubernetes/E45.jpg) · [ready-summary.txt](../../docs/argocd-evidence/ready-summary.txt)
+
+- Demonstrates: Real local output: node Ready, all three app pods 1/1, deployments/statefulset ready, 8 GiB PVC Bound and Traefik Ingress. No cloud/production claim.
+- Supports official requirement(s): 2, 4, 5.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: k3d 5.9.0 / k3s 1.35.5-k3s1 / PostgreSQL 16.10.
+- Command/page: `kubectl get nodes; kubectl -n liora-dev get pods,deploy,sts,pvc,ingress`
+
 ## 5. Automate Deployment (CI/CD Pipeline)
 
 **E09 — Historical Debian CI blocks publication** · **FAILED** · `actual-ui`
@@ -225,6 +255,46 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Captured: 2026-10-23; original observation: 2026-10-23; environment: GitHub Actions.
 - Software: Commit 34bf33e / workflow run 39928939273.
 - Command/page: `Open successful CI run for PR 16 / commit 34bf33e` · [workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273)
+
+**E43 — Argo development Application is Synced and Healthy** · **PASSED** · `actual-ui`
+
+[Screenshot](05-automate-deployment-ci-cd-pipeline/E43.jpg) · [dev-sync.json](../../docs/argocd-evidence/dev-sync.json)
+
+- Demonstrates: Actual disposable local Argo UI, public GitHub deploy/dev at 1b0ffd5, real anonymous GHCR pulls; not a production/cloud deployment.
+- Supports official requirement(s): 1, 4, 5.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Argo CD 3.5.5 / chart 10.10.5 / k3s 1.35.5-k3s1.
+- Command/page: `Apply gitops/applications.yaml dev Application; wait for exact promoted revision`
+
+**E44 — Canonical dev branch restored after successful rollback test** · **PASSED** · `actual-ui`
+
+[Screenshot](05-automate-deployment-ci-cd-pipeline/E44.jpg) · [final-dev-sync.json](../../docs/argocd-evidence/final-dev-sync.json)
+
+- Demonstrates: Actual final dev state after the isolated Git-revert drill. Auto-sync enabled; rollback test did not modify deploy/dev. Cluster removed after evidence capture.
+- Supports official requirement(s): 4, 5, 9.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Argo CD 3.5.5 / dev revision 1b0ffd5.
+- Command/page: `Restore targetRevision deploy/dev; check exact 1b0ffd5 Synced/Healthy/Succeeded`
+
+**E46 — Argo rolls out the controlled changed Git revision** · **PASSED** · `actual-ui`
+
+[Screenshot](05-automate-deployment-ci-cd-pipeline/E46.jpg) · [rollback-changed.json](../../docs/argocd-evidence/rollback-changed.json)
+
+- Demonstrates: Actual changed backend template reached Synced/Healthy with a new ReplicaSet. Secure image tag unchanged; same database record remained accessible.
+- Supports official requirement(s): 4, 5, 9.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Argo CD 3.5.5 / changed revision 0c279d4.
+- Command/page: `Push 0c279d4 to isolated rollback branch; hard refresh; auto-sync and readiness checks`
+
+**E50 — Secure image publication succeeds; promotion initially fails** · **PASSED** · `actual-ui`
+
+[Screenshot](05-automate-deployment-ci-cd-pipeline/E50.jpg) · [release-jobs.json](../../docs/argocd-evidence/release-jobs.json)
+
+- Demonstrates: Publication job PASSED. Overall run FAILED on the later merge conflict; reviewed script recovered promotion separately. This screenshot does not claim the complete main workflow passed.
+- Supports official requirement(s): 1, 5.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: GitHub Actions.
+- Software: Main db2efa8 / workflow run 39931016209.
+- Command/page: `Open successful Publish only scanned images job` · [workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39931016209/job/120340274170)
 
 ## 6. Create IaC (Infrastructure as Code) Templates
 
@@ -433,6 +503,26 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
 - Software: PostgreSQL 16.10 / negative-control test.
 - Command/page: `Deliberately fail pg_dump; reject unrelated namespace`
+
+**E47 — Git revert restores a healthy backend deployment** · **PASSED** · `actual-ui`
+
+[Screenshot](09-think-about-disaster-recovery/E47.jpg) · [rollback-reverted.json](../../docs/argocd-evidence/rollback-reverted.json); [rollback-proof.txt](../../docs/argocd-evidence/rollback-proof.txt)
+
+- Demonstrates: Actual configuration rollback on isolated GitHub branch: original template hash and ReplicaSet restored; record unchanged. Not an image-version or schema downgrade.
+- Supports official requirement(s): 4, 5, 9.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Argo CD 3.5.5 / revert bf1a495 / PostgreSQL 16.10.
+- Command/page: `git revert 0c279d4; push bf1a495; Argo auto-sync; compare template hashes`
+
+**E48 — Argo history records changed revision and Git revert** · **PASSED** · `actual-ui`
+
+[Screenshot](09-think-about-disaster-recovery/E48.jpg) · [rollback-reverted.json](../../docs/argocd-evidence/rollback-reverted.json)
+
+- Demonstrates: Actual auto-sync history, with revert and prior change visible. Full baseline/change/revert history is preserved in JSON; native rollback button was not used.
+- Supports official requirement(s): 5, 9.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Argo CD 3.5.5 / baseline 1107506, change 0c279d4, revert bf1a495.
+- Command/page: `Argo HISTORY AND ROLLBACK after successful Git revert`
 
 ## 10. Documentation
 

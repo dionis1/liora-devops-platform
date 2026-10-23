@@ -1,0 +1,9 @@
+{
+  "node_memory_limit": "2 GiB",
+  "start_gate_available_mib": 1500,
+  "sustained_low_memory_abort_mib": 384,
+  "samples": 260,
+  "minimum_available_mib": 1204,
+  "abort_triggered": false,
+  "monitoring_stack_started": false
+}
