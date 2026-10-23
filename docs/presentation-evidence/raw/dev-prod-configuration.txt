@@ -1,0 +1,15 @@
+STATIC RENDERING ONLY — NOT DEPLOYMENT EVIDENCE.
+$ kubectl kustomize kubernetes/overlays/dev
+Exit code: 0
+Namespace: liora-dev
+backend image: ghcr.io/dionis1/liora-devops-platform-backend:sha-bootstrap
+frontend image: ghcr.io/dionis1/liora-devops-platform-frontend:sha-bootstrap
+Ingress host(s): dev.example.invalid
+TLS: []
+$ kubectl kustomize kubernetes/overlays/prod
+Exit code: 0
+Namespace: liora-prod
+backend image: ghcr.io/dionis1/liora-devops-platform-backend:sha-bootstrap
+frontend image: ghcr.io/dionis1/liora-devops-platform-frontend:sha-bootstrap
+Ingress host(s): app.example.invalid
+TLS: [{'hosts': ['app.example.invalid'], 'secretName': 'course-app-tls'}]

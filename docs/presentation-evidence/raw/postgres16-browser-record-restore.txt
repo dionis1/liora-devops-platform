@@ -1,0 +1,22 @@
+Captured UTC: 2026-10-23T08:16:01.453892+00:00
+PostgreSQL 16.10; isolated Docker database; API/UI stopped before this drill.
+Actual backup script; kubectl exec explicitly adapted to docker exec.
+$ bash scripts/backup-postgres.sh liora-dev
+Backup saved to /tmp/liora-defense/dr/backups/liora-dev-20261023T081601Z.JoTmea.dump (copy to offline/encrypted storage)
+$ stat -c "mode=%a bytes=%s file=%n" BACKUP
+mode=600 bytes=4754 file=/tmp/liora-defense/dr/backups/liora-dev-20261023T081601Z.JoTmea.dump
+$ pg_restore -U app -d defense_restore --exit-on-error < BACKUP
+Exit code: 0
+$ psql -d app -c "SELECT id, title FROM item ORDER BY id;"
+                  id                  |            title             
+--------------------------------------+------------------------------
+ 3b5306f8-77b6-4c64-8fa9-5d0db19ccaa6 | Graduation validation record
+(1 row)
+$ psql -d defense_restore -c "SELECT id, title FROM item ORDER BY id;"
+                  id                  |            title             
+--------------------------------------+------------------------------
+ 3b5306f8-77b6-4c64-8fa9-5d0db19ccaa6 | Graduation validation record
+(1 row)
+PASS restored item ID and title exactly match the browser-created source record.
+Negative control: failed pg_dump exit=9; completed/temp file inventory unchanged.
+PASS failure cleanup and atomic completed-file publication.

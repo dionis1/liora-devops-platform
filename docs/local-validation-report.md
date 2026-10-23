@@ -448,16 +448,16 @@ job results. Public release metadata supplied the verified Trivy download.
 
 | Requirement | Assessment |
 |---|---|
-| 1. Dockerization and registry | PASS local builds/runtime; existing CI publication evidence; private pull not tested |
-| 2. Dev and production environments | PARTIAL: separated overlays/configurations; only dev deployed locally; production placeholders/TLS unresolved |
-| 3. Application tests | PASS: original 55 tests, lint, migrations and health; frontend browser E2E not run |
-| 4. Kubernetes orchestration | PASS for adapted local dev; cloud production remains unverified |
-| 5. Working CI/CD | PARTIAL: existing CI passes; private Argo reconciliation fails; new workflow edits unrun remotely |
-| 6. Terraform IaC | PASS static; cloud plan/apply/recreation not run |
-| 7. Monitoring | PARTIAL: live cluster metrics and UI health; Grafana self-scrape, app metrics, notifications and durable settings incomplete |
-| 8. DevSecOps | FAIL policy: unresolved critical/high findings; several controls implemented and retested |
-| 9. Disaster recovery | PARTIAL: disposable SQL backup/restore passed; node/etcd/off-site/full-platform recovery unverified |
-| 10. Documentation and diagram | PASS presence and updates; architecture Mermaid diagram and runbooks reviewed |
+| 1. Dockerize Your Application | PASS local builds/runtime; existing CI publication evidence; private pull not tested |
+| 2. Deploy the Application in Multiple Environments (Dev & Prod) | PARTIAL: separated overlays/configurations; only dev deployed locally; production placeholders/TLS unresolved |
+| 3. Run Tests on the Application | PASS: original 55 tests, lint, migrations and health; frontend browser E2E not run |
+| 4. Container Orchestration with Kubernetes | PASS for adapted local dev; cloud production remains unverified |
+| 5. Automate Deployment (CI/CD Pipeline) | PARTIAL: existing CI passes; private Argo reconciliation fails; new workflow edits unrun remotely |
+| 6. Create IaC (Infrastructure as Code) Templates | PASS static; cloud plan/apply/recreation not run |
+| 7. Monitor the Application | PARTIAL: live cluster metrics and UI health; Grafana self-scrape, app metrics, notifications and durable settings incomplete |
+| 8. Think About Security (DevSecOps) | FAIL policy: unresolved critical/high findings; several controls implemented and retested |
+| 9. Think About Disaster Recovery | PARTIAL: disposable SQL backup/restore passed; node/etcd/off-site/full-platform recovery unverified |
+| 10. Documentation | PASS presence and updates; architecture Mermaid diagram and runbooks reviewed |
 
 ## Remaining deployment gates
 
@@ -507,3 +507,8 @@ files were removed after evidence was collected.
 ## Second validation pass
 
 The first-pass evidence above is preserved. See [the remediation report](remediation-report.md) for dependency fixes, the authenticated Git history, current security blockers, and new screenshots. Historical results above are not assertions that the hardened second-pass manifests have passed a new cluster run.
+
+
+## Graduation evidence follow-up — 2026-10-23
+
+The historical results above remain dated first-pass observations. The [presentation pack](presentation-evidence.md), [38-image index](screenshots/README.md), and [final official compliance report](final-compliance-report.md) use the exact ten requirement headings. Original command logs were reused in clearly labeled archived-output views; no first-pass cluster was restarted for screenshots. New functional UI and PG16 record-restore evidence is separate from this old cluster run.

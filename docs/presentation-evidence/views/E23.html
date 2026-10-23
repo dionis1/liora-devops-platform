@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>E23 · Production manual sync configuration</title><style>*{box-sizing:border-box}body{margin:0;background:#f0f3f7;color:#142338;font-family:Arial,sans-serif}main{max-width:1400px;margin:auto;padding:24px 32px}header{border-top:7px solid #176b8a;background:white;padding:18px 24px}h1{font-size:26px;line-height:1.15;margin:9px 0}h2{font-size:19px;margin:10px 0}.eyebrow{font-size:12px;font-weight:bold;letter-spacing:1.3px;color:#176b8a}.status{font-size:13px;font-weight:bold;color:#8a4200}.scope{font-size:15px;line-height:1.4;margin:10px 0}.command{font:13px monospace;overflow-wrap:anywhere}.panel{background:white;padding:18px 24px;margin-top:12px;border:1px solid #d4dee8}pre{font:15px/1.42 'DejaVu Sans Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#142338}footer{font-size:11px;line-height:1.5;overflow-wrap:anywhere;padding:12px 4px;color:#47566a}.flow{display:flex;gap:12px;align-items:stretch;margin:15px 0}.box{background:#e9f2f7;border:1px solid #9dbbcb;flex:1;padding:15px;font-size:16px;line-height:1.45}.future{background:#fff4e0;border-color:#dcb568}a{color:#176b8a}img{max-width:100%;border:1px solid #d4dee8}.card{background:white;margin:18px 0;padding:20px}.metadata{font-size:14px;line-height:1.5}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px}@media print{.card{break-inside:avoid}}</style><main><header><div class="eyebrow">CONFIGURATION EXCERPT — NOT DEPLOYMENT PROOF</div><h1>E23 · Production manual sync configuration</h1><div class="status">PARTIALLY VALIDATED · Local</div><p class="scope">Design/static proof only. No successful production sync or rollback is claimed.</p><div class="command">Review gitops/applications.yaml; no automated production policy</div></header><section class="panel"><pre>spec:
+  project: default
+  source:
+    repoURL: https://github.com/dionis1/liora-devops-platform.git
+    targetRevision: main
+    path: kubernetes/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: liora-prod
+  syncPolicy:
+    # No automated policy: production requires manual Argo CD sync.
+    syncOptions:
+      - CreateNamespace=true</pre></section><footer>Requirement 5. Automate Deployment (CI/CD Pipeline)<br>Observed: 2026-10-23 · Screenshot capture: 2026-10-23 · Software: Application manifests at 211199d<br>gitops/applications.yaml<br>SHA-256 aeca538433e25a96b5df7676ade8cacad523724b65ba0971111927a381a6f9e0</footer></main></html>

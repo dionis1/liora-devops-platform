@@ -73,7 +73,7 @@ kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 helm upgrade --install argocd argo/argo-cd -n argocd --wait
 ```
 
-Use a reviewed chart version for the demonstration (add `--version <version>`); document it. Because the GitHub repository is **private**, configure Argo CD repository access with a read-only GitHub token through the Argo CD UI or an externally managed secret. Never put the token into YAML in this repository.
+Use a reviewed chart version for the demonstration (add `--version <version>`); document it. The user made the repository **public on 2026-10-23**. Argo CD can be configured to read its public HTTPS source without a repository credential; a successful new reconciliation has not yet been tested. If the repository is made private again, use a verified read-only token or repository-specific deploy key through an externally managed Secret. Never put a token or private key into YAML in this repository.
 
 The `deploy/dev` branch is created by CI after a successful image publish on main. Make sure it exists before applying:
 

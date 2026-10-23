@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>E16 · 55 upstream tests passed</title><style>*{box-sizing:border-box}body{margin:0;background:#f0f3f7;color:#142338;font-family:Arial,sans-serif}main{max-width:1400px;margin:auto;padding:24px 32px}header{border-top:7px solid #176b8a;background:white;padding:18px 24px}h1{font-size:26px;line-height:1.15;margin:9px 0}h2{font-size:19px;margin:10px 0}.eyebrow{font-size:12px;font-weight:bold;letter-spacing:1.3px;color:#176b8a}.status{font-size:13px;font-weight:bold;color:#8a4200}.scope{font-size:15px;line-height:1.4;margin:10px 0}.command{font:13px monospace;overflow-wrap:anywhere}.panel{background:white;padding:18px 24px;margin-top:12px;border:1px solid #d4dee8}pre{font:15px/1.42 'DejaVu Sans Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#142338}footer{font-size:11px;line-height:1.5;overflow-wrap:anywhere;padding:12px 4px;color:#47566a}.flow{display:flex;gap:12px;align-items:stretch;margin:15px 0}.box{background:#e9f2f7;border:1px solid #9dbbcb;flex:1;padding:15px;font-size:16px;line-height:1.45}.future{background:#fff4e0;border-color:#dcb568}a{color:#176b8a}img{max-width:100%;border:1px solid #d4dee8}.card{background:white;margin:18px 0;padding:20px}.metadata{font-size:14px;line-height:1.5}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px}@media print{.card{break-inside:avoid}}</style><main><header><div class="eyebrow">ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</div><h1>E16 · 55 upstream tests passed</h1><div class="status">PASSED · Local</div><p class="scope">Original captured test counts and result; passlib deprecation warning remains.</p><div class="command">uv run --frozen bash scripts/tests-start.sh</div></header><section class="panel"><pre>collected 55 items
+
+app/tests/api/routes/test_items.py ...........                           [ 20%]
+app/tests/api/routes/test_login.py .......                               [ 32%]
+app/tests/api/routes/test_private.py .                                   [ 34%]
+app/tests/api/routes/test_users.py .........................             [ 80%]
+app/tests/crud/test_user.py .........                                    [ 96%]
+app/tests/scripts/test_backend_pre_start.py .                            [ 98%]
+app/tests/scripts/test_test_pre_start.py .                               [100%]
+
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/passlib/utils/__init__.py:854
+  /home/dionis/backup/liora-devops-platform/course-app/backend/.venv/lib/python3.12/site-packages/passlib/utils/__init__.py:854: DeprecationWarning: &#x27;crypt&#x27; is deprecated and slated for removal in Python 3.13
+    from crypt import crypt as _crypt
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 55 passed, 1 warning in 16.72s ========================
++ coverage report --show-missing
+Name                                          Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------
+app/__init__.py                                   0      0   100%</pre></section><footer>Requirement 3. Run Tests on the Application<br>Observed: 2026-10-23 · Screenshot capture: 2026-10-23 · Software: Python 3.12.3 / pytest 7.4.4 / PostgreSQL 16.10<br>docs/remediation-evidence/backend-tests.txt<br>SHA-256 03fd5697e74d18578e4c8e1bc91a080eb200f355356b9cfc40cf4fcd27b8c574</footer></main></html>

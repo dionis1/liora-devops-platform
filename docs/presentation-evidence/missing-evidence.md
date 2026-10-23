@@ -1,0 +1,25 @@
+# Missing execution proof and unavailable screenshots
+
+All ten requirements have some concrete evidence. The following successful outcomes are still unavailable; configuration views do not fill these gaps.
+
+| Requirement | Unavailable success evidence | Current concrete evidence |
+| --- | --- | --- |
+| 1. Dockerize Your Application | Current hardened images are not published because the backend security gate fails. GHCR package/tag page access was unavailable; historical publication job success is not proof of current registry pulls. | [E07](../screenshots/01-dockerize-your-application/item-created-and-persisted.jpg), [E08](../screenshots/01-dockerize-your-application/swagger-real-health-200.jpg) |
+| 2. Deploy the Application in Multiple Environments (Dev & Prod) | Production deployment and public TLS are NOT YET TESTED; final hardened dev manifests were not redeployed. | [E19](../screenshots/02-deploy-the-application-in-multiple-environments-dev-prod/E19.jpg), [E20](../screenshots/04-container-orchestration-with-kubernetes/E20.jpg) |
+| 3. Run Tests on the Application | The complete automated browser E2E suite and OpenAPI-client regeneration are NOT YET TESTED. | [E16](../screenshots/03-run-tests-on-the-application/E16.jpg), [E17](../screenshots/03-run-tests-on-the-application/E17.jpg) |
+| 4. Container Orchestration with Kubernetes | Historical cluster was deleted. Current hardened cluster, policy enforcement, node-readiness screenshot and cloud deployment are NOT YET TESTED. | [E20](../screenshots/04-container-orchestration-with-kubernetes/E20.jpg), [E21](../screenshots/04-container-orchestration-with-kubernetes/E21.jpg) |
+| 5. Automate Deployment (CI/CD Pipeline) | Successful Argo Synced/Healthy application, public-repo reconciliation and rollback are NOT YET TESTED. The repository became public on 2026-10-23; historical private auth errors do not establish a current public auth failure. | [E09](../screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E10](../screenshots/05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg) |
+| 6. Create IaC (Infrastructure as Code) Templates | Terraform plan/apply, actual remote provisioning and server recreation are NOT YET TESTED. No Hetzner API resources were created. | [E24](../screenshots/06-create-iac-infrastructure-as-code-templates/E24.jpg), [E25](../screenshots/06-create-iac-infrastructure-as-code-templates/E25.jpg) |
+| 7. Monitor the Application | The new ServiceMonitor discovery in Kubernetes, receiver delivery, sustained 5xx alert scenario and durable monitoring recovery are NOT YET TESTED. | [E03](../screenshots/07-monitor-the-application/prometheus-targets-up.jpg), [E04](../screenshots/07-monitor-the-application/grafana-request-latency-errors.jpg) |
+| 8. Think About Security (DevSecOps) | 44 unfixed HIGH backend OS findings remain release blockers. Live NetworkPolicy enforcement and verified read-only deploy-key configuration are NOT YET TESTED; the temporary account key was removed. | [E28](../screenshots/08-think-about-security-devsecops/E28.jpg), [E29](../screenshots/08-think-about-security-devsecops/E29.jpg) |
+| 9. Think About Disaster Recovery | GitOps/deployment rollback, actual k3s snapshot/restore, off-site durability and replacement-server recovery are NOT YET TESTED. The kubectl-to-Docker adapter is documented explicitly. | [E33](../screenshots/09-think-about-disaster-recovery/E33.jpg), [E34](../screenshots/09-think-about-disaster-recovery/E34.jpg) |
+| 10. Documentation | The architecture is a design view; future cloud boxes are not deployment evidence. This is an evidence pack, not an exported PowerPoint deck. | [E36](../screenshots/10-documentation/E36.jpg) |
+
+## Capture limitations
+
+- Original terminal windows and first-pass clusters were already gone. Their genuine saved output is preserved and shown in explicitly labeled archived-output views; these are not original terminal screenshots.
+- Public GitHub workflow summary screenshots became accessible after the user changed repository visibility. Signed-out job logs still require sign-in. Authenticated CLI metadata supplies the full job/step results; no token was placed into the browser.
+- Historical GHCR publication and dev promotion have successful job/step records and a direct workflow screenshot. Historical job-log downloads returned empty output; GHCR package metadata required read:packages scope; the [post-public-visibility read attempt](raw/ghcr-package-metadata-attempt.txt) preserves the actual 403 response. No current package/tag UI or authenticated pull is claimed.
+- Available RAM was below the 3 GiB gate for another Kubernetes/Argo installation. Those stacks were not restarted just for screenshots.
+- No screenshots were manufactured for Argo sync/rollback, production deployment, cloud plans, node readiness, public HTTPS, or k3s snapshot restoration. The real failed/unexecuted state stays visible.
+- Status labels apply to the narrow demonstrated result. The full requirement assessments are in [the final report](../final-compliance-report.md).

@@ -6,6 +6,13 @@
 
 See [second-pass validation and remaining blockers](docs/remediation-report.md) and the preserved [first-pass report](docs/local-validation-report.md).
 
+
+## Graduation defense evidence
+
+The [presentation evidence pack](docs/presentation-evidence.md) includes a ten-minute live plan and a ten-minute screenshot-only fallback under the exact ten official requirements. Browse [38 indexed screenshots](docs/screenshots/README.md), the [offline gallery](docs/presentation-evidence/index.html), the [validation checklist](docs/requirements-validation-checklist.md), and the [final compliance report](docs/final-compliance-report.md). Twelve images are actual application/GitHub/monitoring UIs; 26 are explicitly labeled views of real archived output, configuration or architecture. Five earlier screenshots are preserved unchanged.
+
+Local authenticated item creation and a PostgreSQL 16 restore of that same record passed. Historical publication and Kubernetes evidence are dated separately. The backend image still has 44 HIGH OS findings, so release remains blocked. The repository is now public; a new Argo public-repository sync/rollback has not been tested.
+
 ## Architecture
 
 See [architecture diagram](docs/architecture.md): GitHub Actions CI tests the DataScientest FastAPI/PostgreSQL/React application, publishes backend/frontend SHA-tagged images to GHCR, updates the dev GitOps branch, and Argo CD reconciles k3s. Terraform provisions the future Hetzner host and firewall; Ansible bootstraps k3s. Prometheus and Grafana monitor the cluster.
@@ -92,28 +99,28 @@ Captured on 2026-10-23 from real application and monitoring UIs. Monitoring used
 
 Real patched upstream API; no DB in screenshot fixture.
 
-![FastAPI Swagger UI](docs/screenshots/01-fastapi-docs.jpg)
+![FastAPI Swagger UI](docs/screenshots/01-dockerize-your-application/fastapi-swagger.jpg)
 
 ### React login page
 
 Actual production frontend build; login form rendering, not an authenticated user session.
 
-![React login page](docs/screenshots/02-react-login.jpg)
+![React login page](docs/screenshots/01-dockerize-your-application/react-login.jpg)
 
 ### Prometheus targets
 
 All three isolated Docker targets UP, including Grafana.
 
-![Prometheus targets](docs/screenshots/03-prometheus-targets.jpg)
+![Prometheus targets](docs/screenshots/07-monitor-the-application/prometheus-targets-up.jpg)
 
 ### Grafana application dashboard
 
 Synthetic local health requests and intentional 404s; not production traffic.
 
-![Grafana application dashboard](docs/screenshots/04-grafana-dashboard.jpg)
+![Grafana application dashboard](docs/screenshots/07-monitor-the-application/grafana-request-latency-errors.jpg)
 
 ### Application unavailable firing
 
 Disposable backend stopped; unchanged one-minute production alert rule evaluated by standalone Prometheus.
 
-![Application unavailable firing](docs/screenshots/05-application-alert-firing.jpg)
+![Application unavailable firing](docs/screenshots/07-monitor-the-application/application-alert-firing.jpg)
