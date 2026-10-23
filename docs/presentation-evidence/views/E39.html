@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>E39 · Alpine backend security gate passes</title><style>*{box-sizing:border-box}body{margin:0;background:#f0f3f7;color:#142338;font-family:Arial,sans-serif}main{max-width:1400px;margin:auto;padding:24px 32px}header{border-top:7px solid #176b8a;background:white;padding:18px 24px}h1{font-size:26px;line-height:1.15;margin:9px 0}h2{font-size:19px;margin:10px 0}.eyebrow{font-size:12px;font-weight:bold;letter-spacing:1.3px;color:#176b8a}.status{font-size:13px;font-weight:bold;color:#8a4200}.scope{font-size:15px;line-height:1.4;margin:10px 0}.command{font:13px monospace;overflow-wrap:anywhere}.panel{background:white;padding:18px 24px;margin-top:12px;border:1px solid #d4dee8}pre{font:15px/1.42 'DejaVu Sans Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#142338}footer{font-size:11px;line-height:1.5;overflow-wrap:anywhere;padding:12px 4px;color:#47566a}.flow{display:flex;gap:12px;align-items:stretch;margin:15px 0}.box{background:#e9f2f7;border:1px solid #9dbbcb;flex:1;padding:15px;font-size:16px;line-height:1.45}.future{background:#fff4e0;border-color:#dcb568}a{color:#176b8a}img{max-width:100%;border:1px solid #d4dee8}.card{background:white;margin:18px 0;padding:20px}.metadata{font-size:14px;line-height:1.5}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px}@media print{.card{break-inside:avoid}}</style><main><header><div class="eyebrow">ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</div><h1>E39 · Alpine backend security gate passes</h1><div class="status">PASSED · Local</div><p class="scope">Actual new local scan: 0 HIGH/CRITICAL in OS and Python packages, including unfixed findings. Not proof of hosted publication or GitOps deployment.</p><div class="command">trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 liora-backend:security-fix</div></header><section class="panel"><pre>Backend security remediation — actual local output, 2026-10-23
+Source baseline: 51921c9, working-tree Dockerfile and CI fix
+Previous Debian scan (211199d): CRITICAL 0 / HIGH 44 — FAILED
+Current Alpine scan: CRITICAL 0 / HIGH 0 — PASSED, exit code 0
+Scanner: Trivy 0.76.1; unfixed findings INCLUDED; no CVE exceptions
+Command: trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 --format json --output trivy-backend.json liora-backend:security-fix
+Base: python:3.12.15-alpine3.24@sha256:b658b05ce9c4eb97ec6fc19424818a1f31993659c2b505a532f470e83807815d
+Detected OS: 3.24.3
+Image ID: sha256:1f8aa74b9ac67194d07ed0d722d728c1f08eacebe8f409cab7f612b5bd6e5462
+Target: liora-backend:security-fix (alpine 3.24.3) (os-pkgs) — HIGH 0 / CRITICAL 0
+Target: Python (lang-pkgs) — HIGH 0 / CRITICAL 0
+
+Exact runtime image: migrations, login/JWT, database CRUD, health/readiness, metrics, Docker HEALTHCHECK, non-root/read-only — PASSED
+Existing suite: 55 upstream + 2 platform tests — PASSED
+Source/configuration/secret gates — PASSED
+PR validation does not publish images. New hosted CI, registry publication and GitOps promotion are separate outcomes.
+</pre></section><footer>Requirement 8. Think About Security (DevSecOps)<br>Observed: 2026-10-23 · Screenshot capture: 2026-10-23 · Software: Trivy 0.76.1 / Python 3.12.15 / Alpine 3.24.3<br>docs/backend-security-evidence/summary.txt<br>SHA-256 d6d66a9a02e8cd5a042a7623fdc05328f8662d9d87eda014b99c35080897c52c<br>docs/backend-security-evidence/trivy-backend.json<br>SHA-256 3bd69dfa9cda5dc771ef1c10221888b1baa18b5d7b4c4475b94a3bbfdb11496b</footer></main></html>

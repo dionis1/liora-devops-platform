@@ -6,10 +6,10 @@ Keep the exact official numbering. A checked execution item does not mean an ent
 
 **Assessment: PASSED**
 
-- [x] Implementation documented: Two-stage, non-root platform images around the original pinned DataScientest application; health checks and a reviewed dependency patch.
+- [x] Implementation documented: Multi-stage, non-root platform images around the original pinned DataScientest application; digest-pinned Alpine backend, health checks and a reviewed dependency patch.
 - [x] Executed checks recorded: Sequential builds, actual API/database readiness, authenticated browser login, item creation and persistence after reload in a fixture with a temporary Nginx API proxy. Historical main publication succeeded.
 - [x] Concrete evidence indexed: [E07: Browser-created item persists after reload](screenshots/01-dockerize-your-application/item-created-and-persisted.jpg), [E08: Executed Swagger request returns HTTP 200](screenshots/01-dockerize-your-application/swagger-real-health-200.jpg), [E13: Backend image build completed](screenshots/01-dockerize-your-application/E13.jpg), [E14: Frontend TypeScript and production bundle completed](screenshots/01-dockerize-your-application/E14.jpg), [E15: Running containers and health checks](screenshots/01-dockerize-your-application/E15.jpg), [E10: Historical successful GHCR publication and dev promotion](screenshots/05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg).
-- [ ] Remaining validation: Current hardened images are not published because the backend security gate fails. GHCR package/tag page access was unavailable; historical publication job success is not proof of current registry pulls.
+- [ ] Remaining validation: Publication and authenticated registry pulls for the new Alpine backend are NOT YET TESTED. PR checks do not publish; publication/promotion require a validated push to main. Historical publication evidence is retained.
 
 ## 2. Deploy the Application in Multiple Environments (Dev & Prod)
 
@@ -26,7 +26,7 @@ Keep the exact official numbering. A checked execution item does not mean an ent
 
 - [x] Implementation documented: Upstream tests, PostgreSQL migrations, mypy/Ruff, and metrics/readiness checks run in CI.
 - [x] Executed checks recorded: 55 upstream tests and 2 platform tests pass; exact CI script passes locally and hosted backend-tests/lint jobs passed at 211199d. New browser login/create/reload smoke passed.
-- [x] Concrete evidence indexed: [E16: 55 upstream tests passed](screenshots/03-run-tests-on-the-application/E16.jpg), [E17: Platform metrics and readiness tests passed](screenshots/03-run-tests-on-the-application/E17.jpg), [E18: Mypy and Ruff passed](screenshots/03-run-tests-on-the-application/E18.jpg), [E09: Current CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E07: Browser-created item persists after reload](screenshots/01-dockerize-your-application/item-created-and-persisted.jpg).
+- [x] Concrete evidence indexed: [E16: 55 upstream tests passed](screenshots/03-run-tests-on-the-application/E16.jpg), [E17: Platform metrics and readiness tests passed](screenshots/03-run-tests-on-the-application/E17.jpg), [E18: Mypy and Ruff passed](screenshots/03-run-tests-on-the-application/E18.jpg), [E09: Historical Debian CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E07: Browser-created item persists after reload](screenshots/01-dockerize-your-application/item-created-and-persisted.jpg).
 - [ ] Remaining validation: The complete automated browser E2E suite and OpenAPI-client regeneration are NOT YET TESTED.
 
 ## 4. Container Orchestration with Kubernetes
@@ -43,8 +43,8 @@ Keep the exact official numbering. A checked execution item does not mean an ent
 **Assessment: PARTIALLY VALIDATED**
 
 - [x] Implementation documented: Tests/build/scan gates, exact-scanned-image publication, dev manifest promotion and manual production sync policy; Argo Application manifests.
-- [x] Executed checks recorded: Historical main publication/promotion passed. At remediation revision 211199d, tests/lint/platform/source scans passed but the backend image gate FAILED. Historical Argo installed but private repo comparison FAILED.
-- [x] Concrete evidence indexed: [E09: Current CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E10: Historical successful GHCR publication and dev promotion](screenshots/05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg), [E22: Argo CD ran, but private repository comparison failed](screenshots/05-automate-deployment-ci-cd-pipeline/E22.jpg), [E23: Production manual sync configuration](screenshots/05-automate-deployment-ci-cd-pipeline/E23.jpg), [E38: Historical Argo components ready; sync still unproven](screenshots/05-automate-deployment-ci-cd-pipeline/E38.jpg).
+- [x] Executed checks recorded: Historical main publication/promotion passed. The Debian scan at 211199d failed with 44 HIGH findings. The new Alpine backend passes the strict local scan with 0 HIGH/CRITICAL and image integration checks; new hosted CI results must be checked separately. Historical Argo installed but private repo comparison FAILED.
+- [x] Concrete evidence indexed: [E09: Historical Debian CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E10: Historical successful GHCR publication and dev promotion](screenshots/05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg), [E22: Argo CD ran, but private repository comparison failed](screenshots/05-automate-deployment-ci-cd-pipeline/E22.jpg), [E23: Production manual sync configuration](screenshots/05-automate-deployment-ci-cd-pipeline/E23.jpg), [E38: Historical Argo components ready; sync still unproven](screenshots/05-automate-deployment-ci-cd-pipeline/E38.jpg).
 - [ ] Remaining validation: Successful Argo Synced/Healthy application, public-repo reconciliation and rollback are NOT YET TESTED. The repository became public on 2026-10-23; historical private auth errors do not establish a current public auth failure.
 
 ## 6. Create IaC (Infrastructure as Code) Templates
@@ -67,12 +67,14 @@ Keep the exact official numbering. A checked execution item does not mean an ent
 
 ## 8. Think About Security (DevSecOps)
 
-**Assessment: FAILED**
+Latest: [Alpine security remediation and reproducible checks](backend-security-remediation.md), [E39 scan](screenshots/08-think-about-security-devsecops/E39.jpg), [E40 exact-image integration test](screenshots/08-think-about-security-devsecops/E40.jpg). Historical failures below remain dated evidence.
+
+**Assessment: PARTIALLY VALIDATED**
 
 - [x] Implementation documented: Dependency remediation, strict source/image gates, non-root/read-only controls, dropped capabilities, NetworkPolicies and safe temporary credential cleanup.
-- [x] Executed checks recorded: Patched locks including dev dependencies and frontend runtime: 0 HIGH/CRITICAL. Backend: 4 critical/67 high before, 0 critical/44 high after. Hosted scan fails closed. Docker fixture verified non-root/read-only operation.
-- [x] Concrete evidence indexed: [E28: Security before and after remediation](screenshots/08-think-about-security-devsecops/E28.jpg), [E29: Hosted backend security gate fails closed](screenshots/08-think-about-security-devsecops/E29.jpg), [E12: Current source security workflow passes](screenshots/08-think-about-security-devsecops/github-source-security-passed.jpg), [E30: Container security controls configured](screenshots/08-think-about-security-devsecops/E30.jpg), [E31: Default-deny policy and explicit database traffic](screenshots/08-think-about-security-devsecops/E31.jpg), [E32: Temporary credential access removed](screenshots/08-think-about-security-devsecops/E32.jpg).
-- [ ] Remaining validation: 44 unfixed HIGH backend OS findings remain release blockers. Live NetworkPolicy enforcement and verified read-only deploy-key configuration are NOT YET TESTED; the temporary account key was removed.
+- [x] Executed checks recorded: Patched locks including dev dependencies and frontend runtime: 0 HIGH/CRITICAL. Backend progressed from 4 critical/67 high to Debian 0 critical/44 high, then Alpine 0 critical/0 high in the new strict local scan. The rebuilt image passed migrations, login, authenticated CRUD, readiness and metrics with non-root/read-only restrictions. Historical failing hosted evidence is preserved.
+- [x] Concrete evidence indexed: [E28: Security before and after remediation](screenshots/08-think-about-security-devsecops/E28.jpg), [E29: Historical Debian security gate fails closed](screenshots/08-think-about-security-devsecops/E29.jpg), [E12: Current source security workflow passes](screenshots/08-think-about-security-devsecops/github-source-security-passed.jpg), [E30: Container security controls configured](screenshots/08-think-about-security-devsecops/E30.jpg), [E31: Default-deny policy and explicit database traffic](screenshots/08-think-about-security-devsecops/E31.jpg), [E32: Temporary credential access removed](screenshots/08-think-about-security-devsecops/E32.jpg).
+- [ ] Remaining validation: Fresh hosted CI validation and publication for this change must be checked separately. Live Kubernetes NetworkPolicy enforcement remains NOT YET TESTED; public HTTPS repository access needs no deploy key. The temporary account SSH key was removed.
 
 ## 9. Think About Disaster Recovery
 

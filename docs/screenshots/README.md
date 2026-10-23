@@ -166,7 +166,7 @@ The exact ten official headings below are the primary organization. [Presentatio
 
 ## 5. Automate Deployment (CI/CD Pipeline)
 
-**E09 — Current CI blocks publication** · **FAILED** · `actual-ui`
+**E09 — Historical Debian CI blocks publication** · **FAILED** · `actual-ui`
 
 [Screenshot](05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg) · [github-ci-211199d.json](../../docs/presentation-evidence/raw/github-ci-211199d.json)
 
@@ -322,7 +322,7 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Software: Trivy 0.76.1.
 - Command/page: `Compare original Trivy findings with final remediation scan counts`
 
-**E29 — Hosted backend security gate fails closed** · **FAILED** · `archived-output`
+**E29 — Historical Debian security gate fails closed** · **FAILED** · `archived-output`
 
 [Screenshot](08-think-about-security-devsecops/E29.jpg) · [github-backend-scan-failed.txt](../../docs/presentation-evidence/raw/github-backend-scan-failed.txt)
 
@@ -361,6 +361,26 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
 - Software: GitHub API / 2026-10-23.
 - Command/page: `Exact public-key match; approved removal; API absence verified`
+
+**E39 — Alpine backend security gate passes** · **PASSED** · `archived-output`
+
+[Screenshot](08-think-about-security-devsecops/E39.jpg) · [summary.txt](../../docs/backend-security-evidence/summary.txt); [trivy-backend.json](../../docs/backend-security-evidence/trivy-backend.json)
+
+- Demonstrates: Actual new local scan: 0 HIGH/CRITICAL in OS and Python packages, including unfixed findings. Not proof of hosted publication or GitOps deployment.
+- Supports official requirement(s): 1, 5, 8.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Trivy 0.76.1 / Python 3.12.15 / Alpine 3.24.3.
+- Command/page: `trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 liora-backend:security-fix`
+
+**E40 — Exact Alpine image passes PostgreSQL integration checks** · **PASSED** · `archived-output`
+
+[Screenshot](08-think-about-security-devsecops/E40.jpg) · [runtime-tests.txt](../../docs/backend-security-evidence/runtime-tests.txt)
+
+- Demonstrates: Actual runtime-image test: migrations, login/JWT, database CRUD, health, readiness and metrics under non-root/read-only restrictions. Temporary resources cleaned up.
+- Supports official requirement(s): 1, 3, 5, 8.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Python 3.12.15 / Alpine 3.24.3 / PostgreSQL 16.10.
+- Command/page: `python3 scripts/test-backend-image.py liora-backend:security-fix`
 
 ## 9. Think About Disaster Recovery
 

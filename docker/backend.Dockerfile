@@ -1,5 +1,12 @@
 # Build with context course-app/backend after scripts/prepare-course-app.sh.
-FROM python:3.12 AS build
+# Build and runtime must share musl; a Debian-built venv cannot run on Alpine.
+FROM python:3.12.15-alpine3.24@sha256:b658b05ce9c4eb97ec6fc19424818a1f31993659c2b505a532f470e83807815d AS base
+RUN apk upgrade --no-cache \
+    && apk add --no-cache bash \
+    && addgroup -g 10001 app \
+    && adduser -D -u 10001 -G app app
+
+FROM base AS build
 COPY --from=ghcr.io/astral-sh/uv:0.13.1 /uv /bin/uv
 WORKDIR /app
 ENV UV_LINK_MODE=copy UV_COMPILE_BYTECODE=1
@@ -10,13 +17,9 @@ COPY alembic.ini ./
 COPY app ./app
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
 
-FROM python:3.12-slim
+FROM base AS runtime
 ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/app PATH=/app/.venv/bin:$PATH
 WORKDIR /app
-RUN apt-get update \
-    && apt-get upgrade -y --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    && useradd --uid 10001 --create-home app
 COPY --from=build --chown=10001:10001 /app /app
 USER 10001:10001
 EXPOSE 8000

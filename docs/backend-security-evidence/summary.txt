@@ -1,0 +1,16 @@
+Backend security remediation — actual local output, 2026-10-23
+Source baseline: 51921c9, working-tree Dockerfile and CI fix
+Previous Debian scan (211199d): CRITICAL 0 / HIGH 44 — FAILED
+Current Alpine scan: CRITICAL 0 / HIGH 0 — PASSED, exit code 0
+Scanner: Trivy 0.76.1; unfixed findings INCLUDED; no CVE exceptions
+Command: trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 --format json --output trivy-backend.json liora-backend:security-fix
+Base: python:3.12.15-alpine3.24@sha256:b658b05ce9c4eb97ec6fc19424818a1f31993659c2b505a532f470e83807815d
+Detected OS: 3.24.3
+Image ID: sha256:1f8aa74b9ac67194d07ed0d722d728c1f08eacebe8f409cab7f612b5bd6e5462
+Target: liora-backend:security-fix (alpine 3.24.3) (os-pkgs) — HIGH 0 / CRITICAL 0
+Target: Python (lang-pkgs) — HIGH 0 / CRITICAL 0
+
+Exact runtime image: migrations, login/JWT, database CRUD, health/readiness, metrics, Docker HEALTHCHECK, non-root/read-only — PASSED
+Existing suite: 55 upstream + 2 platform tests — PASSED
+Source/configuration/secret gates — PASSED
+PR validation does not publish images. New hosted CI, registry publication and GitOps promotion are separate outcomes.
