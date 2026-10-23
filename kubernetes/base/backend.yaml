@@ -25,6 +25,8 @@ spec:
     metadata:
       labels:
         app: backend
+      annotations:
+        liora.dev/rollback-marker: baseline
     spec:
       automountServiceAccountToken: false
       securityContext:
