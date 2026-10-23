@@ -1111,6 +1111,64 @@
       ],
       "view": "views/E40.html",
       "sha256": "43c182a6ebe57abcc8b7d88ab25f6ab64503b86951950f065635cb257b40d7b0"
+    },
+    {
+      "id": "E41",
+      "requirement": 8,
+      "supports": [
+        1,
+        3,
+        5,
+        8
+      ],
+      "title": "Hosted backend image security gate passes",
+      "file": "08-think-about-security-devsecops/E41.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "GitHub Actions",
+      "software": "Trivy 0.76.1 / commit 34bf33e",
+      "result": "PASSED",
+      "scope": "Real GitHub job UI: image PostgreSQL integration and both strict image scans passed. Publication artifacts are skipped on PR events by policy.",
+      "command": "Open successful build/scan job for 34bf33e",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273/job/120332436123",
+      "sources": [
+        {
+          "path": "docs/backend-security-evidence/github-ci-34bf33e.json",
+          "sha256": "7ff223ffd5a4e91cf925f85f9a4d5915d8b7f606c4cfeee15e3119c9396df7c4"
+        }
+      ],
+      "source_commit": "34bf33ecc47e0490a144a75974df08f64992fdc2",
+      "sha256": "e186e17a55cc97bd35d487839428795e133175079d173e65c55c624a7dd45f5e"
+    },
+    {
+      "id": "E42",
+      "requirement": 5,
+      "supports": [
+        1,
+        3,
+        5,
+        8
+      ],
+      "title": "Complete Alpine fix CI workflow succeeds",
+      "file": "05-automate-deployment-ci-cd-pipeline/E42.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "GitHub Actions",
+      "software": "Commit 34bf33e / workflow run 39928939273",
+      "result": "PASSED",
+      "scope": "Real GitHub summary: tests, lint, platform validation and build/scan passed. Publishing/promotion intentionally skip because this is a PR, not a push to main.",
+      "command": "Open successful CI run for PR 16 / commit 34bf33e",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273",
+      "sources": [
+        {
+          "path": "docs/backend-security-evidence/github-ci-34bf33e.json",
+          "sha256": "7ff223ffd5a4e91cf925f85f9a4d5915d8b7f606c4cfeee15e3119c9396df7c4"
+        }
+      ],
+      "source_commit": "34bf33ecc47e0490a144a75974df08f64992fdc2",
+      "sha256": "de2d3b515cf0d6759a09ff77b448a0957f1a8aabfb2a37a2635bbdd9c1240f36"
     }
   ]
 }

@@ -8,3 +8,4 @@
 - [E32 — Temporary credential access removed](E32.jpg) — PASSED; see [metadata](../README.md).
 - [E39 — Alpine backend security gate passes](E39.jpg) — PASSED; see [metadata](../README.md).
 - [E40 — Exact Alpine image passes PostgreSQL integration checks](E40.jpg) — PASSED; see [metadata](../README.md).
+- [E41 — Hosted backend image security gate passes](E41.jpg) — PASSED; see [metadata](../README.md).

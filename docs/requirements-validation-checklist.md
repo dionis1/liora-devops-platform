@@ -43,7 +43,7 @@ Keep the exact official numbering. A checked execution item does not mean an ent
 **Assessment: PARTIALLY VALIDATED**
 
 - [x] Implementation documented: Tests/build/scan gates, exact-scanned-image publication, dev manifest promotion and manual production sync policy; Argo Application manifests.
-- [x] Executed checks recorded: Historical main publication/promotion passed. The Debian scan at 211199d failed with 44 HIGH findings. The new Alpine backend passes the strict local scan with 0 HIGH/CRITICAL and image integration checks; new hosted CI results must be checked separately. Historical Argo installed but private repo comparison FAILED.
+- [x] Executed checks recorded: Historical main publication/promotion passed. Debian at 211199d failed with 44 HIGH findings. The Alpine fix at 34bf33e passed hosted CI: backend tests/lint, platform validation, exact-image PostgreSQL integration, and both strict image scans. Source security audit also passed. PR publication/promotion intentionally skip; historical Argo comparison failed.
 - [x] Concrete evidence indexed: [E09: Historical Debian CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E10: Historical successful GHCR publication and dev promotion](screenshots/05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg), [E22: Argo CD ran, but private repository comparison failed](screenshots/05-automate-deployment-ci-cd-pipeline/E22.jpg), [E23: Production manual sync configuration](screenshots/05-automate-deployment-ci-cd-pipeline/E23.jpg), [E38: Historical Argo components ready; sync still unproven](screenshots/05-automate-deployment-ci-cd-pipeline/E38.jpg).
 - [ ] Remaining validation: Successful Argo Synced/Healthy application, public-repo reconciliation and rollback are NOT YET TESTED. The repository became public on 2026-10-23; historical private auth errors do not establish a current public auth failure.
 
@@ -67,14 +67,16 @@ Keep the exact official numbering. A checked execution item does not mean an ent
 
 ## 8. Think About Security (DevSecOps)
 
+Hosted proof: [E41 passing image gate](screenshots/08-think-about-security-devsecops/E41.jpg) and [E42 complete CI success](screenshots/05-automate-deployment-ci-cd-pipeline/E42.jpg), both at `34bf33e`.
+
 Latest: [Alpine security remediation and reproducible checks](backend-security-remediation.md), [E39 scan](screenshots/08-think-about-security-devsecops/E39.jpg), [E40 exact-image integration test](screenshots/08-think-about-security-devsecops/E40.jpg). Historical failures below remain dated evidence.
 
 **Assessment: PARTIALLY VALIDATED**
 
 - [x] Implementation documented: Dependency remediation, strict source/image gates, non-root/read-only controls, dropped capabilities, NetworkPolicies and safe temporary credential cleanup.
-- [x] Executed checks recorded: Patched locks including dev dependencies and frontend runtime: 0 HIGH/CRITICAL. Backend progressed from 4 critical/67 high to Debian 0 critical/44 high, then Alpine 0 critical/0 high in the new strict local scan. The rebuilt image passed migrations, login, authenticated CRUD, readiness and metrics with non-root/read-only restrictions. Historical failing hosted evidence is preserved.
+- [x] Executed checks recorded: Backend progressed from 4 critical/67 high to Debian 0 critical/44 high, then Alpine 0 critical/0 high locally. At 34bf33e, hosted source security and both strict image scans passed. The exact Alpine image passed migrations, login/JWT, authenticated CRUD, health/readiness and metrics under non-root/read-only restrictions. Historical failures are preserved.
 - [x] Concrete evidence indexed: [E28: Security before and after remediation](screenshots/08-think-about-security-devsecops/E28.jpg), [E29: Historical Debian security gate fails closed](screenshots/08-think-about-security-devsecops/E29.jpg), [E12: Current source security workflow passes](screenshots/08-think-about-security-devsecops/github-source-security-passed.jpg), [E30: Container security controls configured](screenshots/08-think-about-security-devsecops/E30.jpg), [E31: Default-deny policy and explicit database traffic](screenshots/08-think-about-security-devsecops/E31.jpg), [E32: Temporary credential access removed](screenshots/08-think-about-security-devsecops/E32.jpg).
-- [ ] Remaining validation: Fresh hosted CI validation and publication for this change must be checked separately. Live Kubernetes NetworkPolicy enforcement remains NOT YET TESTED; public HTTPS repository access needs no deploy key. The temporary account SSH key was removed.
+- [ ] Remaining validation: Publication for the Alpine fix is NOT YET TESTED; CI publishes only on a validated main push. Live Kubernetes NetworkPolicy enforcement remains NOT YET TESTED; public HTTPS repository access needs no deploy key. The temporary account SSH key was removed.
 
 ## 9. Think About Disaster Recovery
 

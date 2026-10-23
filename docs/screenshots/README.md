@@ -216,6 +216,16 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Software: Argo CD 3.5.5 / local k3d.
 - Command/page: `kubectl -n argocd get pods,services; Argo health check`
 
+**E42 — Complete Alpine fix CI workflow succeeds** · **PASSED** · `actual-ui`
+
+[Screenshot](05-automate-deployment-ci-cd-pipeline/E42.jpg) · [github-ci-34bf33e.json](../../docs/backend-security-evidence/github-ci-34bf33e.json)
+
+- Demonstrates: Real GitHub summary: tests, lint, platform validation and build/scan passed. Publishing/promotion intentionally skip because this is a PR, not a push to main.
+- Supports official requirement(s): 1, 3, 5, 8.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: GitHub Actions.
+- Software: Commit 34bf33e / workflow run 39928939273.
+- Command/page: `Open successful CI run for PR 16 / commit 34bf33e` · [workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273)
+
 ## 6. Create IaC (Infrastructure as Code) Templates
 
 **E11 — Current Terraform, Ansible and Kustomize workflow passes** · **PASSED** · `actual-ui`
@@ -381,6 +391,16 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
 - Software: Python 3.12.15 / Alpine 3.24.3 / PostgreSQL 16.10.
 - Command/page: `python3 scripts/test-backend-image.py liora-backend:security-fix`
+
+**E41 — Hosted backend image security gate passes** · **PASSED** · `actual-ui`
+
+[Screenshot](08-think-about-security-devsecops/E41.jpg) · [github-ci-34bf33e.json](../../docs/backend-security-evidence/github-ci-34bf33e.json)
+
+- Demonstrates: Real GitHub job UI: image PostgreSQL integration and both strict image scans passed. Publication artifacts are skipped on PR events by policy.
+- Supports official requirement(s): 1, 3, 5, 8.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: GitHub Actions.
+- Software: Trivy 0.76.1 / commit 34bf33e.
+- Command/page: `Open successful build/scan job for 34bf33e` · [workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273/job/120332436123)
 
 ## 9. Think About Disaster Recovery
 

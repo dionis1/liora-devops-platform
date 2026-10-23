@@ -22,10 +22,13 @@ The existing PostgreSQL-backed suite passed: **55 upstream tests and 2 platform 
 
 CI now runs the runtime-image check between backend build and the existing strict image scan. Publication still requires all gates and a push to `main`; a successful PR check does not publish images or promote `deploy/dev`. Argo reconciliation, cloud provisioning and production deployment are separate untested outcomes.
 
+**Hosted validation:** [CI run 39928939273](https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273) for commit `34bf33e` completed successfully: backend tests/lint, Terraform/Ansible/Kustomize, exact-image PostgreSQL integration, and backend/frontend image scans. The separate source Security audit also passed. Publication and GitOps promotion were intentionally skipped on the PR event. [Job screenshot](screenshots/08-think-about-security-devsecops/E41.jpg) · [Workflow screenshot](screenshots/05-automate-deployment-ci-cd-pipeline/E42.jpg).
+
 ## Concrete evidence
 
 All commands were run sequentially on the local laptop. Source revision before this change: `51921c9`; the fix is recorded by this report's Git commit. The image ID and complete scan output are preserved below. Historical failure evidence remains in the gallery for comparison.
 
+- [Hosted workflow and step records](backend-security-evidence/github-ci-34bf33e.json)
 - [Backend scan JSON](backend-security-evidence/trivy-backend.json)
 - [Scan command, counts and image identity](backend-security-evidence/summary.txt)
 - [Exact runtime-image integration check](backend-security-evidence/runtime-tests.txt)
