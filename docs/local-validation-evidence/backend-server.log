@@ -1,0 +1,49 @@
+INFO     Using path app/main.py                                                 
+INFO     Resolved absolute path                                                 
+         /home/dionis/backup/liora-devops-platform/course-app/backend/app/main.p
+         y                                                                      
+INFO     Searching for package file structure from directories with __init__.py 
+         files                                                                  
+INFO     Importing from                                                         
+         /home/dionis/backup/liora-devops-platform/course-app/backend           
+                                                                                
+ ╭─ Python package file structure ─╮                                            
+ │                                 │                                            
+ │  📁 app                         │                                            
+ │  ├── 🐍 __init__.py             │                                            
+ │  └── 🐍 main.py                 │                                            
+ │                                 │                                            
+ ╰─────────────────────────────────╯                                            
+                                                                                
+INFO     Importing module app.main                                              
+INFO     Found importable FastAPI app                                           
+                                                                                
+ ╭── Importable FastAPI app ──╮                                                 
+ │                            │                                                 
+ │  from app.main import app  │                                                 
+ │                            │                                                 
+ ╰────────────────────────────╯                                                 
+                                                                                
+INFO     Using import string app.main:app                                       
+                                                                                
+ ╭─────────── FastAPI CLI - Production mode ───────────╮                        
+ │                                                     │                        
+ │  Serving at: http://127.0.0.1:18000                 │                        
+ │                                                     │                        
+ │  API docs: http://127.0.0.1:18000/docs              │                        
+ │                                                     │                        
+ │  Running in production mode, for development use:   │                        
+ │                                                     │                        
+ │  fastapi dev                                        │                        
+ │                                                     │                        
+ ╰─────────────────────────────────────────────────────╯                        
+                                                                                
+INFO:     Started server process [1819837]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:18000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57752 - "GET /api/v1/utils/health-check/ HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1819837]

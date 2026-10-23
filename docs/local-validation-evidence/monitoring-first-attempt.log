@@ -1,0 +1,22 @@
+MemAvailable KiB 4556488
+$ helm template monitoring kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --version 92.11.0 -n monitoring -f /home/dionis/backup/liora-devops-platform/monitoring/kube-prometheus-stack-values.yaml
+PASS Helm template: 112 objects
+RENDERED RESOURCE monitoring-prometheus-node-exporter node-exporter {'limits': {'memory': '64Mi'}, 'requests': {'cpu': '10m', 'memory': '16Mi'}}
+RENDERED RESOURCE monitoring-grafana grafana-sc-dashboard {'limits': {'memory': '64Mi'}, 'requests': {'cpu': '10m', 'memory': '16Mi'}}
+RENDERED RESOURCE monitoring-grafana grafana-sc-datasources {'limits': {'memory': '64Mi'}, 'requests': {'cpu': '10m', 'memory': '16Mi'}}
+RENDERED RESOURCE monitoring-grafana grafana {'limits': {'memory': '192Mi'}, 'requests': {'cpu': '50m', 'memory': '64Mi'}}
+RENDERED RESOURCE monitoring-kube-state-metrics kube-state-metrics {'limits': {'memory': '96Mi'}, 'requests': {'cpu': '20m', 'memory': '32Mi'}}
+RENDERED RESOURCE monitoring-kube-prometheus-operator kube-prometheus-stack {'limits': {'memory': '192Mi'}, 'requests': {'cpu': '50m', 'memory': '64Mi'}}
+$ k3d cluster create liora-monitoring-validation-20261022 --servers 1 --agents 0 --servers-memory 2048m --no-lb --api-port 127.0.0.1:16552 --kubeconfig-update-default=false --kubeconfig-switch-context=false --k3s-arg --disable=traefik,metrics-server@server:0 --timeout 120s
+[31mFATA[0m[0000] Failed Cluster Configuration Validation:  provided cluster name 'liora-monitoring-validation-20261022' does not match requirements: Cluster name must be <= 32 characters, but has 36 
+[36mINFO[0m[0000] No nodes found for cluster 'liora-monitoring-validation-20261022', nothing to delete. 
+[36mINFO[0m[0000] No clusters found                            
+Traceback (most recent call last):
+  File "/tmp/liora-validation/monitoring-check.py", line 25, in <module>
+    run(['k3d','cluster','create',name,'--servers','1','--agents','0','--servers-memory','2048m','--no-lb','--api-port','127.0.0.1:16552','--kubeconfig-update-default=false','--kubeconfig-switch-context=false','--k3s-arg','--disable=traefik,metrics-server@server:0','--timeout','120s'])
+  File "/tmp/liora-validation/monitoring-check.py", line 8, in run
+    print('$ '+' '.join(a),flush=True);return subprocess.run(a,env=env,check=True,**kw)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['k3d', 'cluster', 'create', 'liora-monitoring-validation-20261022', '--servers', '1', '--agents', '0', '--servers-memory', '2048m', '--no-lb', '--api-port', '127.0.0.1:16552', '--kubeconfig-update-default=false', '--kubeconfig-switch-context=false', '--k3s-arg', '--disable=traefik,metrics-server@server:0', '--timeout', '120s']' returned non-zero exit status 1.

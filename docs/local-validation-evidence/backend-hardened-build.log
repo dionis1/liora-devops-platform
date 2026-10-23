@@ -1,0 +1,153 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from backend.Dockerfile
+#1 transferring dockerfile: 1.02kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.10-slim
+#2 DONE 0.0s
+
+#3 [internal] load metadata for ghcr.io/astral-sh/uv:0.5.11
+#3 ...
+
+#4 [internal] load metadata for docker.io/library/python:3.10
+#4 DONE 0.5s
+
+#3 [internal] load metadata for ghcr.io/astral-sh/uv:0.5.11
+#3 DONE 0.6s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 116B done
+#5 DONE 0.0s
+
+#6 FROM ghcr.io/astral-sh/uv:0.5.11@sha256:0ac957607303916420297a4c9c213bb33fbd3c888f9cd7f4f7273596ebf42b85
+#6 resolve ghcr.io/astral-sh/uv:0.5.11@sha256:0ac957607303916420297a4c9c213bb33fbd3c888f9cd7f4f7273596ebf42b85 0.0s done
+#6 CACHED
+
+#7 [build 1/9] FROM docker.io/library/python:3.10@sha256:c10791e6f69086d5216f7b5d3b839929c454e24305867ed9bc5152f0355b5423
+#7 resolve docker.io/library/python:3.10@sha256:c10791e6f69086d5216f7b5d3b839929c454e24305867ed9bc5152f0355b5423 0.0s done
+#7 CACHED
+
+#8 [stage-1 1/4] FROM docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d
+#8 resolve docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d 0.0s done
+#8 DONE 0.1s
+
+#9 [internal] load build context
+#9 transferring context: 7.02kB done
+#9 DONE 0.1s
+
+#10 [stage-1 2/4] WORKDIR /app
+#10 DONE 0.1s
+
+#11 [build 2/9] COPY --from=ghcr.io/astral-sh/uv:0.5.11 /uv /bin/uv
+#11 DONE 0.2s
+
+#12 [stage-1 3/4] RUN useradd --uid 10001 --create-home app
+#12 ...
+
+#13 [build 3/9] WORKDIR /app
+#13 DONE 0.1s
+
+#14 [build 4/9] COPY pyproject.toml uv.lock ./
+#14 DONE 0.0s
+
+#12 [stage-1 3/4] RUN useradd --uid 10001 --create-home app
+#12 DONE 0.3s
+
+#15 [build 5/9] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
+#15 0.196 Using CPython 3.10.22 interpreter at: /usr/local/bin/python3
+#15 0.196 Creating virtual environment at: .venv
+#15 0.554 Installed 60 packages in 322ms
+#15 1.921 Bytecode compiled 2173 files in 1.36s
+#15 1.922  + alembic==1.13.2
+#15 1.922  + annotated-types==0.7.0
+#15 1.922  + anyio==4.6.0
+#15 1.922  + bcrypt==4.0.1
+#15 1.922  + cachetools==5.5.0
+#15 1.922  + certifi==2024.8.30
+#15 1.922  + chardet==5.2.0
+#15 1.922  + charset-normalizer==3.3.2
+#15 1.922  + click==8.1.7
+#15 1.922  + cssselect==1.2.0
+#15 1.922  + cssutils==2.11.1
+#15 1.922  + dnspython==2.6.1
+#15 1.922  + email-validator==2.2.0
+#15 1.922  + emails==0.6
+#15 1.922  + exceptiongroup==1.2.2
+#15 1.922  + fastapi==0.115.0
+#15 1.922  + fastapi-cli==0.0.5
+#15 1.922  + greenlet==3.1.1
+#15 1.922  + h11==0.14.0
+#15 1.922  + httpcore==1.0.5
+#15 1.922  + httptools==0.6.1
+#15 1.922  + httpx==0.27.2
+#15 1.922  + idna==3.10
+#15 1.922  + jinja2==3.1.4
+#15 1.922  + lxml==5.3.0
+#15 1.922  + mako==1.3.5
+#15 1.922  + markdown-it-py==3.0.0
+#15 1.922  + markupsafe==2.1.5
+#15 1.922  + mdurl==0.1.2
+#15 1.922  + more-itertools==10.5.0
+#15 1.922  + passlib==1.7.4
+#15 1.922  + premailer==3.10.0
+#15 1.922  + psycopg==3.2.2
+#15 1.922  + psycopg-binary==3.2.2
+#15 1.922  + pydantic==2.9.2
+#15 1.922  + pydantic-core==2.23.4
+#15 1.922  + pydantic-settings==2.5.2
+#15 1.922  + pygments==2.18.0
+#15 1.922  + pyjwt==2.9.0
+#15 1.922  + python-dateutil==2.9.0.post0
+#15 1.922  + python-dotenv==1.0.1
+#15 1.922  + python-multipart==0.0.10
+#15 1.922  + pyyaml==6.0.2
+#15 1.922  + requests==2.32.3
+#15 1.922  + rich==13.8.1
+#15 1.922  + sentry-sdk==1.45.1
+#15 1.922  + shellingham==1.5.4
+#15 1.922  + six==1.16.0
+#15 1.922  + sniffio==1.3.1
+#15 1.922  + sqlalchemy==2.0.35
+#15 1.922  + sqlmodel==0.0.22
+#15 1.922  + starlette==0.38.6
+#15 1.922  + tenacity==8.5.0
+#15 1.922  + typer==0.12.5
+#15 1.922  + typing-extensions==4.12.2
+#15 1.922  + urllib3==2.2.3
+#15 1.922  + uvicorn==0.30.6
+#15 1.922  + uvloop==0.20.0
+#15 1.922  + watchfiles==0.24.0
+#15 1.923  + websockets==13.1
+#15 DONE 2.1s
+
+#16 [build 6/9] COPY scripts ./scripts
+#16 DONE 0.1s
+
+#17 [build 7/9] COPY alembic.ini ./
+#17 DONE 0.0s
+
+#18 [build 8/9] COPY app ./app
+#18 DONE 0.0s
+
+#19 [build 9/9] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
+#19 0.658 Prepared 1 package in 487ms
+#19 0.660 Installed 1 package in 1ms
+#19 0.744 Bytecode compiled 2173 files in 83ms
+#19 0.744  + app==0.1.0 (from file:///app)
+#19 DONE 0.8s
+
+#20 [stage-1 4/4] COPY --from=build --chown=10001:10001 /app /app
+#20 DONE 0.6s
+
+#21 exporting to image
+#21 exporting layers
+#21 exporting layers 4.6s done
+#21 exporting manifest sha256:cebe53484c0d6cd56a6d08ada55a34544b284707d684ea00979323b8d90b47e4 done
+#21 exporting config sha256:97e5515fe3f0886e8f6159e71276f2d4ca9303cb6aac2d0b4c6d595ebceedb44 0.0s done
+#21 exporting attestation manifest sha256:8a29ed7fe0e590ae79c0681fc0565a4dd6c10b6ca5c9deadb5b94921b60229d4 0.0s done
+#21 exporting manifest list sha256:5d5f530402df5fd8c010915e8227af16673b3685f8ed9cf7ef13ea4d0af54bad 0.0s done
+#21 naming to docker.io/library/liora-validation-backend:hardened done
+#21 unpacking to docker.io/library/liora-validation-backend:hardened
+#21 unpacking to docker.io/library/liora-validation-backend:hardened 1.0s done
+#21 DONE 5.7s

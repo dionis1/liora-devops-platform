@@ -14,7 +14,7 @@ The files land under ignored `.secrets/backups/` on your controller workstation.
 Restore is **destructive**; first stop writes to the target database, verify the selected database and backup, and export a current backup. After selecting the right file:
 ```bash
 kubectl -n liora-dev scale deployment/backend --replicas=0
-kubectl -n liora-dev exec -i postgres-0 -- pg_restore -U app -d app --clean --if-exists < .secrets/backups/SELECTED-liora-dev.dump
+kubectl -n liora-dev exec -i postgres-0 -- pg_restore -U app -d app --exit-on-error --clean --if-exists < .secrets/backups/SELECTED-liora-dev.dump
 kubectl -n liora-dev scale deployment/backend --replicas=1
 ```
 Replace the *example filename* with a real backup (without any spaces). Restore into a **fresh temporary database first** before restoring production.
@@ -25,7 +25,7 @@ Ansible provisions embedded etcd with `--cluster-init` so k3s etcd snapshots can
 sudo k3s etcd-snapshot save --name before-upgrade
 sudo k3s etcd-snapshot ls
 ```
-Export the snapshot directory `/var/lib/rancher/k3s/server/db/snapshots/` securely off-host, along with the k3s server token needed for encrypted-data restoration. Never commit tokens or snapshots. Practice a documented restore on an isolated replacement VM using the current official k3s snapshot restoration procedure.
+Export the snapshot directory `/var/lib/rancher/k3s/server/db/snapshots/` securely off-host, along with the k3s server token needed for encrypted-data restoration. Never commit tokens or snapshots. Practice a restore on an isolated replacement VM using the [official embedded-etcd restoration procedure](https://docs.k3s.io/cli/etcd-snapshot#restoring-snapshots). Stop k3s, restore the selected snapshot with `--cluster-reset --cluster-reset-restore-path`, then restart without reset flags. Keep the original token available securely; it decrypts bootstrap data ([K3s backup requirements](https://docs.k3s.io/datastore/backup-restore)). These steps were reviewed against the official documentation on 2026-10-23, but no etcd restore was executed in this pass.
 
 ## Server failure
 1. Record the last available Git SHA, container image digests, database backup timestamps and incident time.
@@ -39,3 +39,8 @@ Deployment rollback: revert the production `newTag` values in `kubernetes/overla
 
 ## Demonstration
 Capture screenshots/logs of backup creation, a restored record on a temporary database, and a GitOps rollback. Do not claim these tests passed until executed on a real cluster.
+
+
+## Local validation evidence
+
+The second pass tested the atomic backup script against disposable PostgreSQL 16.10 with UID/GID 999, a read-only root filesystem, dropped capabilities and temporary writable data/socket directories. A real custom-format dump restored three matching rows into a fresh database. Failed dumps and invalid namespaces produced no completed backup. This exercised the actual script through an explicitly documented kubectl-to-Docker test adapter; it does not prove a cloud PVC or embedded-etcd restore. See [remediation evidence](remediation-evidence/disaster-recovery.txt).

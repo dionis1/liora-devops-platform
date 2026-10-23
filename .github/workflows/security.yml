@@ -16,13 +16,11 @@ jobs:
       - uses: actions/checkout@v7
         with:
           submodules: true
-      - name: Scan dependencies and configuration for vulnerabilities
-        uses: aquasecurity/trivy-action@0.35.0
+          persist-credentials: false
+      - run: ./scripts/prepare-course-app.sh
+      - uses: aquasecurity/setup-trivy@v0.3.1
         with:
-          scan-type: fs
-          scan-ref: .
-          scanners: vuln,misconfig,secret
-          severity: HIGH,CRITICAL
-          ignore-unfixed: true
-          format: table
-          exit-code: "0" # visibility-first for course upstream; hard fail after triage
+          version: v0.76.1
+          cache: true
+      - name: Scan patched dependencies and deployed configuration
+        run: ./scripts/scan-security.sh

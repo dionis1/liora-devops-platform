@@ -1,0 +1,49 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: liora-backend
+  labels:
+    release: monitoring
+spec:
+  jobLabel: app
+  namespaceSelector:
+    matchNames:
+    - liora-dev
+    - liora-prod
+  selector:
+    matchLabels:
+      app: backend
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s
+    scrapeTimeout: 5s
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: liora-application
+  labels:
+    release: monitoring
+spec:
+  groups:
+  - name: liora.application
+    rules:
+    - alert: LioraApplicationUnavailable
+      expr: (up{job="backend"} == 0) or absent(up{job="backend"})
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: DataScientest backend metrics endpoint is unavailable
+        description: Inspect pod readiness, database connectivity and the backend
+          Service.
+    - alert: LioraAPIHighErrorRate
+      expr: (sum(rate(http_requests_total{job="backend",status=~"5.."}[5m])) / clamp_min(sum(rate(http_requests_total{job="backend"}[5m])),
+        0.000001) > 0.05) and sum(rate(http_requests_total{job="backend"}[5m])) >
+        1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: FastAPI server errors exceed 5% at more than one request per second

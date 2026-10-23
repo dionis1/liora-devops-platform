@@ -1,0 +1,3 @@
+# Preserve unified patch context and historical validation logs verbatim.
+*.patch -whitespace
+docs/local-validation-evidence/*.log -whitespace

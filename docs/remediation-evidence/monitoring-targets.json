@@ -1,0 +1,91 @@
+{
+  "status": "success",
+  "data": {
+    "activeTargets": [
+      {
+        "discoveredLabels": {
+          "__address__": "backend:8000",
+          "__always_scrape_classic_histograms__": "false",
+          "__convert_classic_histograms_to_nhcb__": "false",
+          "__metrics_path__": "/metrics",
+          "__scheme__": "http",
+          "__scrape_interval__": "5s",
+          "__scrape_native_histograms__": "false",
+          "__scrape_timeout__": "5s",
+          "job": "backend"
+        },
+        "labels": {
+          "instance": "backend:8000",
+          "job": "backend"
+        },
+        "scrapePool": "backend",
+        "scrapeUrl": "http://backend:8000/metrics",
+        "globalUrl": "http://backend:8000/metrics",
+        "lastError": "",
+        "lastScrape": "2026-10-23T07:37:14.104489554Z",
+        "lastScrapeDuration": 0.004089681,
+        "health": "up",
+        "scrapeInterval": "5s",
+        "scrapeTimeout": "5s"
+      },
+      {
+        "discoveredLabels": {
+          "__address__": "grafana:3000",
+          "__always_scrape_classic_histograms__": "false",
+          "__convert_classic_histograms_to_nhcb__": "false",
+          "__metrics_path__": "/metrics",
+          "__scheme__": "http",
+          "__scrape_interval__": "5s",
+          "__scrape_native_histograms__": "false",
+          "__scrape_timeout__": "5s",
+          "job": "grafana"
+        },
+        "labels": {
+          "instance": "grafana:3000",
+          "job": "grafana"
+        },
+        "scrapePool": "grafana",
+        "scrapeUrl": "http://grafana:3000/metrics",
+        "globalUrl": "http://grafana:3000/metrics",
+        "lastError": "",
+        "lastScrape": "2026-10-23T07:37:12.719369608Z",
+        "lastScrapeDuration": 0.060559794,
+        "health": "up",
+        "scrapeInterval": "5s",
+        "scrapeTimeout": "5s"
+      },
+      {
+        "discoveredLabels": {
+          "__address__": "localhost:9090",
+          "__always_scrape_classic_histograms__": "false",
+          "__convert_classic_histograms_to_nhcb__": "false",
+          "__metrics_path__": "/metrics",
+          "__scheme__": "http",
+          "__scrape_interval__": "5s",
+          "__scrape_native_histograms__": "false",
+          "__scrape_timeout__": "5s",
+          "job": "prometheus"
+        },
+        "labels": {
+          "instance": "localhost:9090",
+          "job": "prometheus"
+        },
+        "scrapePool": "prometheus",
+        "scrapeUrl": "http://localhost:9090/metrics",
+        "globalUrl": "http://58ac81312a3d:9090/metrics",
+        "lastError": "",
+        "lastScrape": "2026-10-23T07:37:14.319237808Z",
+        "lastScrapeDuration": 0.013724884,
+        "health": "up",
+        "scrapeInterval": "5s",
+        "scrapeTimeout": "5s"
+      }
+    ],
+    "droppedTargets": [],
+    "droppedTargetCounts": {
+      "backend": 0,
+      "grafana": 0,
+      "prometheus": 0
+    }
+  }
+}

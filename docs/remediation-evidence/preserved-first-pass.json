@@ -1,0 +1,207 @@
+{
+  "upstream_base": "3ca992543988c25ba644f130f06dcb1289f38a51",
+  "all_previous_files_preserved": true,
+  "files": [
+    {
+      "path": ".github/dependabot.yml",
+      "sha256": "c8c8b0e9edada59e4e254477c6d6e7a2a8da430c2efef504c19aa673b426a0cd"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "aec15fd291552c06e7fc5436de9a52a4bbb7534f4c129322761858b95a360d9e"
+    },
+    {
+      "path": ".github/workflows/security.yml",
+      "sha256": "b8ad179f6126d4ba012ec04a4e6c3d07b592df3b40bca0462e719c60311d005d"
+    },
+    {
+      "path": ".github/workflows/validate-platform.yml",
+      "sha256": "8069f4301bc9a47c60f98472a8b2dfc00c1f916e0d837b0b32386a2f451c8278"
+    },
+    {
+      "path": "README.md",
+      "sha256": "c562c5bf089db4c491ee398f1bf2abefcf3457e4f7f5650818cda81417782cb7"
+    },
+    {
+      "path": "ansible/playbooks/kubeconfig.yml",
+      "sha256": "75366f47d38a6d8e6c77b4741d00408b2e3aed1b3298af6e713267e5f9218a66"
+    },
+    {
+      "path": "docker/backend.Dockerfile",
+      "sha256": "b1be57771d63480e7382c869ad2be320ef3a513b94e2100d0663a1218a1bd6d6"
+    },
+    {
+      "path": "docker/frontend.Dockerfile",
+      "sha256": "f9d3f8589866dbcfb892ab1c57c34d8d398f8c2964892c9ca0ad756efd4296bf"
+    },
+    {
+      "path": "docs/architecture.md",
+      "sha256": "fdcc486c4c2c9f3d4a7c98a4814c8fae6cd0f94876be938a800fc90d2e7036e2"
+    },
+    {
+      "path": "docs/disaster-recovery.md",
+      "sha256": "edde05b34f8cbc6e14369e4e2f8012e05f26f6ba598eb0b4a1d3a2f2ea9bb1db"
+    },
+    {
+      "path": "docs/local-validation-evidence/cleanup-audit.json",
+      "sha256": "7bb5b2890bd22164cd6458e039ca03f4433091560d72b5d41351f6ed92e86b2b"
+    },
+    {
+      "path": "docs/local-validation-evidence/monitoring-memory.json",
+      "sha256": "6c3299b9d04f266f56c22b315da298c721baaa2a20c737f63a82a40ed8da8524"
+    },
+    {
+      "path": "docs/local-validation-evidence/provenance.json",
+      "sha256": "3e567ddc7dc87bfa1bd2b56edcbbf71a1fdfe7d88b33851e806fab3a56de772e"
+    },
+    {
+      "path": "docs/local-validation-evidence/remote-ci.json",
+      "sha256": "707ecd47b8e9d1a6283024267eafef5dd86a7ec59c4c77cb19d00d23e2bdf9b3"
+    },
+    {
+      "path": "docs/local-validation-evidence/security-findings.json",
+      "sha256": "39b00750744a8e6a04a5bf62e5f4cae082c2be2b2101422e8bac6b5a5bbd7bee"
+    },
+    {
+      "path": "docs/local-validation-fixes.patch",
+      "sha256": "9ef0efbed781313425b87011d66c3c149eb57783ccdc6d18253454c6354c09bf"
+    },
+    {
+      "path": "docs/local-validation-report.md",
+      "sha256": "b02781ec1f3147a010b3cdafc85fd4c223ac279fb2778612614f5b4ad7213bdd"
+    },
+    {
+      "path": "infrastructure/terraform/.terraform.lock.hcl",
+      "sha256": "cbb3c6bb1ccdc39378e3e521e622c1840875a6fcc926159d680b33eb6e7ed6d5"
+    },
+    {
+      "path": "infrastructure/terraform/main.tf",
+      "sha256": "397450c7d44c8b102ba3f2683cb3659c2e04262e8a79c6d98906809702168272"
+    },
+    {
+      "path": "infrastructure/terraform/variables.tf",
+      "sha256": "016e0e08b82eced1eb464e5b8697e08c26f5ddec1d484994e6319f264730f615"
+    },
+    {
+      "path": "kubernetes/base/backend.yaml",
+      "sha256": "24faedac1a8c415decb2e84043189f065b3f25e16d08d3f6609541953054704a"
+    },
+    {
+      "path": "kubernetes/base/database.yaml",
+      "sha256": "d0332e8cf818eaa7eac925ceae25add86139686eed2780ba3c64a75bb0f1beb1"
+    },
+    {
+      "path": "kubernetes/base/frontend.yaml",
+      "sha256": "3ce54058046caca69a320f52a47cfe3bd76ca783e40ebd259de51d3cf97a4246"
+    },
+    {
+      "path": "monitoring/README.md",
+      "sha256": "709f505b98a4154fd7ffd5ecff4cc34370b37145cce81528aae00a8584260424"
+    },
+    {
+      "path": "monitoring/kube-prometheus-stack-values.yaml",
+      "sha256": "7173b0518604a9a11a48ca68bbfa3af1190feacd3cc000c4e6684987ea076930"
+    },
+    {
+      "path": "scripts/backup-postgres.sh",
+      "sha256": "fcad12f0bf4de87d98f5e9cbafc0c6fe348e20457c8864c1211dfdc33583c974"
+    },
+    {
+      "path": "docs/local-validation-evidence/backend-tests.log",
+      "sha256": "d534a2cbd54b55c6cfb218c6730ed02fb47fa5d08916ca9ce7bfcbb0d68bf177"
+    },
+    {
+      "path": "docs/local-validation-evidence/backend-lint.log",
+      "sha256": "89cb412fe3e6214e3ce91b1313b84978174fc7782242c5d5aeef78be158fd12d"
+    },
+    {
+      "path": "docs/local-validation-evidence/terraform-validate.log",
+      "sha256": "f7997225125835fdd14060ac776d273f394b874f9a481b9e2122c83dc8adc5c1"
+    },
+    {
+      "path": "docs/local-validation-evidence/backend-build.log",
+      "sha256": "4ac38d6ec7c3f45e9ce6a4c159f2a0a2e3357741b6c46def33d14ab46ed2bca6"
+    },
+    {
+      "path": "docs/local-validation-evidence/image-smoke.log",
+      "sha256": "3dbf70352285919bc66cd9b5eef0d38175341dad0b1960cbc63c6f50c4da0f64"
+    },
+    {
+      "path": "docs/local-validation-evidence/image-cleanup.log",
+      "sha256": "d1e00b4ac424729104cf7b9a690c111b3b6094519c90346b7f102ed49515ae99"
+    },
+    {
+      "path": "docs/local-validation-evidence/kubernetes-live.log",
+      "sha256": "37543c835eeaa64be065a5a02e17e7139f968df21d05d43d54dccf7be67da27a"
+    },
+    {
+      "path": "docs/local-validation-evidence/argocd-live.log",
+      "sha256": "9957b7f688039df3a25e545695d3ee1d2aabde36feb97c281a5aee34d6e33e8b"
+    },
+    {
+      "path": "docs/local-validation-evidence/image-smoke-final.log",
+      "sha256": "0bfab3244bcfb654fa363f53d816c41b38b45812c7034f0542e903e57322be9f"
+    },
+    {
+      "path": "docs/local-validation-evidence/backend-migrate.log",
+      "sha256": "702e0e73c8cb5592a228111a4a5530e53b99a2d327b7fff0ad33c32c011b090d"
+    },
+    {
+      "path": "docs/local-validation-evidence/backend-security-build.log",
+      "sha256": "58921ee9187ecc5f0dd2a7f4316d708c5a05c696e9a8d2ee6aa3f7550af1c437"
+    },
+    {
+      "path": "docs/local-validation-evidence/backend-server.log",
+      "sha256": "aa8d5479910a4f57b343ac969bcb0b2fbccdef8423583068f71cf423f41a32a0"
+    },
+    {
+      "path": "docs/local-validation-evidence/backend-hardened-build.log",
+      "sha256": "c47cb69ad533508eb441ac42a7cb6458e51acc51cf5a00b6e0b7e635d53a0786"
+    },
+    {
+      "path": "docs/local-validation-evidence/monitoring-first-attempt.log",
+      "sha256": "e243e6d8a21503ab1db939f17d6fe81a0239347bffc9ede40d7005eb90108dde"
+    },
+    {
+      "path": "docs/local-validation-evidence/frontend-security-build.log",
+      "sha256": "a7a081382c079e7bf3af3d3ba450dc85a284906e0a815f814a63279e5bac37c4"
+    },
+    {
+      "path": "docs/local-validation-evidence/terraform-init.log",
+      "sha256": "c2af3e6a9b3adc0085db46520d6f98a62b81f087ed689c88965d5b42ad49f967"
+    },
+    {
+      "path": "docs/local-validation-evidence/backend-dependencies.log",
+      "sha256": "249c4fb0e7f1ebb72b595eb40475b3a6e4a82cf3400a5729bb4a9c9402ab64bb"
+    },
+    {
+      "path": "docs/local-validation-evidence/frontend-nginx-build.log",
+      "sha256": "f62092bd00148382acbf0fa936d7a67218a4d1b65eb050a8e361b81268ab4402"
+    },
+    {
+      "path": "docs/local-validation-evidence/monitoring-live.log",
+      "sha256": "6cc108ea05c631152adb67daab750a64eb4ac9fbd470b8a0f1f81e8f2826248b"
+    },
+    {
+      "path": "docs/local-validation-evidence/disaster-recovery.log",
+      "sha256": "2c9c736c94820a15b3e9ff8a1b067840b1548422d073c9d3f42eb245c0fc1edd"
+    },
+    {
+      "path": "docs/local-validation-evidence/frontend-hardened-build.log",
+      "sha256": "5bd41b5bf6344e393ea41573ae0619a2bd450558bdb2ff1c6e808802f89f34e1"
+    },
+    {
+      "path": "docs/local-validation-evidence/frontend-build.log",
+      "sha256": "b069ebd9d1302e17d10cc8c037e4ee7b4d4353f59cd82e13dea25326273989b5"
+    },
+    {
+      "path": "docs/local-validation-evidence/monitoring-oom-attempt.log",
+      "sha256": "548dc6124383b0a5cbd544c4b3b6f6e0367ce8d58bdfca7e477b962db0244070"
+    },
+    {
+      "path": "docs/local-validation-evidence/frontend-base-update.log",
+      "sha256": "37e347ff0f2870d1aaa6dd7758bc12b0c7f734549e10c3d43d8a95e690db9d13"
+    }
+  ],
+  "preserved_file_count": 50
+}

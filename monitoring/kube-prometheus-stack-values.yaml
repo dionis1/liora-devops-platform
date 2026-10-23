@@ -1,5 +1,7 @@
 # Intentionally small footprint for single-node k3s lab.
 grafana:
+  serviceMonitor:
+    enabled: true
   admin:
     existingSecret: grafana-admin
     userKey: admin-user
@@ -8,6 +10,21 @@ grafana:
     type: ClusterIP
   persistence:
     enabled: false
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 384Mi
+  sidecar:
+    datasources:
+      uid: liora-prometheus
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 192Mi
 prometheus:
   prometheusSpec:
     retention: 2d
@@ -16,7 +33,7 @@ prometheus:
         cpu: 100m
         memory: 400Mi
       limits:
-        memory: 1Gi
+        memory: 768Mi
     storageSpec:
       volumeClaimTemplate:
         spec:
@@ -33,7 +50,35 @@ alertmanager:
         cpu: 30m
         memory: 100Mi
       limits:
-        memory: 250Mi
+        memory: 128Mi
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 192Mi
+  prometheusConfigReloader:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+      limits:
+        memory: 32Mi
+kube-state-metrics:
+  resources:
+    requests:
+      cpu: 20m
+      memory: 32Mi
+    limits:
+      memory: 96Mi
+prometheus-node-exporter:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 16Mi
+    limits:
+      memory: 64Mi
 kubeEtcd:
   enabled: false
 kubeControllerManager:

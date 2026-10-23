@@ -1,0 +1,4 @@
+PASS liora-validation-backend:20261022 runtime_uid=0 image=amd64 491363071 "" null
+PASS liora-validation-backend:hardened runtime_uid=10001 image=amd64 80211655 "10001:10001" {"Test":["CMD-SHELL","python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/utils/health-check/', timeout=2)\""],"Interval":15000000000,"Timeout":3000000000,"StartPeriod":15000000000,"Retries":3}
+PASS liora-validation-frontend:20261022 runtime_uid=0 image=amd64 64148302 "" null
+PASS liora-validation-frontend:hardened runtime_uid=101 image=amd64 23298530 "101:101" {"Test":["CMD-SHELL","wget -q -O /dev/null http://127.0.0.1:8080/"],"Interval":15000000000,"Timeout":3000000000,"StartPeriod":5000000000,"Retries":3}

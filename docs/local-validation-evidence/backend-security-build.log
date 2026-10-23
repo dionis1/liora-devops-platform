@@ -1,0 +1,135 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from backend.Dockerfile
+#1 transferring dockerfile: 1.13kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.10-slim
+#2 DONE 0.0s
+
+#3 [internal] load metadata for ghcr.io/astral-sh/uv:0.5.11
+#3 DONE 0.7s
+
+#4 [internal] load metadata for docker.io/library/python:3.10
+#4 DONE 0.9s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 116B done
+#5 DONE 0.0s
+
+#6 FROM ghcr.io/astral-sh/uv:0.5.11@sha256:0ac957607303916420297a4c9c213bb33fbd3c888f9cd7f4f7273596ebf42b85
+#6 resolve ghcr.io/astral-sh/uv:0.5.11@sha256:0ac957607303916420297a4c9c213bb33fbd3c888f9cd7f4f7273596ebf42b85 0.0s done
+#6 DONE 0.0s
+
+#7 [build 1/9] FROM docker.io/library/python:3.10@sha256:c10791e6f69086d5216f7b5d3b839929c454e24305867ed9bc5152f0355b5423
+#7 resolve docker.io/library/python:3.10@sha256:c10791e6f69086d5216f7b5d3b839929c454e24305867ed9bc5152f0355b5423 0.0s done
+#7 DONE 0.0s
+
+#8 [stage-1 1/4] FROM docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d
+#8 resolve docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d 0.0s done
+#8 DONE 0.0s
+
+#9 [stage-1 2/4] WORKDIR /app
+#9 CACHED
+
+#10 [internal] load build context
+#10 transferring context: 7.02kB done
+#10 DONE 0.0s
+
+#11 [build 4/9] COPY pyproject.toml uv.lock ./
+#11 CACHED
+
+#12 [build 6/9] COPY scripts ./scripts
+#12 CACHED
+
+#13 [build 3/9] WORKDIR /app
+#13 CACHED
+
+#14 [build 8/9] COPY app ./app
+#14 CACHED
+
+#15 [build 5/9] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
+#15 CACHED
+
+#16 [build 2/9] COPY --from=ghcr.io/astral-sh/uv:0.5.11 /uv /bin/uv
+#16 CACHED
+
+#17 [build 7/9] COPY alembic.ini ./
+#17 CACHED
+
+#18 [build 9/9] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
+#18 CACHED
+
+#19 [stage-1 3/4] RUN apt-get update     && apt-get upgrade -y --no-install-recommends     && rm -rf /var/lib/apt/lists/*     && useradd --uid 10001 --create-home app
+#19 0.400 Hit:1 http://deb.debian.org/debian trixie InRelease
+#19 0.436 Get:2 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+#19 0.494 Get:3 http://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+#19 0.546 Get:4 http://deb.debian.org/debian trixie/main amd64 Packages [9678 kB]
+#19 2.611 Get:5 http://deb.debian.org/debian trixie-updates/main amd64 Packages [4412 B]
+#19 2.658 Get:6 http://deb.debian.org/debian-security trixie-security/main amd64 Packages [269 kB]
+#19 3.361 Fetched 10.0 MB in 3s (3241 kB/s)
+#19 3.361 Reading package lists...
+#19 3.947 Reading package lists...
+#19 4.522 Building dependency tree...
+#19 4.665 Reading state information...
+#19 4.737 Calculating upgrade...
+#19 4.995 The following packages will be upgraded:
+#19 4.997   ca-certificates liblzma5
+#19 5.111 2 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#19 5.111 Need to get 470 kB of archives.
+#19 5.111 After this operation, 3072 B disk space will be freed.
+#19 5.111 Get:1 http://deb.debian.org/debian-security trixie-security/main amd64 liblzma5 amd64 5.8.1-1+deb13u2 [310 kB]
+#19 5.292 Get:2 http://deb.debian.org/debian-security trixie-security/main amd64 ca-certificates all 20250419+deb13u1 [161 kB]
+#19 5.518 debconf: unable to initialize frontend: Dialog
+#19 5.518 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#19 5.518 debconf: falling back to frontend: Readline
+#19 5.518 debconf: unable to initialize frontend: Readline
+#19 5.518 debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC entries checked: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.40.1 /usr/local/share/perl/5.40.1 /usr/lib/x86_64-linux-gnu/perl5/5.40 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.40 /usr/share/perl/5.40 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 8, <STDIN> line 2.)
+#19 5.518 debconf: falling back to frontend: Teletype
+#19 5.524 debconf: unable to initialize frontend: Teletype
+#19 5.524 debconf: (This frontend requires a controlling tty.)
+#19 5.524 debconf: falling back to frontend: Noninteractive
+#19 6.273 Preconfiguring packages ...
+#19 6.659 Fetched 470 kB in 0s (1477 kB/s)
+#19 6.681 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5660 files and directories currently installed.)
+#19 6.699 Preparing to unpack .../liblzma5_5.8.1-1+deb13u2_amd64.deb ...
+#19 6.710 Unpacking liblzma5:amd64 (5.8.1-1+deb13u2) over (5.8.1-1+deb13u1) ...
+#19 6.749 Setting up liblzma5:amd64 (5.8.1-1+deb13u2) ...
+#19 6.786 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5660 files and directories currently installed.)
+#19 6.793 Preparing to unpack .../ca-certificates_20250419+deb13u1_all.deb ...
+#19 6.802 Unpacking ca-certificates (20250419+deb13u1) over (20250419) ...
+#19 7.127 Setting up ca-certificates (20250419+deb13u1) ...
+#19 7.199 debconf: unable to initialize frontend: Dialog
+#19 7.199 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#19 7.199 debconf: falling back to frontend: Readline
+#19 7.199 debconf: unable to initialize frontend: Readline
+#19 7.199 debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC entries checked: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.40.1 /usr/local/share/perl/5.40.1 /usr/lib/x86_64-linux-gnu/perl5/5.40 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.40 /usr/share/perl/5.40 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 8.)
+#19 7.199 debconf: falling back to frontend: Teletype
+#19 7.202 debconf: unable to initialize frontend: Teletype
+#19 7.202 debconf: (This frontend requires a controlling tty.)
+#19 7.202 debconf: falling back to frontend: Noninteractive
+#19 8.279 Updating certificates in /etc/ssl/certs...
+#19 8.948 rehash: warning: skipping ca-certificates.crt, it does not contain exactly one certificate or CRL
+#19 8.951 0 added, 2 removed; done.
+#19 8.974 Processing triggers for libc-bin (2.41-12+deb13u4) ...
+#19 9.011 Processing triggers for ca-certificates (20250419+deb13u1) ...
+#19 9.021 Updating certificates in /etc/ssl/certs...
+#19 9.426 0 added, 0 removed; done.
+#19 9.426 Running hooks in /etc/ca-certificates/update.d...
+#19 9.427 done.
+#19 DONE 9.5s
+
+#20 [stage-1 4/4] COPY --from=build --chown=10001:10001 /app /app
+#20 DONE 1.4s
+
+#21 exporting to image
+#21 exporting layers
+#21 exporting layers 5.4s done
+#21 exporting manifest sha256:deb9386018bb28cb940f6f2ff97de75ee0298ba00c606515818324c25197dbad done
+#21 exporting config sha256:939e51d28096da01d2aaf593768d21aa968f69da729c0ca082b0b264001aed7d done
+#21 exporting attestation manifest sha256:d87a1a44f255f05c3feafcb20be30c560a45b2284e1ac9d03293673379c4e680 0.0s done
+#21 exporting manifest list sha256:0f9bbf0f1461a0b59b17e8eee264c35ca53880637ffd3870e301ac12257495c7 done
+#21 naming to docker.io/library/liora-validation-backend:hardened done
+#21 unpacking to docker.io/library/liora-validation-backend:hardened
+#21 unpacking to docker.io/library/liora-validation-backend:hardened 1.0s done
+#21 DONE 6.4s

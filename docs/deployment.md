@@ -105,3 +105,24 @@ terraform destroy
 ```
 
 Deleting the cloud server deletes local-path volumes. Take backups first. Powered-off Hetzner servers still incur charges.
+
+
+## Private Git authentication validation
+
+For SSH, add a repository-specific GitHub deploy key with **Allow write access unchecked**.
+Verify its fingerprint and that GitHub reports `read_only: true` before installing it.
+A key that reads the repo is not proof of read-only scope. Test the exact private key with
+`ssh -F /dev/null -i /absolute/private/key -o IdentitiesOnly=yes -o IdentityAgent=none`
+so account-level SSH configuration cannot silently provide another identity.
+
+Create the Argo repository Secret locally with the secret-type label `repository`,
+`type=git`, `url=git@github.com:dionis1/liora-devops-platform.git`, and `sshPrivateKey`
+read from the private file. Do not save the Secret in this repository or print it.
+Configure verified GitHub SSH host keys in `argocd-ssh-known-hosts-cm` and use the
+matching SSH repoURL in both Applications when choosing SSH authentication.
+The checked-in HTTPS URLs instead require a read-only HTTPS credential.
+Keep Argo server access on a loopback-only port-forward; remove temporary keys after testing.
+
+The temporary test key could read GitHub, but the repository deploy-key API returned zero keys.
+Its scope was therefore not accepted as verified read-only, and it was not installed in Argo.
+The exact temporary account-level key was removed with explicit user approval and removal was verified. Dev synchronization, private GHCR pulls, and rollback still require a separate live test.
