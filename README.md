@@ -9,9 +9,13 @@ See [second-pass validation and remaining blockers](docs/remediation-report.md) 
 
 ## Graduation defense evidence
 
-The [presentation evidence pack](docs/presentation-evidence.md) includes a ten-minute live plan and a ten-minute screenshot-only fallback under the exact ten official requirements. Browse [38 indexed screenshots](docs/screenshots/README.md), the [offline gallery](docs/presentation-evidence/index.html), the [validation checklist](docs/requirements-validation-checklist.md), and the [final compliance report](docs/final-compliance-report.md). Twelve images are actual application/GitHub/monitoring UIs; 26 are explicitly labeled views of real archived output, configuration or architecture. Five earlier screenshots are preserved unchanged.
+The [presentation evidence pack](docs/presentation-evidence.md) includes a ten-minute live plan and a ten-minute screenshot-only fallback under the exact ten official requirements. Browse [42 indexed screenshots](docs/screenshots/README.md), the [offline gallery](docs/presentation-evidence/index.html), the [validation checklist](docs/requirements-validation-checklist.md), and the [final compliance report](docs/final-compliance-report.md). Fourteen images are actual application/GitHub/monitoring UIs; 28 are explicitly labeled views of real archived output, configuration or architecture. Five earlier screenshots are preserved unchanged.
 
-Local authenticated item creation and a PostgreSQL 16 restore of that same record passed. Historical publication and Kubernetes evidence are dated separately. The backend image still has 44 HIGH OS findings, so release remains blocked. The repository is now public; a new Argo public-repository sync/rollback has not been tested.
+Local authenticated item creation and a PostgreSQL 16 restore of that same record passed. Historical publication and Kubernetes evidence are dated separately. The [Alpine backend remediation](docs/backend-security-remediation.md) reduces the previous 44 HIGH Debian findings to **0 HIGH / 0 CRITICAL** in the strict local image scan. The exact runtime image also passes PostgreSQL migrations, login, authenticated item operations, readiness and metrics. [Hosted CI passed for the fix at `34bf33e`](https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273), including the backend runtime check and both strict image scans. Publication/promotion intentionally remain restricted to validated main pushes. The repository is now public; a new Argo public-repository sync/rollback has not been tested.
+
+![Hosted backend security gate passes](docs/screenshots/08-think-about-security-devsecops/E41.jpg)
+
+[Local scan: 0 HIGH / 0 CRITICAL](docs/screenshots/08-think-about-security-devsecops/E39.jpg) · [Complete hosted CI success](docs/screenshots/05-automate-deployment-ci-cd-pipeline/E42.jpg)
 
 ## Architecture
 

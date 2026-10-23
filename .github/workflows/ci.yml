@@ -74,6 +74,8 @@ jobs:
         run: bash scripts/scan-security.sh
       - name: Build backend
         run: docker build -f docker/backend.Dockerfile -t liora-backend:ci course-app/backend
+      - name: Test backend image against PostgreSQL 16
+        run: python3 scripts/test-backend-image.py liora-backend:ci
       - name: Scan backend before publication
         run: trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 liora-backend:ci
       - name: Build frontend

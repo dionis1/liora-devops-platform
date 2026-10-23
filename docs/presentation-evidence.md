@@ -1,10 +1,10 @@
 # Graduation presentation evidence
 
-**38 screenshots, covering all ten official requirements:** 12 actual UI captures and 26 clearly labeled views of real saved output/configuration/design. Five earlier UI screenshots are reused unchanged. All captures are dated 2026-10-23; original 2026-10-22 observations are labeled.
+**42 screenshots, covering all ten official requirements:** 14 actual UI captures and 28 clearly labeled views of real saved output/configuration/design. Five earlier UI screenshots are reused unchanged. All captures are dated 2026-10-23; original 2026-10-22 observations are labeled.
 
 Open [the offline gallery](presentation-evidence/index.html) for a screenshot-only presentation, [the complete evidence index](screenshots/README.md) for provenance, and [the final compliance report](final-compliance-report.md) for limitations. Keep the complete `docs/screenshots/` and `docs/presentation-evidence/` directories together. Nothing in the offline gallery needs a live server, credentials or an external CDN.
 
-**State to say aloud:** “The application, tests, local recovery and monitoring have concrete successful evidence. The current release is blocked by 44 HIGH backend OS findings. Final hardened Kubernetes/Argo/cloud deployment and full recovery are not yet validated.”
+**State to say aloud:** “The application, tests, local recovery and monitoring have concrete successful evidence. The new Alpine backend passes the local security gate with zero HIGH/CRITICAL findings; the previous Debian failure is preserved as historical evidence. Final hardened Kubernetes/Argo/cloud deployment and full recovery are not yet validated.”
 
 ## Ten-minute live demonstration plan
 
@@ -14,11 +14,11 @@ Preflight only services already running safely. Do not start Kubernetes, Argo an
 | --- | --- | --- | --- | --- | --- |
 | 0:00–1:30 | Architecture, original app attribution, IaC boundaries and exact rubric (6, 10). | Architecture.md; `terraform -chdir=infrastructure/terraform validate`; saved Ansible syntax results. | E36, E24, E25 | Reviewed infrastructure code and honest separation of design from execution. |
 | 1:30–2:30 | Reproducible Docker packaging and UI–API–database path (1). | `docker ps`; local `/docs`; authenticated Items page, if fixture already running. | E07, E08, E15 | Container runtime verification and a complete functional data path. |
-| 2:30–4:00 | Tests, historical publication/promotion and the current gate (3, 5). | [Remediation workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39920280796); [historical main run](https://github.com/dionis1/liora-devops-platform/actions/runs/39802778100). | E16, E09, E10 | Automated quality checks and controlled publication. |
+| 2:30–4:00 | Tests, historical publication/promotion and the current gate (3, 5). | [Passing Alpine fix workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273); [historical main run](https://github.com/dionis1/liora-devops-platform/actions/runs/39802778100). | E16, E42, E10 | Automated quality checks and controlled publication. |
 | 4:00–5:15 | Dev/prod separation, workloads, PVC and ingress (2, 4). | With the explicitly selected disposable context: `kubectl --context CONTEXT -n liora-dev get pods,deploy,sts,svc,pvc,ingress`. Otherwise show static overlays. | E19, E20, E21, E37 | Readiness/storage/routing validation without claiming untested production. |
 | 5:15–6:00 | Argo health versus successful synchronization; prod manual policy (5). | `kubectl --context CONTEXT -n argocd get applications`; `gitops/applications.yaml`. | E22, E23, E38 | GitOps policies, failure diagnosis and scope-aware reporting. |
 | 6:00–7:15 | Real metrics, target health and alert lifecycle (7). | Local Grafana dashboard/Prometheus targets, only if already running alone. | E03, E04, E05, E26 | Instrumentation and tested alert evaluation/recovery. |
-| 7:15–8:45 | Security improvement, remaining failures and enforcement boundaries (8). | Archived scan summaries; [source scan](https://github.com/dionis1/liora-devops-platform/actions/runs/39920280780); failed backend scan. | E28, E29, E30, E31 | Risk reduction with an enforced release gate rather than suppressed findings. |
+| 7:15–8:45 | Security improvement, remaining failures and enforcement boundaries (8). | Archived scan summaries; [source scan](https://github.com/dionis1/liora-devops-platform/actions/runs/39920280780); new passing Alpine scan versus the historical failed Debian scan. | E41, E39, E40, E29 | Risk reduction with an enforced release gate rather than suppressed findings. |
 | 8:45–10:00 | Backup permissions, fresh restore, matching record and recovery limits (9). | Read `raw/postgres16-browser-record-restore.txt`; never restore a real database during the defense. | E33, E34, E35 | Verified recoverability and safe negative-path testing. |
 
 ## Ten-minute screenshot-only fallback
@@ -31,10 +31,10 @@ Use one minute per official requirement, in this exact order. Open the offline g
 | 1:00–2:00 | 2. Deploy the Application in Multiple Environments (Dev & Prod) | [E19: Dev and prod separation: static manifests](screenshots/02-deploy-the-application-in-multiple-environments-dev-prod/E19.jpg), [E21: Historical PVC and Kubernetes HTTP access](screenshots/04-container-orchestration-with-kubernetes/E21.jpg) | Dev/prod configuration is separated; historical local dev worked, production and final hardening remain untested. |
 | 2:00–3:00 | 3. Run Tests on the Application | [E16: 55 upstream tests passed](screenshots/03-run-tests-on-the-application/E16.jpg), [E17: Platform metrics and readiness tests passed](screenshots/03-run-tests-on-the-application/E17.jpg) | 55 upstream plus 2 platform tests passed; full browser E2E/client regeneration was not run. |
 | 3:00–4:00 | 4. Container Orchestration with Kubernetes | [E20: Historical dev pods and Services READY](screenshots/04-container-orchestration-with-kubernetes/E20.jpg), [E37: Historical ConfigMap, Ingress and rollout results](screenshots/04-container-orchestration-with-kubernetes/E37.jpg) | Real old dev pods/rollouts/PVC/ingress evidence; these screenshots of saved output are dated, not a current cluster view. |
-| 4:00–5:00 | 5. Automate Deployment (CI/CD Pipeline) | [E10: Historical successful GHCR publication and dev promotion](screenshots/05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg), [E09: Current CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg) | Older publication/promotion passed; the remediation image gate fails correctly, and Argo successful sync/rollback is unproven. |
+| 4:00–5:00 | 5. Automate Deployment (CI/CD Pipeline) | [E10: Historical successful GHCR publication and dev promotion](screenshots/05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg), [E09: Historical Debian CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg) | Older publication/promotion passed; the old Debian gate failed correctly, the new Alpine local and hosted gates pass, and successful Argo sync/rollback is unproven. |
 | 5:00–6:00 | 6. Create IaC (Infrastructure as Code) Templates | [E24: Terraform formatting and validation passed](screenshots/06-create-iac-infrastructure-as-code-templates/E24.jpg), [E25: Three Ansible syntax checks passed](screenshots/06-create-iac-infrastructure-as-code-templates/E25.jpg) | Templates and syntax validate; no plan/apply, cloud provision or replacement-host test was performed. |
 | 6:00–7:00 | 7. Monitor the Application | [E04: Real request counts, error counts and latency](screenshots/07-monitor-the-application/grafana-request-latency-errors.jpg), [E05: Unavailable alert FIRING after one minute](screenshots/07-monitor-the-application/application-alert-firing.jpg) | Synthetic metrics and firing/recovery passed in isolated Docker; ServiceMonitor discovery/notification delivery remains untested. |
-| 7:00–8:00 | 8. Think About Security (DevSecOps) | [E28: Security before and after remediation](screenshots/08-think-about-security-devsecops/E28.jpg), [E29: Hosted backend security gate fails closed](screenshots/08-think-about-security-devsecops/E29.jpg) | Critical findings fell to zero, 44 HIGH backend OS findings remain, and CI blocks release. |
+| 7:00–8:00 | 8. Think About Security (DevSecOps) | [E39: Alpine scan passes](screenshots/08-think-about-security-devsecops/E39.jpg), [E40: Runtime integration passes](screenshots/08-think-about-security-devsecops/E40.jpg), [E29: Historical Debian failure](screenshots/08-think-about-security-devsecops/E29.jpg) | Backend findings fell from 44 HIGH on Debian to zero HIGH/CRITICAL on Alpine; image integration checks pass. Hosted CI also passed at 34bf33e; publication and Kubernetes enforcement remain separate checks. |
 | 8:00–9:00 | 9. Think About Disaster Recovery | [E34: Restored record matches the browser-created item](screenshots/09-think-about-disaster-recovery/E34.jpg), [E33: Actual backup creation and mode 0600](screenshots/09-think-about-disaster-recovery/E33.jpg) | Same browser-created ID/title restored into a new PG16 database, with mode 0600; no full cloud/etcd recovery claim. |
 | 9:00–10:00 | 10. Documentation | [E36: Architecture and engineering boundaries](screenshots/10-documentation/E36.jpg) | Architecture, provenance, exact rubric and reusable capture protocol make the project reviewable; cloud blocks are future design. |
 
@@ -44,7 +44,7 @@ Use one minute per official requirement, in this exact order. Open the offline g
 
 **Assessment: PASSED**
 
-**Implemented:** Two-stage, non-root platform images around the original pinned DataScientest application; health checks and a reviewed dependency patch.
+**Implemented:** Multi-stage, non-root platform images around the original pinned DataScientest application; digest-pinned Alpine backend, health checks and a reviewed dependency patch.
 
 **How it was tested:** Sequential builds, actual API/database readiness, authenticated browser login, item creation and persistence after reload in a Docker fixture with a temporary same-origin Nginx API proxy. Historical main publication succeeded.
 
@@ -54,7 +54,7 @@ Use one minute per official requirement, in this exact order. Open the offline g
 
 **What to explain:** I can package an existing application reproducibly and validate the complete UI–API–database path.
 
-**Limit:** Current hardened images are not published because the backend security gate fails. GHCR package/tag page access was unavailable; historical publication job success is not proof of current registry pulls.
+**Limit:** Publication and authenticated registry pulls for the new Alpine backend are NOT YET TESTED. PR checks do not publish; publication/promotion require a validated push to main. Historical publication evidence is retained.
 
 ### 2. Deploy the Application in Multiple Environments (Dev & Prod)
 
@@ -80,7 +80,7 @@ Use one minute per official requirement, in this exact order. Open the offline g
 
 **How it was tested:** 55 upstream tests and 2 platform tests pass; exact CI script passes locally and hosted backend-tests/lint jobs passed at 211199d. New browser login/create/reload smoke passed.
 
-**Evidence:** [E16: 55 upstream tests passed](screenshots/03-run-tests-on-the-application/E16.jpg), [E17: Platform metrics and readiness tests passed](screenshots/03-run-tests-on-the-application/E17.jpg), [E18: Mypy and Ruff passed](screenshots/03-run-tests-on-the-application/E18.jpg), [E09: Current CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E07: Browser-created item persists after reload](screenshots/01-dockerize-your-application/item-created-and-persisted.jpg).
+**Evidence:** [E16: 55 upstream tests passed](screenshots/03-run-tests-on-the-application/E16.jpg), [E17: Platform metrics and readiness tests passed](screenshots/03-run-tests-on-the-application/E17.jpg), [E18: Mypy and Ruff passed](screenshots/03-run-tests-on-the-application/E18.jpg), [E09: Historical Debian CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E07: Browser-created item persists after reload](screenshots/01-dockerize-your-application/item-created-and-persisted.jpg).
 
 ![E16 — 55 upstream tests passed](screenshots/03-run-tests-on-the-application/E16.jpg)
 
@@ -110,11 +110,11 @@ Use one minute per official requirement, in this exact order. Open the offline g
 
 **Implemented:** Tests/build/scan gates, exact-scanned-image publication, dev manifest promotion and manual production sync policy; Argo Application manifests.
 
-**How it was tested:** Historical main publication/promotion passed. At remediation revision 211199d, tests/lint/platform/source scans passed but the backend image gate FAILED. Historical Argo installed but private repo comparison FAILED.
+**How it was tested:** Historical main publication/promotion passed. Debian at 211199d failed with 44 HIGH findings. The Alpine fix at 34bf33e passed hosted CI: backend tests/lint, platform validation, exact-image PostgreSQL integration, and both strict image scans. Source security audit also passed. PR publication/promotion intentionally skip; historical Argo comparison failed.
 
-**Evidence:** [E09: Current CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E10: Historical successful GHCR publication and dev promotion](screenshots/05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg), [E22: Argo CD ran, but private repository comparison failed](screenshots/05-automate-deployment-ci-cd-pipeline/E22.jpg), [E23: Production manual sync configuration](screenshots/05-automate-deployment-ci-cd-pipeline/E23.jpg), [E38: Historical Argo components ready; sync still unproven](screenshots/05-automate-deployment-ci-cd-pipeline/E38.jpg).
+**Evidence:** [E09: Historical Debian CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg), [E10: Historical successful GHCR publication and dev promotion](screenshots/05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg), [E22: Argo CD ran, but private repository comparison failed](screenshots/05-automate-deployment-ci-cd-pipeline/E22.jpg), [E23: Production manual sync configuration](screenshots/05-automate-deployment-ci-cd-pipeline/E23.jpg), [E38: Historical Argo components ready; sync still unproven](screenshots/05-automate-deployment-ci-cd-pipeline/E38.jpg).
 
-![E09 — Current CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg)
+![E09 — Historical Debian CI blocks publication](screenshots/05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg)
 
 **What to explain:** I design a delivery chain that blocks unsafe releases and keep Git promotion distinct from successful deployment.
 
@@ -154,19 +154,23 @@ Use one minute per official requirement, in this exact order. Open the offline g
 
 ### 8. Think About Security (DevSecOps)
 
-**Assessment: FAILED**
+Hosted proof: [E41 passing image gate](screenshots/08-think-about-security-devsecops/E41.jpg) and [E42 complete CI success](screenshots/05-automate-deployment-ci-cd-pipeline/E42.jpg), both at `34bf33e`.
+
+Latest: [Alpine security remediation and reproducible checks](backend-security-remediation.md), [E39 scan](screenshots/08-think-about-security-devsecops/E39.jpg), [E40 exact-image integration test](screenshots/08-think-about-security-devsecops/E40.jpg). Historical failures below remain dated evidence.
+
+**Assessment: PARTIALLY VALIDATED**
 
 **Implemented:** Dependency remediation, strict source/image gates, non-root/read-only controls, dropped capabilities, NetworkPolicies and safe temporary credential cleanup.
 
-**How it was tested:** Patched locks including dev dependencies and frontend runtime: 0 HIGH/CRITICAL. Backend: 4 critical/67 high before, 0 critical/44 high after. Hosted scan fails closed. Docker fixture verified non-root/read-only operation.
+**How it was tested:** Backend progressed from 4 critical/67 high to Debian 0 critical/44 high, then Alpine 0 critical/0 high locally. At 34bf33e, hosted source security and both strict image scans passed. The exact Alpine image passed migrations, login/JWT, authenticated CRUD, health/readiness and metrics under non-root/read-only restrictions. Historical failures are preserved.
 
-**Evidence:** [E28: Security before and after remediation](screenshots/08-think-about-security-devsecops/E28.jpg), [E29: Hosted backend security gate fails closed](screenshots/08-think-about-security-devsecops/E29.jpg), [E12: Current source security workflow passes](screenshots/08-think-about-security-devsecops/github-source-security-passed.jpg), [E30: Container security controls configured](screenshots/08-think-about-security-devsecops/E30.jpg), [E31: Default-deny policy and explicit database traffic](screenshots/08-think-about-security-devsecops/E31.jpg), [E32: Temporary credential access removed](screenshots/08-think-about-security-devsecops/E32.jpg).
+**Evidence:** [E28: Security before and after remediation](screenshots/08-think-about-security-devsecops/E28.jpg), [E29: Historical Debian security gate fails closed](screenshots/08-think-about-security-devsecops/E29.jpg), [E12: Current source security workflow passes](screenshots/08-think-about-security-devsecops/github-source-security-passed.jpg), [E30: Container security controls configured](screenshots/08-think-about-security-devsecops/E30.jpg), [E31: Default-deny policy and explicit database traffic](screenshots/08-think-about-security-devsecops/E31.jpg), [E32: Temporary credential access removed](screenshots/08-think-about-security-devsecops/E32.jpg).
 
 ![E28 — Security before and after remediation](screenshots/08-think-about-security-devsecops/E28.jpg)
 
 **What to explain:** I quantify security improvement, keep failing policy checks enabled, and distinguish configuration from enforcement.
 
-**Limit:** 44 unfixed HIGH backend OS findings remain release blockers. Live NetworkPolicy enforcement and verified read-only deploy-key configuration are NOT YET TESTED; the temporary account key was removed.
+**Limit:** Publication for the Alpine fix is NOT YET TESTED; CI publishes only on a validated main push. Live Kubernetes NetworkPolicy enforcement remains NOT YET TESTED; public HTTPS repository access needs no deploy key. The temporary account SSH key was removed.
 
 ### 9. Think About Disaster Recovery
 

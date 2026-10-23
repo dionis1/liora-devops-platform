@@ -4,7 +4,7 @@
     "title": "Dockerize Your Application",
     "directory": "01-dockerize-your-application",
     "status": "PASSED",
-    "implemented": "Two-stage, non-root platform images around the original pinned DataScientest application; health checks and a reviewed dependency patch.",
+    "implemented": "Multi-stage, non-root platform images around the original pinned DataScientest application; digest-pinned Alpine backend, health checks and a reviewed dependency patch.",
     "tested": "Sequential builds, actual API/database readiness, authenticated browser login, item creation and persistence after reload. Historical main publication succeeded. The Docker fixture used a temporary same-origin Nginx API proxy.",
     "evidence": [
       "E07",
@@ -12,9 +12,11 @@
       "E13",
       "E14",
       "E15",
-      "E10"
+      "E10",
+      "E40",
+      "E41"
     ],
-    "gaps": "Current hardened images are not published because the backend security gate fails. GHCR package/tag page access was unavailable; historical publication job success is not proof of current registry pulls.",
+    "gaps": "Publication and authenticated registry pulls for the new Alpine backend are NOT YET TESTED. PR checks do not publish; publication/promotion require a validated push to main. Historical publication evidence is retained.",
     "engineering": "I can package an existing application reproducibly and validate the complete UI\u2013API\u2013database path."
   },
   {
@@ -44,7 +46,9 @@
       "E17",
       "E18",
       "E09",
-      "E07"
+      "E07",
+      "E40",
+      "E41"
     ],
     "gaps": "The complete automated browser E2E suite and OpenAPI-client regeneration are NOT YET TESTED.",
     "engineering": "I use automated checks and a focused functional smoke test to catch compatibility regressions."
@@ -71,13 +75,15 @@
     "directory": "05-automate-deployment-ci-cd-pipeline",
     "status": "PARTIALLY_VALIDATED",
     "implemented": "Tests/build/scan gates, exact-scanned-image publication, dev manifest promotion and manual production sync policy; Argo Application manifests.",
-    "tested": "Historical main publication/promotion passed. At remediation revision 211199d, tests/lint/platform/source scans passed but the backend image gate FAILED. Historical Argo installed but private repo comparison FAILED.",
+    "tested": "Historical main publication/promotion passed. Debian at 211199d failed with 44 HIGH findings. The Alpine fix at 34bf33e passed hosted CI: backend tests/lint, platform validation, exact-image PostgreSQL integration, and both strict image scans. Source security audit also passed. PR publication/promotion intentionally skip; historical Argo comparison failed.",
     "evidence": [
       "E09",
       "E10",
       "E22",
       "E23",
-      "E38"
+      "E38",
+      "E39",
+      "E42"
     ],
     "gaps": "Successful Argo Synced/Healthy application, public-repo reconciliation and rollback are NOT YET TESTED. The repository became public on 2026-10-23; historical private auth errors do not establish a current public auth failure.",
     "engineering": "I design a delivery chain that blocks unsafe releases and keep Git promotion distinct from successful deployment."
@@ -118,18 +124,21 @@
     "number": 8,
     "title": "Think About Security (DevSecOps)",
     "directory": "08-think-about-security-devsecops",
-    "status": "FAILED",
+    "status": "PARTIALLY_VALIDATED",
     "implemented": "Dependency remediation, strict source/image gates, non-root/read-only controls, dropped capabilities, NetworkPolicies and safe temporary credential cleanup.",
-    "tested": "Patched locks including dev dependencies and frontend runtime: 0 HIGH/CRITICAL. Backend: 4 critical/67 high before, 0 critical/44 high after. Hosted scan fails closed. Docker fixture verified non-root/read-only operation.",
+    "tested": "Backend progressed from 4 critical/67 high to Debian 0 critical/44 high, then Alpine 0 critical/0 high locally. At 34bf33e, hosted source security and both strict image scans passed. The exact Alpine image passed migrations, login/JWT, authenticated CRUD, health/readiness and metrics under non-root/read-only restrictions. Historical failures are preserved.",
     "evidence": [
       "E28",
       "E29",
       "E12",
       "E30",
       "E31",
-      "E32"
+      "E32",
+      "E39",
+      "E40",
+      "E41"
     ],
-    "gaps": "44 unfixed HIGH backend OS findings remain release blockers. Live NetworkPolicy enforcement and verified read-only deploy-key configuration are NOT YET TESTED; the temporary account key was removed.",
+    "gaps": "Publication for the Alpine fix is NOT YET TESTED; CI publishes only on a validated main push. Live Kubernetes NetworkPolicy enforcement remains NOT YET TESTED; public HTTPS repository access needs no deploy key. The temporary account SSH key was removed.",
     "engineering": "I quantify security improvement, keep failing policy checks enabled, and distinguish configuration from enforcement."
   },
   {

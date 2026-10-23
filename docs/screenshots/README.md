@@ -166,7 +166,7 @@ The exact ten official headings below are the primary organization. [Presentatio
 
 ## 5. Automate Deployment (CI/CD Pipeline)
 
-**E09 — Current CI blocks publication** · **FAILED** · `actual-ui`
+**E09 — Historical Debian CI blocks publication** · **FAILED** · `actual-ui`
 
 [Screenshot](05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg) · [github-ci-211199d.json](../../docs/presentation-evidence/raw/github-ci-211199d.json)
 
@@ -215,6 +215,16 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Captured: 2026-10-23; original observation: 2026-10-22; environment: Local.
 - Software: Argo CD 3.5.5 / local k3d.
 - Command/page: `kubectl -n argocd get pods,services; Argo health check`
+
+**E42 — Complete Alpine fix CI workflow succeeds** · **PASSED** · `actual-ui`
+
+[Screenshot](05-automate-deployment-ci-cd-pipeline/E42.jpg) · [github-ci-34bf33e.json](../../docs/backend-security-evidence/github-ci-34bf33e.json)
+
+- Demonstrates: Real GitHub summary: tests, lint, platform validation and build/scan passed. Publishing/promotion intentionally skip because this is a PR, not a push to main.
+- Supports official requirement(s): 1, 3, 5, 8.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: GitHub Actions.
+- Software: Commit 34bf33e / workflow run 39928939273.
+- Command/page: `Open successful CI run for PR 16 / commit 34bf33e` · [workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273)
 
 ## 6. Create IaC (Infrastructure as Code) Templates
 
@@ -322,7 +332,7 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Software: Trivy 0.76.1.
 - Command/page: `Compare original Trivy findings with final remediation scan counts`
 
-**E29 — Hosted backend security gate fails closed** · **FAILED** · `archived-output`
+**E29 — Historical Debian security gate fails closed** · **FAILED** · `archived-output`
 
 [Screenshot](08-think-about-security-devsecops/E29.jpg) · [github-backend-scan-failed.txt](../../docs/presentation-evidence/raw/github-backend-scan-failed.txt)
 
@@ -361,6 +371,36 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
 - Software: GitHub API / 2026-10-23.
 - Command/page: `Exact public-key match; approved removal; API absence verified`
+
+**E39 — Alpine backend security gate passes** · **PASSED** · `archived-output`
+
+[Screenshot](08-think-about-security-devsecops/E39.jpg) · [summary.txt](../../docs/backend-security-evidence/summary.txt); [trivy-backend.json](../../docs/backend-security-evidence/trivy-backend.json)
+
+- Demonstrates: Actual new local scan: 0 HIGH/CRITICAL in OS and Python packages, including unfixed findings. Not proof of hosted publication or GitOps deployment.
+- Supports official requirement(s): 1, 5, 8.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Trivy 0.76.1 / Python 3.12.15 / Alpine 3.24.3.
+- Command/page: `trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 liora-backend:security-fix`
+
+**E40 — Exact Alpine image passes PostgreSQL integration checks** · **PASSED** · `archived-output`
+
+[Screenshot](08-think-about-security-devsecops/E40.jpg) · [runtime-tests.txt](../../docs/backend-security-evidence/runtime-tests.txt)
+
+- Demonstrates: Actual runtime-image test: migrations, login/JWT, database CRUD, health, readiness and metrics under non-root/read-only restrictions. Temporary resources cleaned up.
+- Supports official requirement(s): 1, 3, 5, 8.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
+- Software: Python 3.12.15 / Alpine 3.24.3 / PostgreSQL 16.10.
+- Command/page: `python3 scripts/test-backend-image.py liora-backend:security-fix`
+
+**E41 — Hosted backend image security gate passes** · **PASSED** · `actual-ui`
+
+[Screenshot](08-think-about-security-devsecops/E41.jpg) · [github-ci-34bf33e.json](../../docs/backend-security-evidence/github-ci-34bf33e.json)
+
+- Demonstrates: Real GitHub job UI: image PostgreSQL integration and both strict image scans passed. Publication artifacts are skipped on PR events by policy.
+- Supports official requirement(s): 1, 3, 5, 8.
+- Captured: 2026-10-23; original observation: 2026-10-23; environment: GitHub Actions.
+- Software: Trivy 0.76.1 / commit 34bf33e.
+- Command/page: `Open successful build/scan job for 34bf33e` · [workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273/job/120332436123)
 
 ## 9. Think About Disaster Recovery
 

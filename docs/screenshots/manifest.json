@@ -81,7 +81,7 @@
       "sources": [
         {
           "path": "docs/remediation-report.md",
-          "sha256": "23c7ea70aaaa8e6082f14408b50aa377f5a3998c6f131329ff59cac43bcca233"
+          "sha256": "c4832437e01fc86972bba37cc2d9a9a70783d7ee82389b00e7ad54338645130b"
         }
       ],
       "sha256": "a13cac067cbcb8d1ef41ecaaee520019711a7fa9109941e61386709540c6511a"
@@ -106,7 +106,7 @@
       "sources": [
         {
           "path": "docs/remediation-report.md",
-          "sha256": "23c7ea70aaaa8e6082f14408b50aa377f5a3998c6f131329ff59cac43bcca233"
+          "sha256": "c4832437e01fc86972bba37cc2d9a9a70783d7ee82389b00e7ad54338645130b"
         }
       ],
       "sha256": "054ecbf539b63d0583ce8b8d8e41c8cbed77ac3443dac0f46931d31f64ca48b9"
@@ -270,7 +270,7 @@
       "supports": [
         5
       ],
-      "title": "Current CI blocks publication",
+      "title": "Historical Debian CI blocks publication",
       "file": "05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg",
       "capture_date": "2026-10-23",
       "observed_date": "2026-10-23",
@@ -797,7 +797,7 @@
       "supports": [
         8
       ],
-      "title": "Hosted backend security gate fails closed",
+      "title": "Historical Debian security gate fails closed",
       "file": "08-think-about-security-devsecops/E29.jpg",
       "capture_date": "2026-10-23",
       "observed_date": "2026-10-23",
@@ -1050,6 +1050,125 @@
       ],
       "view": "views/E38.html",
       "sha256": "0dfd7e9d395ca88b9d7fa816d1c297d27bb6d1f5d64de242fe3ab3b10041ef35"
+    },
+    {
+      "id": "E39",
+      "requirement": 8,
+      "supports": [
+        1,
+        5,
+        8
+      ],
+      "title": "Alpine backend security gate passes",
+      "file": "08-think-about-security-devsecops/E39.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Trivy 0.76.1 / Python 3.12.15 / Alpine 3.24.3",
+      "result": "PASSED",
+      "scope": "Actual new local scan: 0 HIGH/CRITICAL in OS and Python packages, including unfixed findings. Not proof of hosted publication or GitOps deployment.",
+      "command": "trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 liora-backend:security-fix",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/backend-security-evidence/summary.txt",
+          "sha256": "d6d66a9a02e8cd5a042a7623fdc05328f8662d9d87eda014b99c35080897c52c"
+        },
+        {
+          "path": "docs/backend-security-evidence/trivy-backend.json",
+          "sha256": "3bd69dfa9cda5dc771ef1c10221888b1baa18b5d7b4c4475b94a3bbfdb11496b"
+        }
+      ],
+      "view": "views/E39.html",
+      "sha256": "6a6c861c17a619a8efd524b907514697b64d73f8acc26938261e76310d52336d"
+    },
+    {
+      "id": "E40",
+      "requirement": 8,
+      "supports": [
+        1,
+        3,
+        5,
+        8
+      ],
+      "title": "Exact Alpine image passes PostgreSQL integration checks",
+      "file": "08-think-about-security-devsecops/E40.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Python 3.12.15 / Alpine 3.24.3 / PostgreSQL 16.10",
+      "result": "PASSED",
+      "scope": "Actual runtime-image test: migrations, login/JWT, database CRUD, health, readiness and metrics under non-root/read-only restrictions. Temporary resources cleaned up.",
+      "command": "python3 scripts/test-backend-image.py liora-backend:security-fix",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/backend-security-evidence/runtime-tests.txt",
+          "sha256": "cf9806eb9702eee03afe711c32590a569cc55be2df6c7b3967775b0233e4a155"
+        }
+      ],
+      "view": "views/E40.html",
+      "sha256": "43c182a6ebe57abcc8b7d88ab25f6ab64503b86951950f065635cb257b40d7b0"
+    },
+    {
+      "id": "E41",
+      "requirement": 8,
+      "supports": [
+        1,
+        3,
+        5,
+        8
+      ],
+      "title": "Hosted backend image security gate passes",
+      "file": "08-think-about-security-devsecops/E41.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "GitHub Actions",
+      "software": "Trivy 0.76.1 / commit 34bf33e",
+      "result": "PASSED",
+      "scope": "Real GitHub job UI: image PostgreSQL integration and both strict image scans passed. Publication artifacts are skipped on PR events by policy.",
+      "command": "Open successful build/scan job for 34bf33e",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273/job/120332436123",
+      "sources": [
+        {
+          "path": "docs/backend-security-evidence/github-ci-34bf33e.json",
+          "sha256": "7ff223ffd5a4e91cf925f85f9a4d5915d8b7f606c4cfeee15e3119c9396df7c4"
+        }
+      ],
+      "source_commit": "34bf33ecc47e0490a144a75974df08f64992fdc2",
+      "sha256": "e186e17a55cc97bd35d487839428795e133175079d173e65c55c624a7dd45f5e"
+    },
+    {
+      "id": "E42",
+      "requirement": 5,
+      "supports": [
+        1,
+        3,
+        5,
+        8
+      ],
+      "title": "Complete Alpine fix CI workflow succeeds",
+      "file": "05-automate-deployment-ci-cd-pipeline/E42.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "GitHub Actions",
+      "software": "Commit 34bf33e / workflow run 39928939273",
+      "result": "PASSED",
+      "scope": "Real GitHub summary: tests, lint, platform validation and build/scan passed. Publishing/promotion intentionally skip because this is a PR, not a push to main.",
+      "command": "Open successful CI run for PR 16 / commit 34bf33e",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39928939273",
+      "sources": [
+        {
+          "path": "docs/backend-security-evidence/github-ci-34bf33e.json",
+          "sha256": "7ff223ffd5a4e91cf925f85f9a4d5915d8b7f606c4cfeee15e3119c9396df7c4"
+        }
+      ],
+      "source_commit": "34bf33ecc47e0490a144a75974df08f64992fdc2",
+      "sha256": "de2d3b515cf0d6759a09ff77b448a0957f1a8aabfb2a37a2635bbdd9c1240f36"
     }
   ]
 }
