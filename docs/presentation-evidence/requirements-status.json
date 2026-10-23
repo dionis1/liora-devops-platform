@@ -1,0 +1,164 @@
+[
+  {
+    "number": 1,
+    "title": "Dockerize Your Application",
+    "directory": "01-dockerize-your-application",
+    "status": "PASSED",
+    "implemented": "Two-stage, non-root platform images around the original pinned DataScientest application; health checks and a reviewed dependency patch.",
+    "tested": "Sequential builds, actual API/database readiness, authenticated browser login, item creation and persistence after reload. Historical main publication succeeded. The Docker fixture used a temporary same-origin Nginx API proxy.",
+    "evidence": [
+      "E07",
+      "E08",
+      "E13",
+      "E14",
+      "E15",
+      "E10"
+    ],
+    "gaps": "Current hardened images are not published because the backend security gate fails. GHCR package/tag page access was unavailable; historical publication job success is not proof of current registry pulls.",
+    "engineering": "I can package an existing application reproducibly and validate the complete UI\u2013API\u2013database path."
+  },
+  {
+    "number": 2,
+    "title": "Deploy the Application in Multiple Environments (Dev & Prod)",
+    "directory": "02-deploy-the-application-in-multiple-environments-dev-prod",
+    "status": "PARTIALLY_VALIDATED",
+    "implemented": "Separate dev/prod namespaces, overlays, host settings, credentials references and a production TLS Secret reference.",
+    "tested": "Both overlays render; first-pass dev deployment and routing ran locally.",
+    "evidence": [
+      "E19",
+      "E20",
+      "E21"
+    ],
+    "gaps": "Production deployment and public TLS are NOT YET TESTED; final hardened dev manifests were not redeployed.",
+    "engineering": "I separate configuration and release policies while being explicit about shared-node failure domains."
+  },
+  {
+    "number": 3,
+    "title": "Run Tests on the Application",
+    "directory": "03-run-tests-on-the-application",
+    "status": "PASSED",
+    "implemented": "Upstream tests, PostgreSQL migrations, mypy/Ruff, and metrics/readiness checks run in CI.",
+    "tested": "55 upstream tests and 2 platform tests pass; exact CI script passes locally and hosted backend-tests/lint jobs passed at 211199d. New browser login/create/reload smoke passed.",
+    "evidence": [
+      "E16",
+      "E17",
+      "E18",
+      "E09",
+      "E07"
+    ],
+    "gaps": "The complete automated browser E2E suite and OpenAPI-client regeneration are NOT YET TESTED.",
+    "engineering": "I use automated checks and a focused functional smoke test to catch compatibility regressions."
+  },
+  {
+    "number": 4,
+    "title": "Container Orchestration with Kubernetes",
+    "directory": "04-container-orchestration-with-kubernetes",
+    "status": "PARTIALLY_VALIDATED",
+    "implemented": "Deployments, StatefulSet, PVC, Services, ConfigMap, Ingress, namespace policy and resource/security settings.",
+    "tested": "Historical local dev pods reached 1/1 Ready, PVC Bound, rollouts completed, and frontend/backend/Traefik HTTP routing passed; new manifests render.",
+    "evidence": [
+      "E20",
+      "E21",
+      "E37",
+      "E19"
+    ],
+    "gaps": "Historical cluster was deleted. Current hardened cluster, policy enforcement, node-readiness screenshot and cloud deployment are NOT YET TESTED.",
+    "engineering": "I translate application dependencies into orchestrated resources and verify readiness, storage and routing."
+  },
+  {
+    "number": 5,
+    "title": "Automate Deployment (CI/CD Pipeline)",
+    "directory": "05-automate-deployment-ci-cd-pipeline",
+    "status": "PARTIALLY_VALIDATED",
+    "implemented": "Tests/build/scan gates, exact-scanned-image publication, dev manifest promotion and manual production sync policy; Argo Application manifests.",
+    "tested": "Historical main publication/promotion passed. At remediation revision 211199d, tests/lint/platform/source scans passed but the backend image gate FAILED. Historical Argo installed but private repo comparison FAILED.",
+    "evidence": [
+      "E09",
+      "E10",
+      "E22",
+      "E23",
+      "E38"
+    ],
+    "gaps": "Successful Argo Synced/Healthy application, public-repo reconciliation and rollback are NOT YET TESTED. The repository became public on 2026-10-23; historical private auth errors do not establish a current public auth failure.",
+    "engineering": "I design a delivery chain that blocks unsafe releases and keep Git promotion distinct from successful deployment."
+  },
+  {
+    "number": 6,
+    "title": "Create IaC (Infrastructure as Code) Templates",
+    "directory": "06-create-iac-infrastructure-as-code-templates",
+    "status": "PARTIALLY_VALIDATED",
+    "implemented": "Terraform Hetzner templates and Ansible preparation/k3s/kubeconfig playbooks, with restricted SSH configuration.",
+    "tested": "Fresh Terraform fmt/validate and three Ansible syntax checks passed; hosted platform validation passed.",
+    "evidence": [
+      "E24",
+      "E25",
+      "E11"
+    ],
+    "gaps": "Terraform plan/apply, actual remote provisioning and server recreation are NOT YET TESTED. No Hetzner API resources were created.",
+    "engineering": "I express infrastructure as reviewed code and validate it before any billable provisioning."
+  },
+  {
+    "number": 7,
+    "title": "Monitor the Application",
+    "directory": "07-monitor-the-application",
+    "status": "PARTIALLY_VALIDATED",
+    "implemented": "Prometheus/Grafana resources, FastAPI metrics, dashboard, ServiceMonitor and unavailable/5xx alert rules.",
+    "tested": "All three isolated targets were UP including Grafana; real synthetic request/rate/latency/error metrics rendered; the one-minute unavailable alert fired and cleared after recovery.",
+    "evidence": [
+      "E03",
+      "E04",
+      "E05",
+      "E26",
+      "E27"
+    ],
+    "gaps": "The new ServiceMonitor discovery in Kubernetes, receiver delivery, sustained 5xx alert scenario and durable monitoring recovery are NOT YET TESTED.",
+    "engineering": "I instrument service behavior and validate alert evaluation rather than equating process uptime with observability."
+  },
+  {
+    "number": 8,
+    "title": "Think About Security (DevSecOps)",
+    "directory": "08-think-about-security-devsecops",
+    "status": "FAILED",
+    "implemented": "Dependency remediation, strict source/image gates, non-root/read-only controls, dropped capabilities, NetworkPolicies and safe temporary credential cleanup.",
+    "tested": "Patched locks including dev dependencies and frontend runtime: 0 HIGH/CRITICAL. Backend: 4 critical/67 high before, 0 critical/44 high after. Hosted scan fails closed. Docker fixture verified non-root/read-only operation.",
+    "evidence": [
+      "E28",
+      "E29",
+      "E12",
+      "E30",
+      "E31",
+      "E32"
+    ],
+    "gaps": "44 unfixed HIGH backend OS findings remain release blockers. Live NetworkPolicy enforcement and verified read-only deploy-key configuration are NOT YET TESTED; the temporary account key was removed.",
+    "engineering": "I quantify security improvement, keep failing policy checks enabled, and distinguish configuration from enforcement."
+  },
+  {
+    "number": 9,
+    "title": "Think About Disaster Recovery",
+    "directory": "09-think-about-disaster-recovery",
+    "status": "PARTIALLY_VALIDATED",
+    "implemented": "Atomic compressed PostgreSQL backups, recovery/rollback runbooks and off-node snapshot/token guidance.",
+    "tested": "PG16 backup mode 0600, fresh database restore, same browser-created item ID/title, and failed-dump cleanup passed; previous three-row restore also passed.",
+    "evidence": [
+      "E33",
+      "E34",
+      "E35",
+      "E07"
+    ],
+    "gaps": "GitOps/deployment rollback, actual k3s snapshot/restore, off-site durability and replacement-server recovery are NOT YET TESTED. The kubectl-to-Docker adapter is documented explicitly.",
+    "engineering": "I prove recovery with restored data and failure-path checks while stating the boundary of the drill."
+  },
+  {
+    "number": 10,
+    "title": "Documentation",
+    "directory": "10-documentation",
+    "status": "PASSED",
+    "implemented": "Architecture/runbooks, exact ten-heading compliance mapping, provenance-backed screenshot index, capture protocol and both ten-minute plans.",
+    "tested": "Screenshot/source hashes, original-image preservation, asset links and offline presentation gallery are checked before delivery.",
+    "evidence": [
+      "E36"
+    ],
+    "gaps": "The architecture is a design view; future cloud boxes are not deployment evidence. This is an evidence pack, not an exported PowerPoint deck.",
+    "engineering": "I make the system reviewable and explain its tested capabilities and remaining risks precisely."
+  }
+]

@@ -1,0 +1,114 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from frontend.Dockerfile
+#1 DONE 0.0s
+
+#1 [internal] load build definition from frontend.Dockerfile
+#1 transferring dockerfile: 925B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/nginxinc/nginx-unprivileged:1.28-alpine
+#2 ...
+
+#3 [internal] load metadata for docker.io/library/node:20
+#3 DONE 0.5s
+
+#2 [internal] load metadata for docker.io/nginxinc/nginx-unprivileged:1.28-alpine
+#2 DONE 0.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 58B done
+#4 DONE 0.0s
+
+#5 [stage-1 1/5] FROM docker.io/nginxinc/nginx-unprivileged:1.28-alpine@sha256:7377697a821c131a924a7105fafbe7414db4e9fcc77a6f08f776f33f141ec3f8
+#5 resolve docker.io/nginxinc/nginx-unprivileged:1.28-alpine@sha256:7377697a821c131a924a7105fafbe7414db4e9fcc77a6f08f776f33f141ec3f8 0.0s done
+#5 DONE 0.0s
+
+#6 [build 1/6] FROM docker.io/library/node:20@sha256:8f693eaa7e0a8e71560c9a82b55fd54c2ae920a2ba5d2cde28bac7d1c01c9ba5
+#6 resolve docker.io/library/node:20@sha256:8f693eaa7e0a8e71560c9a82b55fd54c2ae920a2ba5d2cde28bac7d1c01c9ba5 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 5.02kB done
+#7 DONE 0.0s
+
+#8 [build 2/6] WORKDIR /app
+#8 CACHED
+
+#9 [stage-1 3/5] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#9 CACHED
+
+#10 [build 3/6] COPY package.json package-lock.json ./
+#10 CACHED
+
+#11 [build 4/6] RUN npm ci --no-audit --no-fund
+#11 CACHED
+
+#12 [build 5/6] COPY . .
+#12 CACHED
+
+#13 [build 6/6] RUN npm run build
+#13 CACHED
+
+#14 [stage-1 2/5] COPY --from=build /app/dist/ /usr/share/nginx/html/
+#14 CACHED
+
+#15 [stage-1 4/5] COPY nginx-backend-not-found.conf /etc/nginx/extra-conf.d/backend-not-found.conf
+#15 CACHED
+
+#16 [stage-1 5/5] RUN apk upgrade --no-cache     && apk add --no-cache --upgrade nginx     && sed -i 's/listen 80;/listen 8080;/' /etc/nginx/conf.d/default.conf
+#16 1.503 Preupgrading:
+#16 1.503 (1/2) Upgrading libapk (3.0.3-r1 -> 3.0.8-r0)
+#16 1.564 (2/2) Upgrading apk-tools (3.0.3-r1 -> 3.0.8-r0)
+#16 1.626 Executing busybox-1.37.0-r30.trigger
+#16 1.690 Continuing with the main upgrade transaction:
+#16 3.985 ( 1/27) Upgrading alpine-baselayout-data (3.7.1-r8 -> 3.7.2-r0)
+#16 4.035   Installing file to etc/group.apk-new
+#16 4.036   Installing file to etc/hosts.apk-new
+#16 4.038   Installing file to etc/passwd.apk-new
+#16 4.039   Installing file to etc/shadow.apk-new
+#16 4.040 ( 2/27) Upgrading musl (1.2.5-r21 -> 1.2.5-r24)
+#16 4.159 ( 3/27) Upgrading alpine-baselayout (3.7.1-r8 -> 3.7.2-r0)
+#16 4.203   Executing alpine-baselayout-3.7.2-r0.pre-upgrade
+#16 4.226   Executing alpine-baselayout-3.7.2-r0.post-upgrade
+#16 4.244 ( 4/27) Upgrading alpine-release (3.23.3-r0 -> 3.23.7-r0)
+#16 4.287 ( 5/27) Upgrading libcrypto3 (3.5.5-r0 -> 3.5.9-r0)
+#16 4.668 ( 6/27) Upgrading libssl3 (3.5.5-r0 -> 3.5.9-r0)
+#16 4.761 ( 7/27) Upgrading zlib (1.3.1-r2 -> 1.3.2-r1)
+#16 4.817 ( 8/27) Upgrading ca-certificates-bundle (20251003-r0 -> 20261020-r0)
+#16 4.880 ( 9/27) Upgrading ca-certificates (20251003-r0 -> 20261020-r0)
+#16 4.970 (10/27) Upgrading brotli-libs (1.2.0-r0 -> 1.2.1-r0)
+#16 5.062 (11/27) Upgrading c-ares (1.34.6-r0 -> 1.34.9-r0)
+#16 5.122 (12/27) Upgrading nghttp2-libs (1.68.0-r0 -> 1.69.0-r0)
+#16 5.177 (13/27) Upgrading libcurl (8.17.0-r1 -> 8.22.0-r0)
+#16 5.260 (14/27) Upgrading curl (8.17.0-r1 -> 8.22.0-r0)
+#16 5.314 (15/27) Upgrading musl-utils (1.2.5-r21 -> 1.2.5-r24)
+#16 5.363 (16/27) Upgrading pcre2 (10.47-r0 -> 10.49-r0)
+#16 5.439 (17/27) Upgrading libuuid (2.41.2-r0 -> 2.41.6-r1)
+#16 5.476 (18/27) Upgrading libxpm (3.5.17-r0 -> 3.5.19-r0)
+#16 5.520 (19/27) Upgrading aom-libs (3.13.1-r1 -> 3.14.1-r0)
+#16 6.078 (20/27) Upgrading libexpat (2.7.4-r0 -> 2.9.0-r0)
+#16 6.131 (21/27) Upgrading libpng (1.6.54-r0 -> 1.6.59-r0)
+#16 6.268 (22/27) Upgrading freetype (2.14.1-r0 -> 2.14.3-r0)
+#16 6.358 (23/27) Upgrading tiff (4.7.1-r0 -> 4.7.2-r0)
+#16 6.438 (24/27) Upgrading xz-libs (5.8.2-r0 -> 5.8.4-r0)
+#16 6.499 (25/27) Upgrading libxml2 (2.13.9-r0 -> 2.13.9-r1)
+#16 6.608 (26/27) Upgrading tzdata (2025c-r0 -> 2026e-r0)
+#16 6.729 (27/27) Purging nghttp3 (1.13.1-r0)
+#16 6.729 Executing busybox-1.37.0-r30.trigger
+#16 6.732 Executing ca-certificates-20261020-r0.trigger
+#16 6.767 OK: 50.9 MiB in 70 packages
+#16 8.134 OK: 50.9 MiB in 70 packages
+#16 DONE 8.2s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 1.0s done
+#17 exporting manifest sha256:0c3e03c27c4f4b294470972ce3e1e8ff70140c721e83e0c3972b21239b4fe3c6 0.0s done
+#17 exporting config sha256:7e3a8b67b745f3ea39a664b5e045d5157de3bb5bbb03fd246f4fb4b5cca58008 0.0s done
+#17 exporting attestation manifest sha256:8a568d578d296142783fbc06af54e91a94adb04145e1fe1e503454119364f281 0.0s done
+#17 exporting manifest list sha256:a80f6ae83c903d1a62a0817f1594a0fd16f0870493194f284b105247c36ce8bc 0.0s done
+#17 naming to docker.io/library/liora-validation-frontend:hardened done
+#17 unpacking to docker.io/library/liora-validation-frontend:hardened
+#17 unpacking to docker.io/library/liora-validation-frontend:hardened 0.2s done
+#17 DONE 1.3s

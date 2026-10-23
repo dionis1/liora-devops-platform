@@ -1,0 +1,216 @@
+MemAvailable KiB 4518196
+$ helm template monitoring kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --version 92.11.0 -n monitoring -f /home/dionis/backup/liora-devops-platform/monitoring/kube-prometheus-stack-values.yaml
+PASS Helm template: 112 objects
+RENDERED RESOURCE monitoring-prometheus-node-exporter node-exporter {'limits': {'memory': '64Mi'}, 'requests': {'cpu': '10m', 'memory': '16Mi'}}
+RENDERED RESOURCE monitoring-grafana grafana-sc-dashboard {'limits': {'memory': '192Mi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}
+RENDERED RESOURCE monitoring-grafana grafana-sc-datasources {'limits': {'memory': '192Mi'}, 'requests': {'cpu': '10m', 'memory': '64Mi'}}
+RENDERED RESOURCE monitoring-grafana grafana {'limits': {'memory': '192Mi'}, 'requests': {'cpu': '50m', 'memory': '64Mi'}}
+RENDERED RESOURCE monitoring-kube-state-metrics kube-state-metrics {'limits': {'memory': '96Mi'}, 'requests': {'cpu': '20m', 'memory': '32Mi'}}
+RENDERED RESOURCE monitoring-kube-prometheus-operator kube-prometheus-stack {'limits': {'memory': '192Mi'}, 'requests': {'cpu': '50m', 'memory': '64Mi'}}
+$ k3d cluster create liora-monitoring-20261022 --servers 1 --agents 0 --servers-memory 2048m --no-lb --api-port 127.0.0.1:16552 --kubeconfig-update-default=false --kubeconfig-switch-context=false --k3s-arg --disable=traefik,metrics-server@server:0 --timeout 120s
+[36mINFO[0m[0000] Prep: Network                                
+[36mINFO[0m[0000] Created network 'k3d-liora-monitoring-20261022' 
+[36mINFO[0m[0000] Created image volume k3d-liora-monitoring-20261022-images 
+[36mINFO[0m[0000] Starting new tools node...                   
+[36mINFO[0m[0000] Starting node 'k3d-liora-monitoring-20261022-tools' 
+[36mINFO[0m[0001] Creating node 'k3d-liora-monitoring-20261022-server-0' 
+[36mINFO[0m[0001] Using the k3d-tools node to gather environment information 
+[36mINFO[0m[0001] HostIP: using network gateway 172.28.0.1 address 
+[36mINFO[0m[0001] Starting cluster 'liora-monitoring-20261022' 
+[36mINFO[0m[0001] Starting servers...                          
+[36mINFO[0m[0001] Starting node 'k3d-liora-monitoring-20261022-server-0' 
+[36mINFO[0m[0007] All agents already running.                  
+[36mINFO[0m[0007] All helpers already running.                 
+[36mINFO[0m[0007] Injecting records for hostAliases (incl. host.k3d.internal) and for 1 network members into CoreDNS configmap... 
+[36mINFO[0m[0009] Cluster 'liora-monitoring-20261022' created successfully! 
+[36mINFO[0m[0009] You can now use it like this:                
+export KUBECONFIG=$(k3d kubeconfig write liora-monitoring-20261022)
+kubectl cluster-info
+$ k3d kubeconfig get liora-monitoring-20261022
+$ kubectl --kubeconfig /tmp/liora-validation/monitoring-kubeconfig create namespace monitoring
+namespace/monitoring created
+$ kubectl --kubeconfig /tmp/liora-validation/monitoring-kubeconfig -n monitoring create secret generic grafana-admin --from-env-file=/tmp/liora-validation/grafana.env
+secret/grafana-admin created
+$ helm --kubeconfig /tmp/liora-validation/monitoring-kubeconfig install monitoring kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --version 92.11.0 -n monitoring -f /home/dionis/backup/liora-devops-platform/monitoring/kube-prometheus-stack-values.yaml --wait --timeout 450s
+NAME: monitoring
+LAST DEPLOYED: Thu Oct 22 22:37:15 2026
+NAMESPACE: monitoring
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+kube-prometheus-stack has been installed. Check its status by running:
+  kubectl --namespace monitoring get pods -l "release=monitoring"
+
+Get Grafana 'admin' user password by running:
+
+  kubectl --namespace monitoring get secrets monitoring-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+
+Access Grafana local instance:
+
+  export POD_NAME=$(kubectl --namespace monitoring get pod -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance=monitoring" -oname)
+  kubectl --namespace monitoring port-forward $POD_NAME 3000
+
+Get your grafana admin user password by running:
+
+  kubectl get secret --namespace monitoring -l app.kubernetes.io/component=admin-secret -o jsonpath="{.items[0].data.admin-password}" | base64 --decode ; echo
+
+
+Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
+$ kubectl --kubeconfig /tmp/liora-validation/monitoring-kubeconfig -n monitoring get pods,services,pvc
+NAME                                                         READY   STATUS    RESTARTS   AGE
+pod/alertmanager-monitoring-kube-prometheus-alertmanager-0   2/2     Running   0          4m46s
+pod/monitoring-grafana-bcf9fffc9-ts7h6                       3/3     Running   0          23s
+pod/monitoring-kube-prometheus-operator-69f84d889-lrwm4      1/1     Running   0          5m8s
+pod/monitoring-kube-state-metrics-65ddf759fc-p7qcs           1/1     Running   0          5m8s
+pod/monitoring-prometheus-node-exporter-hmpp5                1/1     Running   0          5m8s
+pod/prometheus-monitoring-kube-prometheus-prometheus-0       2/2     Running   0          4m45s
+
+NAME                                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+service/alertmanager-operated                     ClusterIP   None            <none>        9093/TCP,9094/TCP,9094/UDP   4m46s
+service/monitoring-grafana                        ClusterIP   10.43.72.29     <none>        80/TCP                       5m8s
+service/monitoring-kube-prometheus-alertmanager   ClusterIP   10.43.149.45    <none>        9093/TCP,8080/TCP            5m8s
+service/monitoring-kube-prometheus-operator       ClusterIP   10.43.199.19    <none>        443/TCP                      5m8s
+service/monitoring-kube-prometheus-prometheus     ClusterIP   10.43.200.71    <none>        9090/TCP,8080/TCP            5m8s
+service/monitoring-kube-state-metrics             ClusterIP   10.43.88.70     <none>        8080/TCP                     5m8s
+service/monitoring-prometheus-node-exporter       ClusterIP   10.43.202.148   <none>        9100/TCP                     5m8s
+service/prometheus-operated                       ClusterIP   None            <none>        9090/TCP                     4m45s
+
+NAME                                                                                                                           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/prometheus-monitoring-kube-prometheus-prometheus-db-prometheus-monitoring-kube-prometheus-prometheus-0   Bound    pvc-ebaeb60c-30c3-43f9-ad7b-acfda970a314   5Gi        RWO            local-path     <unset>                 4m45s
+PASS grafana HTTP 200 {
+  "database": "ok",
+  "version": "13.2.4",
+  "commit": "0e79aef9d91abf3bdadae9af15763029072fb45b"
+}
+PASS prometheus HTTP 200 Prometheus Server is Healthy.
+
+PASS Prometheus metrics collection: 13 up samples; 12 healthy targets
+SCRAPE kube-state-metrics 1
+SCRAPE kubelet 1
+SCRAPE monitoring-kube-prometheus-operator 1
+SCRAPE kubelet 1
+SCRAPE monitoring-kube-prometheus-alertmanager 1
+SCRAPE monitoring-kube-prometheus-prometheus 1
+SCRAPE coredns 1
+SCRAPE monitoring-kube-prometheus-alertmanager 1
+SCRAPE node-exporter 1
+SCRAPE apiserver 1
+SCRAPE kubelet 1
+SCRAPE monitoring-kube-prometheus-prometheus 1
+SCRAPE monitoring-grafana 0
+PASS alertmanager HTTP 200 OK
+NAME                                                         READY   STATUS    RESTARTS   AGE
+pod/alertmanager-monitoring-kube-prometheus-alertmanager-0   2/2     Running   0          4m50s
+pod/monitoring-grafana-bcf9fffc9-ts7h6                       3/3     Running   0          27s
+pod/monitoring-kube-prometheus-operator-69f84d889-lrwm4      1/1     Running   0          5m12s
+pod/monitoring-kube-state-metrics-65ddf759fc-p7qcs           1/1     Running   0          5m12s
+pod/monitoring-prometheus-node-exporter-hmpp5                1/1     Running   0          5m12s
+pod/prometheus-monitoring-kube-prometheus-prometheus-0       2/2     Running   0          4m49s
+
+LAST SEEN   TYPE      REASON                  OBJECT                                                                                                                         MESSAGE
+4m49s       Normal    Scheduled               pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Successfully assigned monitoring/alertmanager-monitoring-kube-prometheus-alertmanager-0 to k3d-liora-monitoring-20261022-server-0
+4m49s       Normal    Pulling                 pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Pulling image "quay.io/prometheus-operator/prometheus-config-reloader:v0.94.1"
+4m39s       Normal    Pulled                  pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Successfully pulled image "quay.io/prometheus-operator/prometheus-config-reloader:v0.94.1" in 9.616s (9.616s including waiting). Image size: 14893664 bytes.
+4m39s       Normal    Created                 pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Container created
+4m39s       Normal    Started                 pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Container started
+4m38s       Normal    Pulling                 pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Pulling image "quay.io/prometheus/alertmanager:v0.34.1"
+3m21s       Normal    Pulled                  pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Successfully pulled image "quay.io/prometheus/alertmanager:v0.34.1" in 1m17.141s (1m17.141s including waiting). Image size: 40730411 bytes.
+3m21s       Normal    Created                 pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Container created
+3m21s       Normal    Started                 pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Container started
+3m21s       Normal    Pulled                  pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Container image "quay.io/prometheus-operator/prometheus-config-reloader:v0.94.1" already present on machine and can be accessed by the pod
+3m21s       Normal    Created                 pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Container created
+3m21s       Normal    Started                 pod/alertmanager-monitoring-kube-prometheus-alertmanager-0                                                                     Container started
+4m50s       Normal    SuccessfulCreate        statefulset/alertmanager-monitoring-kube-prometheus-alertmanager                                                               Create Pod alertmanager-monitoring-kube-prometheus-alertmanager-0 in StatefulSet alertmanager-monitoring-kube-prometheus-alertmanager successful
+5m11s       Normal    Scheduled               pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Successfully assigned monitoring/monitoring-grafana-8684c4dfcc-tn5zb to k3d-liora-monitoring-20261022-server-0
+5m11s       Normal    Pulling                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Pulling image "quay.io/kiwigrid/k8s-sidecar:2.14.1"
+4m42s       Normal    Pulled                  pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Successfully pulled image "quay.io/kiwigrid/k8s-sidecar:2.14.1" in 28.956s (28.956s including waiting). Image size: 29200776 bytes.
+4m42s       Normal    Created                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Container created
+4m42s       Normal    Started                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Container started
+4m42s       Normal    Pulled                  pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Container image "quay.io/kiwigrid/k8s-sidecar:2.14.1" already present on machine and can be accessed by the pod
+4m42s       Normal    Created                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Container created
+4m42s       Normal    Started                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Container started
+4m42s       Normal    Pulling                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Pulling image "docker.io/grafana/grafana:13.2.4-distroless"
+2m43s       Normal    Pulled                  pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Successfully pulled image "docker.io/grafana/grafana:13.2.4-distroless" in 1m59.306s (1m59.306s including waiting). Image size: 464079275 bytes.
+35s         Normal    Created                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Container created
+35s         Normal    Started                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Container started
+35s         Warning   Unhealthy               pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Readiness probe failed: Get "http://10.42.0.7:3000/api/health": dial tcp 10.42.0.7:3000: connect: connection refused
+41s         Warning   Unhealthy               pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Liveness probe failed: Get "http://10.42.0.7:3000/api/health": dial tcp 10.42.0.7:3000: connect: connection refused
+35s         Normal    Pulled                  pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Container image "docker.io/grafana/grafana:13.2.4-distroless" already present on machine and can be accessed by the pod
+21s         Warning   BackOff                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Back-off restarting failed container grafana in pod monitoring-grafana-8684c4dfcc-tn5zb_monitoring(7c3e5f14-20db-405e-9bf5-4c67800dc16e)
+14s         Normal    Killing                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Stopping container grafana-sc-dashboard
+14s         Normal    Killing                 pod/monitoring-grafana-8684c4dfcc-tn5zb                                                                                        Stopping container grafana-sc-datasources
+5m12s       Normal    SuccessfulCreate        replicaset/monitoring-grafana-8684c4dfcc                                                                                       Created pod: monitoring-grafana-8684c4dfcc-tn5zb
+14s         Normal    SuccessfulDelete        replicaset/monitoring-grafana-8684c4dfcc                                                                                       Deleted pod: monitoring-grafana-8684c4dfcc-tn5zb
+26s         Normal    Scheduled               pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Successfully assigned monitoring/monitoring-grafana-bcf9fffc9-ts7h6 to k3d-liora-monitoring-20261022-server-0
+26s         Normal    Pulled                  pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Container image "quay.io/kiwigrid/k8s-sidecar:2.14.1" already present on machine and can be accessed by the pod
+26s         Normal    Created                 pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Container created
+26s         Normal    Started                 pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Container started
+26s         Normal    Pulled                  pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Container image "quay.io/kiwigrid/k8s-sidecar:2.14.1" already present on machine and can be accessed by the pod
+26s         Normal    Created                 pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Container created
+26s         Normal    Started                 pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Container started
+26s         Normal    Pulled                  pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Container image "docker.io/grafana/grafana:13.2.4-distroless" already present on machine and can be accessed by the pod
+26s         Normal    Created                 pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Container created
+26s         Normal    Started                 pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Container started
+24s         Warning   Unhealthy               pod/monitoring-grafana-bcf9fffc9-ts7h6                                                                                         Readiness probe failed: Get "http://10.42.0.11:3000/api/health": dial tcp 10.42.0.11:3000: connect: connection refused
+27s         Normal    SuccessfulCreate        replicaset/monitoring-grafana-bcf9fffc9                                                                                        Created pod: monitoring-grafana-bcf9fffc9-ts7h6
+5m12s       Normal    ScalingReplicaSet       deployment/monitoring-grafana                                                                                                  Scaled up replica set monitoring-grafana-8684c4dfcc from 0 to 1
+27s         Normal    ScalingReplicaSet       deployment/monitoring-grafana                                                                                                  Scaled up replica set monitoring-grafana-bcf9fffc9 from 0 to 1
+14s         Normal    ScalingReplicaSet       deployment/monitoring-grafana                                                                                                  Scaled down replica set monitoring-grafana-8684c4dfcc from 1 to 0
+5m24s       Normal    Scheduled               pod/monitoring-kube-prometheus-admission-create-sp82z                                                                          Successfully assigned monitoring/monitoring-kube-prometheus-admission-create-sp82z to k3d-liora-monitoring-20261022-server-0
+5m20s       Normal    Pulling                 pod/monitoring-kube-prometheus-admission-create-sp82z                                                                          Pulling image "ghcr.io/jkroepke/kube-webhook-certgen:1.11.0"
+5m16s       Normal    Pulled                  pod/monitoring-kube-prometheus-admission-create-sp82z                                                                          Successfully pulled image "ghcr.io/jkroepke/kube-webhook-certgen:1.11.0" in 4.017s (4.017s including waiting). Image size: 9490613 bytes.
+5m16s       Normal    Created                 pod/monitoring-kube-prometheus-admission-create-sp82z                                                                          Container created
+5m16s       Normal    Started                 pod/monitoring-kube-prometheus-admission-create-sp82z                                                                          Container started
+5m25s       Normal    SuccessfulCreate        job/monitoring-kube-prometheus-admission-create                                                                                Created pod: monitoring-kube-prometheus-admission-create-sp82z
+5m13s       Normal    Completed               job/monitoring-kube-prometheus-admission-create                                                                                Job completed
+8s          Normal    Scheduled               pod/monitoring-kube-prometheus-admission-patch-np4nh                                                                           Successfully assigned monitoring/monitoring-kube-prometheus-admission-patch-np4nh to k3d-liora-monitoring-20261022-server-0
+8s          Normal    Pulled                  pod/monitoring-kube-prometheus-admission-patch-np4nh                                                                           Container image "ghcr.io/jkroepke/kube-webhook-certgen:1.11.0" already present on machine and can be accessed by the pod
+8s          Normal    Created                 pod/monitoring-kube-prometheus-admission-patch-np4nh                                                                           Container created
+8s          Normal    Started                 pod/monitoring-kube-prometheus-admission-patch-np4nh                                                                           Container started
+9s          Normal    SuccessfulCreate        job/monitoring-kube-prometheus-admission-patch                                                                                 Created pod: monitoring-kube-prometheus-admission-patch-np4nh
+5s          Normal    Completed               job/monitoring-kube-prometheus-admission-patch                                                                                 Job completed
+5m11s       Normal    Scheduled               pod/monitoring-kube-prometheus-operator-69f84d889-lrwm4                                                                        Successfully assigned monitoring/monitoring-kube-prometheus-operator-69f84d889-lrwm4 to k3d-liora-monitoring-20261022-server-0
+5m11s       Normal    Pulling                 pod/monitoring-kube-prometheus-operator-69f84d889-lrwm4                                                                        Pulling image "quay.io/prometheus-operator/prometheus-operator:v0.94.1"
+4m50s       Normal    Pulled                  pod/monitoring-kube-prometheus-operator-69f84d889-lrwm4                                                                        Successfully pulled image "quay.io/prometheus-operator/prometheus-operator:v0.94.1" in 21.08s (21.08s including waiting). Image size: 22572616 bytes.
+4m50s       Normal    Created                 pod/monitoring-kube-prometheus-operator-69f84d889-lrwm4                                                                        Container created
+4m50s       Normal    Started                 pod/monitoring-kube-prometheus-operator-69f84d889-lrwm4                                                                        Container started
+4m50s       Warning   Unhealthy               pod/monitoring-kube-prometheus-operator-69f84d889-lrwm4                                                                        Readiness probe failed: Get "https://10.42.0.6:10250/healthz": dial tcp 10.42.0.6:10250: connect: connection refused
+5m12s       Normal    SuccessfulCreate        replicaset/monitoring-kube-prometheus-operator-69f84d889                                                                       Created pod: monitoring-kube-prometheus-operator-69f84d889-lrwm4
+5m12s       Normal    ScalingReplicaSet       deployment/monitoring-kube-prometheus-operator                                                                                 Scaled up replica set monitoring-kube-prometheus-operator-69f84d889 from 0 to 1
+5m11s       Normal    Scheduled               pod/monitoring-kube-state-metrics-65ddf759fc-p7qcs                                                                             Successfully assigned monitoring/monitoring-kube-state-metrics-65ddf759fc-p7qcs to k3d-liora-monitoring-20261022-server-0
+5m11s       Normal    Pulling                 pod/monitoring-kube-state-metrics-65ddf759fc-p7qcs                                                                             Pulling image "registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.20.0"
+4m43s       Normal    Pulled                  pod/monitoring-kube-state-metrics-65ddf759fc-p7qcs                                                                             Successfully pulled image "registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.20.0" in 28.838s (28.838s including waiting). Image size: 19261896 bytes.
+4m42s       Normal    Created                 pod/monitoring-kube-state-metrics-65ddf759fc-p7qcs                                                                             Container created
+4m42s       Normal    Started                 pod/monitoring-kube-state-metrics-65ddf759fc-p7qcs                                                                             Container started
+5m12s       Normal    SuccessfulCreate        replicaset/monitoring-kube-state-metrics-65ddf759fc                                                                            Created pod: monitoring-kube-state-metrics-65ddf759fc-p7qcs
+5m12s       Normal    ScalingReplicaSet       deployment/monitoring-kube-state-metrics                                                                                       Scaled up replica set monitoring-kube-state-metrics-65ddf759fc from 0 to 1
+5m11s       Normal    Scheduled               pod/monitoring-prometheus-node-exporter-hmpp5                                                                                  Successfully assigned monitoring/monitoring-prometheus-node-exporter-hmpp5 to k3d-liora-monitoring-20261022-server-0
+5m11s       Normal    Pulling                 pod/monitoring-prometheus-node-exporter-hmpp5                                                                                  Pulling image "quay.io/prometheus/node-exporter:v1.12.1-distroless"
+4m53s       Normal    Pulled                  pod/monitoring-prometheus-node-exporter-hmpp5                                                                                  Successfully pulled image "quay.io/prometheus/node-exporter:v1.12.1-distroless" in 18.1s (18.1s including waiting). Image size: 13123706 bytes.
+4m53s       Normal    Created                 pod/monitoring-prometheus-node-exporter-hmpp5                                                                                  Container created
+4m53s       Normal    Started                 pod/monitoring-prometheus-node-exporter-hmpp5                                                                                  Container started
+5m12s       Normal    SuccessfulCreate        daemonset/monitoring-prometheus-node-exporter                                                                                  Created pod: monitoring-prometheus-node-exporter-hmpp5
+4m38s       Normal    Scheduled               pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Successfully assigned monitoring/prometheus-monitoring-kube-prometheus-prometheus-0 to k3d-liora-monitoring-20261022-server-0
+4m39s       Normal    Pulled                  pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Container image "quay.io/prometheus-operator/prometheus-config-reloader:v0.94.1" already present on machine and can be accessed by the pod
+4m39s       Normal    Created                 pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Container created
+4m39s       Normal    Started                 pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Container started
+4m38s       Normal    Pulling                 pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Pulling image "quay.io/prometheus/prometheus:v3.15.0-distroless"
+3m37s       Normal    Pulled                  pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Successfully pulled image "quay.io/prometheus/prometheus:v3.15.0-distroless" in 1m1.232s (1m1.232s including waiting). Image size: 113793870 bytes.
+3m37s       Normal    Created                 pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Container created
+3m37s       Normal    Started                 pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Container started
+3m37s       Normal    Pulled                  pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Container image "quay.io/prometheus-operator/prometheus-config-reloader:v0.94.1" already present on machine and can be accessed by the pod
+3m37s       Normal    Created                 pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Container created
+3m37s       Normal    Started                 pod/prometheus-monitoring-kube-prometheus-prometheus-0                                                                         Container started
+4m49s       Normal    WaitForFirstConsumer    persistentvolumeclaim/prometheus-monitoring-kube-prometheus-prometheus-db-prometheus-monitoring-kube-prometheus-prometheus-0   waiting for first consumer to be created before binding
+4m49s       Normal    ExternalProvisioning    persistentvolumeclaim/prometheus-monitoring-kube-prometheus-prometheus-db-prometheus-monitoring-kube-prometheus-prometheus-0   Waiting for a volume to be created either by the external provisioner 'rancher.io/local-path' or manually by the system administrator. If volume creation is delayed, please verify that the provisioner is running and correctly registered.
+4m49s       Normal    Provisioning            persistentvolumeclaim/prometheus-monitoring-kube-prometheus-prometheus-db-prometheus-monitoring-kube-prometheus-prometheus-0   External provisioner is provisioning volume for claim "monitoring/prometheus-monitoring-kube-prometheus-prometheus-db-prometheus-monitoring-kube-prometheus-prometheus-0"
+4m40s       Normal    ProvisioningSucceeded   persistentvolumeclaim/prometheus-monitoring-kube-prometheus-prometheus-db-prometheus-monitoring-kube-prometheus-prometheus-0   Successfully provisioned volume pvc-ebaeb60c-30c3-43f9-ad7b-acfda970a314
+4m49s       Normal    SuccessfulCreate        statefulset/prometheus-monitoring-kube-prometheus-prometheus                                                                   Create Claim prometheus-monitoring-kube-prometheus-prometheus-db-prometheus-monitoring-kube-prometheus-prometheus-0 Pod prometheus-monitoring-kube-prometheus-prometheus-0 in StatefulSet prometheus-monitoring-kube-prometheus-prometheus success
+4m49s       Normal    SuccessfulCreate        statefulset/prometheus-monitoring-kube-prometheus-prometheus                                                                   Create Pod prometheus-monitoring-kube-prometheus-prometheus-0 in StatefulSet prometheus-monitoring-kube-prometheus-prometheus successful
+[36mINFO[0m[0000] Deleting cluster 'liora-monitoring-20261022' 
+[36mINFO[0m[0001] Deleting cluster network 'k3d-liora-monitoring-20261022' 
+[36mINFO[0m[0002] Deleting 1 attached volumes...               
+[36mINFO[0m[0002] Removing cluster details from default kubeconfig... 
+[36mINFO[0m[0002] Removing standalone kubeconfig file (if there is one)... 
+[36mINFO[0m[0002] Successfully deleted cluster liora-monitoring-20261022! 

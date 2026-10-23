@@ -1,0 +1,22 @@
+{
+  "status": "success",
+  "data": {
+    "alerts": [
+      {
+        "labels": {
+          "alertname": "LioraApplicationUnavailable",
+          "instance": "backend:8000",
+          "job": "backend",
+          "severity": "critical"
+        },
+        "annotations": {
+          "description": "Inspect pod readiness, database connectivity and the backend Service.",
+          "summary": "DataScientest backend metrics endpoint is unavailable"
+        },
+        "state": "firing",
+        "activeAt": "2026-10-23T07:38:09.481986186Z",
+        "value": "0e+00"
+      }
+    ]
+  }
+}

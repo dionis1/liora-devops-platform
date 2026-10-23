@@ -4,8 +4,9 @@
 flowchart TD
   Dev[Developer] --> GH[GitHub main]
   GH --> CI[GitHub Actions: pytest and Docker]
-  CI --> REG[GHCR images sha tag]
-  CI --> GITOPS[deploy/dev branch]
+  CI --> SCAN[Trivy source and image gates]
+  SCAN --> REG[Publish exact scanned images to GHCR]
+  REG --> GITOPS[deploy/dev validated manifests and SHA tags]
   GITOPS --> ARGO[Argo CD auto-sync dev]
   GH --> PRODPROMO[Reviewed image tag PR]
   PRODPROMO --> PRODAPP[Argo CD manual sync prod]
@@ -32,4 +33,4 @@ This is a **single physical VM** lab: prod and dev are separated by Kubernetes n
 - Terraform: create/recreate cloud VM, firewall, private network, SSH key
 - Ansible: provision Ubuntu prerequisites and pinned k3s
 - Kubernetes: deploy frontend, backend, database, Services, Ingress, namespace-scoped secrets
-- Monitoring: kube-prometheus-stack for cluster and workload metrics; application /metrics isn't implemented upstream
+- Monitoring: kube-prometheus-stack for cluster and workload metrics; the reviewed platform patch exposes internal application metrics and database readiness

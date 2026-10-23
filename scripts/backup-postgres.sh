@@ -7,10 +7,14 @@ case "$NAMESPACE" in
   *) echo "Invalid namespace"; exit 1 ;;
 esac
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-DEST="$ROOT/.secrets/backups"
-mkdir -p "$DEST"
+DEST="${BACKUP_DIR:-$ROOT/.secrets/backups}"
 umask 077
-FILE="$DEST/${NAMESPACE}-$(date -u +%Y%m%dT%H%M%SZ).dump"
-kubectl -n "$NAMESPACE" exec postgres-0 -- pg_dump -U app -d app -Fc > "$FILE"
-test -s "$FILE"
+mkdir -p "$DEST"
+TEMP="$(mktemp "$DEST/${NAMESPACE}-$(date -u +%Y%m%dT%H%M%SZ).XXXXXX.tmp")"
+FILE="${TEMP%.tmp}.dump"
+trap 'rm -f -- "$TEMP"' EXIT
+kubectl -n "$NAMESPACE" exec postgres-0 -- pg_dump -U app -d app -Fc > "$TEMP"
+test -s "$TEMP"
+# Publish only a successful dump, atomically, without replacing another backup.
+ln -- "$TEMP" "$FILE"
 echo "Backup saved to $FILE (copy to offline/encrypted storage)"

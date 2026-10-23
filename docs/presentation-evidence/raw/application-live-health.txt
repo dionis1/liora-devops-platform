@@ -1,0 +1,11 @@
+Captured UTC: 2026-10-23T08:09:57.399930+00:00
+Fixture: loopback-only Docker; isolated PostgreSQL 16.10, no Kubernetes or monitoring.
+$ GET http://127.0.0.1:18000/api/v1/utils/health-check/
+HTTP 200
+true
+$ GET http://127.0.0.1:18000/readyz
+HTTP 200
+ready
+$ GET http://127.0.0.1:18081/login
+HTTP 200
+477 bytes of actual frontend HTML

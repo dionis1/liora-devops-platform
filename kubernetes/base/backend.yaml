@@ -2,13 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend
+  labels:
+    app: backend
 spec:
   selector:
     app: backend
   ports:
-    - name: http
-      port: 8000
-      targetPort: 8000
+  - name: http
+    port: 8000
+    targetPort: 8000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -24,45 +26,98 @@ spec:
       labels:
         app: backend
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
       imagePullSecrets:
-        - name: ghcr-pull
+      - name: ghcr-pull
       initContainers:
-        # Single replica only: migrations run before serving; a dedicated Job
-        # is required before scaling to multiple replicas.
-        - name: migrate
-          image: ghcr.io/dionis1/liora-devops-platform-backend:sha-bootstrap
-          command: ["bash", "scripts/prestart.sh"]
-          envFrom:
-            - configMapRef:
-                name: course-app-config
-            - secretRef:
-                name: course-app-secrets
+      - name: migrate
+        image: ghcr.io/dionis1/liora-devops-platform-backend:sha-bootstrap
+        command:
+        - bash
+        - scripts/prestart.sh
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+            cpu: '1'
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        envFrom:
+        - configMapRef:
+            name: course-app-config
+        - secretRef:
+            name: course-app-secrets
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
       containers:
-        - name: backend
-          image: ghcr.io/dionis1/liora-devops-platform-backend:sha-bootstrap
-          command: ["fastapi", "run", "--workers", "1", "app/main.py"]
-          ports:
-            - name: http
-              containerPort: 8000
-          envFrom:
-            - configMapRef:
-                name: course-app-config
-            - secretRef:
-                name: course-app-secrets
-          readinessProbe:
-            httpGet:
-              path: /api/v1/utils/health-check/
-              port: http
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /api/v1/utils/health-check/
-              port: http
-            initialDelaySeconds: 15
-            periodSeconds: 20
-          resources:
-            requests:
-              cpu: 100m
-              memory: 256Mi
-            limits:
-              memory: 1Gi
+      - name: backend
+        image: ghcr.io/dionis1/liora-devops-platform-backend:sha-bootstrap
+        command:
+        - uvicorn
+        - app.platform_metrics:app
+        - --host
+        - 0.0.0.0
+        - --port
+        - '8000'
+        - --workers
+        - '1'
+        ports:
+        - name: http
+          containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: course-app-config
+        - secretRef:
+            name: course-app-secrets
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        startupProbe:
+          httpGet:
+            path: /api/v1/utils/health-check/
+            port: http
+          failureThreshold: 30
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http
+          periodSeconds: 10
+          timeoutSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /api/v1/utils/health-check/
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            memory: 1Gi
+            cpu: '1'
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        emptyDir:
+          medium: Memory
+          sizeLimit: 64Mi

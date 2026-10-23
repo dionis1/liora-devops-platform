@@ -1,0 +1,16 @@
+{
+  "test_containers_remaining": [],
+  "test_clusters_remaining": [],
+  "test_processes_remaining": [],
+  "original_running_container_ids": [
+    "ae311182c043",
+    "b713c0e6b5fa",
+    "5783f938700e",
+    "852b0c58d8a4"
+  ],
+  "preserved_existing_clusters": [
+    "flagship-platform",
+    "gitlab-gitops"
+  ],
+  "generated_credentials_kubeconfigs_and_dump_removed": true
+}

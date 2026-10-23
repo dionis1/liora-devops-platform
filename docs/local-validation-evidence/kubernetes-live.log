@@ -1,0 +1,81 @@
+MemAvailable KiB 4569764
+$ k3d cluster create liora-validation-20261022 --servers 1 --agents 0 --servers-memory 2048m --no-lb --api-port 127.0.0.1:16550 --kubeconfig-update-default=false --kubeconfig-switch-context=false --k3s-arg --disable=metrics-server@server:0 --timeout 120s
+[36mINFO[0m[0000] Prep: Network                                
+[36mINFO[0m[0000] Created network 'k3d-liora-validation-20261022' 
+[36mINFO[0m[0000] Created image volume k3d-liora-validation-20261022-images 
+[36mINFO[0m[0000] Starting new tools node...                   
+[36mINFO[0m[0000] Starting node 'k3d-liora-validation-20261022-tools' 
+[36mINFO[0m[0001] Creating node 'k3d-liora-validation-20261022-server-0' 
+[36mINFO[0m[0001] Using the k3d-tools node to gather environment information 
+[36mINFO[0m[0001] HostIP: using network gateway 172.28.0.1 address 
+[36mINFO[0m[0001] Starting cluster 'liora-validation-20261022' 
+[36mINFO[0m[0001] Starting servers...                          
+[36mINFO[0m[0001] Starting node 'k3d-liora-validation-20261022-server-0' 
+[36mINFO[0m[0007] All agents already running.                  
+[36mINFO[0m[0007] All helpers already running.                 
+[36mINFO[0m[0007] Injecting records for hostAliases (incl. host.k3d.internal) and for 1 network members into CoreDNS configmap... 
+[36mINFO[0m[0009] Cluster 'liora-validation-20261022' created successfully! 
+[36mINFO[0m[0009] You can now use it like this:                
+export KUBECONFIG=$(k3d kubeconfig write liora-validation-20261022)
+kubectl cluster-info
+$ k3d kubeconfig get liora-validation-20261022
+$ k3d image import liora-validation-backend:hardened liora-validation-frontend:hardened -c liora-validation-20261022
+[36mINFO[0m[0000] Importing image(s) into cluster 'liora-validation-20261022' 
+[36mINFO[0m[0000] Starting new tools node...                   
+[36mINFO[0m[0000] Starting node 'k3d-liora-validation-20261022-tools' 
+[36mINFO[0m[0001] Saving 2 image(s) from runtime...            
+[36mINFO[0m[0003] Importing images into nodes...               
+[36mINFO[0m[0003] Importing images from tarball '/k3d/images/k3d-liora-validation-20261022-images-20261022222427.tar' into node 'k3d-liora-validation-20261022-server-0'... 
+[36mINFO[0m[0008] Removing the tarball(s) from image volume... 
+[36mINFO[0m[0009] Removing k3d-tools node...                   
+[36mINFO[0m[0009] Successfully imported image(s)               
+[36mINFO[0m[0009] Successfully imported 2 image(s) into 1 cluster(s) 
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig create namespace liora-dev
+namespace/liora-dev created
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n liora-dev create secret generic course-app-secrets --from-env-file=/tmp/liora-validation/k8s-secrets.env
+secret/course-app-secrets created
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig apply -f /tmp/liora-validation/local-dev.yaml
+configmap/course-app-config created
+service/backend created
+service/frontend created
+service/postgres created
+deployment.apps/backend created
+deployment.apps/frontend created
+statefulset.apps/postgres created
+ingress.networking.k8s.io/course-app created
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n liora-dev rollout status statefulset/postgres --timeout=180s
+Waiting for statefulset spec update to be observed...
+Waiting for 1 pods to be ready...
+Waiting for 1 pods to be ready...
+partitioned roll out complete: 1 new pods have been updated...
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n liora-dev rollout status deployment/backend --timeout=180s
+Waiting for deployment "backend" rollout to finish: 0 of 1 updated replicas are available...
+deployment "backend" successfully rolled out
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n liora-dev rollout status deployment/frontend --timeout=120s
+deployment "frontend" successfully rolled out
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n liora-dev get pods,services,pvc -o wide
+NAME                            READY   STATUS    RESTARTS   AGE   IP           NODE                                     NOMINATED NODE   READINESS GATES
+pod/backend-7c68bc5756-kp6d9    1/1     Running   0          91s   10.42.0.5    k3d-liora-validation-20261022-server-0   <none>           <none>
+pod/frontend-6cf897bd8b-ftnsj   1/1     Running   0          91s   10.42.0.4    k3d-liora-validation-20261022-server-0   <none>           <none>
+pod/postgres-0                  1/1     Running   0          91s   10.42.0.11   k3d-liora-validation-20261022-server-0   <none>           <none>
+
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE   SELECTOR
+service/backend    ClusterIP   10.43.81.95     <none>        8000/TCP   92s   app=backend
+service/frontend   ClusterIP   10.43.225.144   <none>        80/TCP     92s   app=frontend
+service/postgres   ClusterIP   10.43.77.183    <none>        5432/TCP   92s   app=postgres
+
+NAME                                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE   VOLUMEMODE
+persistentvolumeclaim/dbdata-postgres-0   Bound    pvc-48cd8e3f-bb18-46c1-bf5b-17f6f3cde912   8Gi        RWO            local-path     <unset>                 91s   Filesystem
+PASS HTTP http://127.0.0.1:18000/api/v1/utils/health-check/ host None bytes 4
+PASS HTTP http://127.0.0.1:18081/ host None bytes 477
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n kube-system rollout status deployment/traefik --timeout=120s
+deployment "traefik" successfully rolled out
+PASS HTTP http://127.0.0.1:18080/api/v1/utils/health-check/ host dev.validation.test bytes 4
+PASS HTTP http://127.0.0.1:18080/ host dev.validation.test bytes 477
+PASS development deployment, PVC, migrations, readiness, frontend, backend and Traefik routing
+[36mINFO[0m[0000] Deleting cluster 'liora-validation-20261022' 
+[36mINFO[0m[0001] Deleting cluster network 'k3d-liora-validation-20261022' 
+[36mINFO[0m[0001] Deleting 1 attached volumes...               
+[36mINFO[0m[0001] Removing cluster details from default kubeconfig... 
+[36mINFO[0m[0001] Removing standalone kubeconfig file (if there is one)... 
+[36mINFO[0m[0001] Successfully deleted cluster liora-validation-20261022! 

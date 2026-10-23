@@ -1,0 +1,1055 @@
+{
+  "capture_date": "2026-10-23",
+  "timezone": "Europe/Tirane",
+  "source_commit": "211199da8c52caf07199b155fb6baf28deb5b1f4",
+  "requirements": [
+    {
+      "number": 1,
+      "title": "Dockerize Your Application",
+      "directory": "01-dockerize-your-application"
+    },
+    {
+      "number": 2,
+      "title": "Deploy the Application in Multiple Environments (Dev & Prod)",
+      "directory": "02-deploy-the-application-in-multiple-environments-dev-prod"
+    },
+    {
+      "number": 3,
+      "title": "Run Tests on the Application",
+      "directory": "03-run-tests-on-the-application"
+    },
+    {
+      "number": 4,
+      "title": "Container Orchestration with Kubernetes",
+      "directory": "04-container-orchestration-with-kubernetes"
+    },
+    {
+      "number": 5,
+      "title": "Automate Deployment (CI/CD Pipeline)",
+      "directory": "05-automate-deployment-ci-cd-pipeline"
+    },
+    {
+      "number": 6,
+      "title": "Create IaC (Infrastructure as Code) Templates",
+      "directory": "06-create-iac-infrastructure-as-code-templates"
+    },
+    {
+      "number": 7,
+      "title": "Monitor the Application",
+      "directory": "07-monitor-the-application"
+    },
+    {
+      "number": 8,
+      "title": "Think About Security (DevSecOps)",
+      "directory": "08-think-about-security-devsecops"
+    },
+    {
+      "number": 9,
+      "title": "Think About Disaster Recovery",
+      "directory": "09-think-about-disaster-recovery"
+    },
+    {
+      "number": 10,
+      "title": "Documentation",
+      "directory": "10-documentation"
+    }
+  ],
+  "status_legend": {
+    "PASSED": "The narrow observed check passed, not the entire requirement.",
+    "FAILED": "The shown policy/integration failed; no success is implied.",
+    "PARTIALLY_VALIDATED": "Configuration/static evidence, with stated runtime gaps.",
+    "NOT_YET_TESTED": "No execution proof; use the missing-evidence register."
+  },
+  "screenshots": [
+    {
+      "id": "E01",
+      "requirement": 1,
+      "supports": [
+        1
+      ],
+      "title": "FastAPI Swagger documentation",
+      "file": "01-dockerize-your-application/fastapi-swagger.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Python 3.12 / FastAPI 0.161.0",
+      "result": "PASSED",
+      "scope": "Original patched upstream app; screenshot fixture had no database.",
+      "command": "Open http://127.0.0.1:18000/docs",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-report.md",
+          "sha256": "23c7ea70aaaa8e6082f14408b50aa377f5a3998c6f131329ff59cac43bcca233"
+        }
+      ],
+      "sha256": "a13cac067cbcb8d1ef41ecaaee520019711a7fa9109941e61386709540c6511a"
+    },
+    {
+      "id": "E02",
+      "requirement": 1,
+      "supports": [
+        1
+      ],
+      "title": "Original React login page",
+      "file": "01-dockerize-your-application/react-login.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "React 18 / Vite 6.4.4",
+      "result": "PASSED",
+      "scope": "Login form rendering only. Authenticated functionality is proved separately by E06\u2013E07.",
+      "command": "Open http://127.0.0.1:18081/login",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-report.md",
+          "sha256": "23c7ea70aaaa8e6082f14408b50aa377f5a3998c6f131329ff59cac43bcca233"
+        }
+      ],
+      "sha256": "054ecbf539b63d0583ce8b8d8e41c8cbed77ac3443dac0f46931d31f64ca48b9"
+    },
+    {
+      "id": "E03",
+      "requirement": 7,
+      "supports": [
+        7
+      ],
+      "title": "All three Prometheus targets UP",
+      "file": "07-monitor-the-application/prometheus-targets-up.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Prometheus 3.15.0 / Grafana 13.2.4",
+      "result": "PASSED",
+      "scope": "Isolated Docker targets; not proof of ServiceMonitor discovery in Kubernetes.",
+      "command": "Open http://127.0.0.1:18084/targets",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/monitoring-targets.json",
+          "sha256": "ba20b037e7f762c1b079f046bdac7d8d4af9da4d12c405b48d229a9ec942eef6"
+        }
+      ],
+      "sha256": "05783056cf2c08e11a2101d80347f153ae5f9690dc0eb4bd259c9d0a7f133ad3"
+    },
+    {
+      "id": "E04",
+      "requirement": 7,
+      "supports": [
+        7
+      ],
+      "title": "Real request counts, error counts and latency",
+      "file": "07-monitor-the-application/grafana-request-latency-errors.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Grafana 13.2.4",
+      "result": "PASSED",
+      "scope": "Synthetic local health requests and deliberate 404s; no production traffic.",
+      "command": "Open http://127.0.0.1:18083/d/liora-fastapi",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "monitoring/dashboards/fastapi.json",
+          "sha256": "6edfe7b1455cbd3b2fff7e0f649e64360c42c7b2575a7a61f9a597ceab034172"
+        }
+      ],
+      "sha256": "04ac6f7b5199a508a841d77faf261c0c237d72f029aca6772c30ad17eb354dc0"
+    },
+    {
+      "id": "E05",
+      "requirement": 7,
+      "supports": [
+        7
+      ],
+      "title": "Unavailable alert FIRING after one minute",
+      "file": "07-monitor-the-application/application-alert-firing.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Prometheus 3.15.0",
+      "result": "PASSED",
+      "scope": "Disposable backend deliberately stopped. Receiver notification delivery not tested.",
+      "command": "Open http://127.0.0.1:18084/alerts",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/alert-firing.json",
+          "sha256": "032c7562a0fe921df8f42aa8829da3c61434ec35aead7104db024a4c77876ca5"
+        }
+      ],
+      "sha256": "4952c641c05587f701248ccbf9d6ac0a3d866aeec9ed673eee40b17184b40310"
+    },
+    {
+      "id": "E06",
+      "requirement": 1,
+      "supports": [
+        1,
+        3
+      ],
+      "title": "Authenticated application dashboard",
+      "file": "01-dockerize-your-application/authenticated-dashboard.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Patched upstream app at platform 211199d / PostgreSQL 16.10",
+      "result": "PASSED",
+      "scope": "Actual browser login against an isolated database; no password appears in the screenshot.",
+      "command": "Sign in to isolated http://127.0.0.1:18081 with temporary local credentials",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/application-live-health.txt",
+          "sha256": "dfdfd113394033be6d5e771b1eba5d29f52670effcab95f1650381318db2f0e8"
+        }
+      ],
+      "sha256": "0a91bc53524d617f82025542276f4012ed2ccdd5c2d047cea83a963e3c36ff1a"
+    },
+    {
+      "id": "E07",
+      "requirement": 1,
+      "supports": [
+        1,
+        3,
+        9
+      ],
+      "title": "Browser-created item persists after reload",
+      "file": "01-dockerize-your-application/item-created-and-persisted.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "React / FastAPI / PostgreSQL 16.10",
+      "result": "PASSED",
+      "scope": "Synthetic item persisted through the API and database; same ID/title restored in E34.",
+      "command": "Items \u2192 Add Item \u2192 Save \u2192 reload",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/postgres16-browser-record-restore.txt",
+          "sha256": "62e35849b9c79ef167a340499690ddc17b01621b586eeeea14005108c52672a8"
+        }
+      ],
+      "sha256": "e9477f634417e221408f2edd1dd34036755157876e844bb567aad38cc61622e8"
+    },
+    {
+      "id": "E08",
+      "requirement": 1,
+      "supports": [
+        1
+      ],
+      "title": "Executed Swagger request returns HTTP 200",
+      "file": "01-dockerize-your-application/swagger-real-health-200.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "FastAPI 0.161.0 / Uvicorn",
+      "result": "PASSED",
+      "scope": "Server response 200 and body true, not the schema example. Database readiness separately returned 200.",
+      "command": "Swagger \u2192 health-check \u2192 Try it out \u2192 Execute",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/application-live-health.txt",
+          "sha256": "dfdfd113394033be6d5e771b1eba5d29f52670effcab95f1650381318db2f0e8"
+        }
+      ],
+      "sha256": "3e169a54945f82f44bce1b5b5c78658dca516d92804e18e22a7158b29c0875b0"
+    },
+    {
+      "id": "E09",
+      "requirement": 5,
+      "supports": [
+        5
+      ],
+      "title": "Current CI blocks publication",
+      "file": "05-automate-deployment-ci-cd-pipeline/github-current-security-gate.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "GitHub Actions",
+      "software": "Commit 211199d",
+      "result": "FAILED",
+      "scope": "Tests/lint/platform checks passed; backend image scan failed; publication/promotion skipped. PR publication is also restricted to main push events.",
+      "command": "Open current workflow run",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39920280796",
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/github-ci-211199d.json",
+          "sha256": "f5984117ca8a728879c259cf19d9ab0e18fccf2f095b6cf04602cfc4aae45df3"
+        }
+      ],
+      "sha256": "799277b71945cd9bddd12b5af563edc9ee6bf680db88249365a2c7334f1040cb"
+    },
+    {
+      "id": "E10",
+      "requirement": 5,
+      "supports": [
+        1,
+        5
+      ],
+      "title": "Historical successful GHCR publication and dev promotion",
+      "file": "05-automate-deployment-ci-cd-pipeline/github-historical-publish-promote.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-22",
+      "environment": "GitHub Actions",
+      "software": "Commit 3ca9925; older pipeline",
+      "result": "PASSED",
+      "scope": "Historical publication/promotion only; not a release of 211199d and not Argo deployment proof.",
+      "command": "Open historical main workflow run",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39802778100",
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/github-historical-ci-main.json",
+          "sha256": "5b5ff4114ea71b20b2026d876d4a73bdbf2d32a3dbefc105e835e648376e5a2d"
+        }
+      ],
+      "sha256": "8685e7fb3ac2509f6c3cc2b55963382ec482009e165e9046fe2958fde0c9a8e1"
+    },
+    {
+      "id": "E11",
+      "requirement": 6,
+      "supports": [
+        2,
+        4,
+        6
+      ],
+      "title": "Current Terraform, Ansible and Kustomize workflow passes",
+      "file": "06-create-iac-infrastructure-as-code-templates/github-platform-validation-passed.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "GitHub Actions",
+      "software": "Commit 211199d",
+      "result": "PASSED",
+      "scope": "Static checks only; no Terraform plan/apply or k3s provisioning.",
+      "command": "Open platform validation workflow",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39920280791",
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/github-platform-211199d.json",
+          "sha256": "7fb3a82e91fe14ab599c3156a3e9b678da69a1b29b8388397b25f25fe7c63955"
+        }
+      ],
+      "sha256": "67a0e6c110759801f7c68cb1fd1e9c653c9c9d55ddfd8cf68c23c02f99737ade"
+    },
+    {
+      "id": "E12",
+      "requirement": 8,
+      "supports": [
+        8
+      ],
+      "title": "Current source security workflow passes",
+      "file": "08-think-about-security-devsecops/github-source-security-passed.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "GitHub Actions",
+      "software": "Trivy 0.76.1 / commit 211199d",
+      "result": "PASSED",
+      "scope": "Patched dependency/configuration/secret scan; not a passing backend-image scan.",
+      "command": "Open source security workflow",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39920280780",
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/github-source-security-211199d.json",
+          "sha256": "6d78172201ae97efa534ac538a3766aeb275976a25a6491469b28a76d5044deb"
+        }
+      ],
+      "sha256": "e54ef809cd6b7c1fe7dc52ea219ca0cab48633403b214754b7421e15ac096df2"
+    },
+    {
+      "id": "E13",
+      "requirement": 1,
+      "supports": [
+        1
+      ],
+      "title": "Backend image build completed",
+      "file": "01-dockerize-your-application/E13.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Python 3.12 / uv 0.13.1 / Docker 29.1.3",
+      "result": "PASSED",
+      "scope": "Original build log excerpt; build success does not waive its 44 HIGH OS findings.",
+      "command": "docker build -f docker/backend.Dockerfile -t liora-remediation-backend:local course-app/backend",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/backend-build.txt",
+          "sha256": "2051f2164f434c580506e21f750ce545c792a3232c62e46932740acde7d69170"
+        }
+      ],
+      "view": "views/E13.html",
+      "sha256": "2f3535ade563dbe65c9373007076d31717c23059661fbea987f7e5336d73a65f"
+    },
+    {
+      "id": "E14",
+      "requirement": 1,
+      "supports": [
+        1
+      ],
+      "title": "Frontend TypeScript and production bundle completed",
+      "file": "01-dockerize-your-application/E14.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Node 22 / Vite 6.4.4 / Nginx 1.30",
+      "result": "PASSED",
+      "scope": "Exact archived build output. Later cached functional fixture reused this application source.",
+      "command": "docker build -f docker/frontend.Dockerfile -t liora-remediation-frontend:local course-app/frontend",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/frontend-build.txt",
+          "sha256": "a2668e08e74824d821d83cb2ec298f45aa09454d1fc49b2900adde1a7a0d87ef"
+        }
+      ],
+      "view": "views/E14.html",
+      "sha256": "83efeab2c1417e83d4a0e3c251ae64993b21d163a4ee5382430fe265bef37df1"
+    },
+    {
+      "id": "E15",
+      "requirement": 1,
+      "supports": [
+        1
+      ],
+      "title": "Running containers and health checks",
+      "file": "01-dockerize-your-application/E15.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Docker 29.1.3 / PostgreSQL 16.10",
+      "result": "PASSED",
+      "scope": "Actual isolated containers with a temporary same-origin Nginx API proxy; no Kubernetes/monitoring was running.",
+      "command": "docker ps; docker inspect (selected health/security fields only)",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/docker-running-health.txt",
+          "sha256": "683b7d6e4c8d52844527870743ccd40e52972d3bbf4e66cf041b14a9ab9cae3c"
+        },
+        {
+          "path": "docs/presentation-evidence/raw/functional-fixture.compose.yml",
+          "sha256": "192874ac3cbce6695c30398bdc709422d3fe2673b28a4c230195a79fc9cbd7d2"
+        }
+      ],
+      "view": "views/E15.html",
+      "sha256": "7b55bb7385776af7070c7af66f80b52ff43663330c3ff9bd9bcff17854362322"
+    },
+    {
+      "id": "E16",
+      "requirement": 3,
+      "supports": [
+        3
+      ],
+      "title": "55 upstream tests passed",
+      "file": "03-run-tests-on-the-application/E16.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Python 3.12.3 / pytest 7.4.4 / PostgreSQL 16.10",
+      "result": "PASSED",
+      "scope": "Original captured test counts and result; passlib deprecation warning remains.",
+      "command": "uv run --frozen bash scripts/tests-start.sh",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/backend-tests.txt",
+          "sha256": "03fd5697e74d18578e4c8e1bc91a080eb200f355356b9cfc40cf4fcd27b8c574"
+        }
+      ],
+      "view": "views/E16.html",
+      "sha256": "eca28c5f2854fa819f782b02b0fed183e18d663af01de71bfee1e35e9d43bb55"
+    },
+    {
+      "id": "E17",
+      "requirement": 3,
+      "supports": [
+        3
+      ],
+      "title": "Platform metrics and readiness tests passed",
+      "file": "03-run-tests-on-the-application/E17.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Python 3.12 / pytest 7.4.4",
+      "result": "PASSED",
+      "scope": "Request/status/duration metrics and safe database-unavailable 503 response.",
+      "command": "python -m pytest tests/test_platform_metrics.py -q",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/metrics-tests.txt",
+          "sha256": "57e68228f56e0d1c1361cf2c291e5acd5931620c025dc7eb7b955c62f2a6a38a"
+        }
+      ],
+      "view": "views/E17.html",
+      "sha256": "b8aee363174ed5ae1ddbe1902281a5224f0184b1d8f13e1f2d2da2df537dbd9b"
+    },
+    {
+      "id": "E18",
+      "requirement": 3,
+      "supports": [
+        3
+      ],
+      "title": "Mypy and Ruff passed",
+      "file": "03-run-tests-on-the-application/E18.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Mypy / Ruff 0.17.2",
+      "result": "PASSED",
+      "scope": "Actual archived lint output for 39 source files.",
+      "command": "uv run --frozen bash scripts/lint.sh",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/backend-lint.txt",
+          "sha256": "7b0c431dc35f074c565cb591485bfdbaff12eb8ea6aabbf2841bd64b28e281fa"
+        }
+      ],
+      "view": "views/E18.html",
+      "sha256": "8ae5588089ae2dfc702a80de3767ec0eec0f2e894fce82d26561f75fedffccbb"
+    },
+    {
+      "id": "E19",
+      "requirement": 2,
+      "supports": [
+        2
+      ],
+      "title": "Dev and prod separation: static manifests",
+      "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E19.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "kubectl 1.35.9 / Kustomize 5.7.1",
+      "result": "PARTIALLY_VALIDATED",
+      "scope": "Namespaces, image references, hosts and TLS settings are configuration evidence only. Production was not deployed.",
+      "command": "kubectl kustomize kubernetes/overlays/dev; kubectl kustomize kubernetes/overlays/prod",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/dev-prod-configuration.txt",
+          "sha256": "6c6951f6a8538b7fc9bcef052f163a75c1ccb1be68bef3ff93b72d946d0dd501"
+        }
+      ],
+      "view": "views/E19.html",
+      "sha256": "560be86795a46ea6800c6d4314a689c545a96bd855902d39162ba970240c334f"
+    },
+    {
+      "id": "E20",
+      "requirement": 4,
+      "supports": [
+        4
+      ],
+      "title": "Historical dev pods and Services READY",
+      "file": "04-container-orchestration-with-kubernetes/E20.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-22",
+      "environment": "Local",
+      "software": "k3d 5.9.0 / default k3s 1.35.5-k3s1 / PostgreSQL 16.10",
+      "result": "PASSED",
+      "scope": "Archived actual first-pass local cluster; cluster deleted. Final second-pass hardening was not deployed.",
+      "command": "kubectl -n liora-dev get pods,services,pvc -o wide",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/local-validation-evidence/kubernetes-live.log",
+          "sha256": "37543c835eeaa64be065a5a02e17e7139f968df21d05d43d54dccf7be67da27a"
+        }
+      ],
+      "view": "views/E20.html",
+      "sha256": "078830be1ba5d81d3938a340deb37df12a089ea9a2b083ba6c05b4e5dbd73656"
+    },
+    {
+      "id": "E21",
+      "requirement": 4,
+      "supports": [
+        4
+      ],
+      "title": "Historical PVC and Kubernetes HTTP access",
+      "file": "04-container-orchestration-with-kubernetes/E21.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-22",
+      "environment": "Local",
+      "software": "k3d 5.9.0 / PostgreSQL 16.10 / Traefik",
+      "result": "PASSED",
+      "scope": "Actual first-pass bound 8 GiB PVC and local backend/frontend/Traefik checks. Not cloud/public HTTPS.",
+      "command": "kubectl get pvc; loopback port-forward HTTP requests; Traefik routing smoke",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/local-validation-evidence/kubernetes-live.log",
+          "sha256": "37543c835eeaa64be065a5a02e17e7139f968df21d05d43d54dccf7be67da27a"
+        }
+      ],
+      "view": "views/E21.html",
+      "sha256": "d9a51edef347fc9aacc4780a74f5d625a8e2edb24b14046c91ffa2a4502d69d7"
+    },
+    {
+      "id": "E22",
+      "requirement": 5,
+      "supports": [
+        5
+      ],
+      "title": "Argo CD ran, but private repository comparison failed",
+      "file": "05-automate-deployment-ci-cd-pipeline/E22.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-22",
+      "environment": "Local",
+      "software": "Argo CD 3.5.5 / local k3d",
+      "result": "FAILED",
+      "scope": "Health is not synchronization. Historical private-repo ComparisonError. Repository became public on 2026-10-23; new public reconciliation still not tested.",
+      "command": "Argo CD health; kubectl get applications",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/local-validation-evidence/argocd-live.log",
+          "sha256": "9957b7f688039df3a25e545695d3ee1d2aabde36feb97c281a5aee34d6e33e8b"
+        }
+      ],
+      "view": "views/E22.html",
+      "sha256": "a6f61fa8cc2995734d317d8217faea330d38e0576276001b64a6db77ae7dfcf5"
+    },
+    {
+      "id": "E23",
+      "requirement": 5,
+      "supports": [
+        5
+      ],
+      "title": "Production manual sync configuration",
+      "file": "05-automate-deployment-ci-cd-pipeline/E23.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Application manifests at 211199d",
+      "result": "PARTIALLY_VALIDATED",
+      "scope": "Design/static proof only. No successful production sync or rollback is claimed.",
+      "command": "Review gitops/applications.yaml; no automated production policy",
+      "kind": "configuration",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "gitops/applications.yaml",
+          "sha256": "aeca538433e25a96b5df7676ade8cacad523724b65ba0971111927a381a6f9e0"
+        }
+      ],
+      "view": "views/E23.html",
+      "sha256": "54c48beccb31265fd476d955140dd4c92bda596ba1e2dbdb711bc80dd1fb202d"
+    },
+    {
+      "id": "E24",
+      "requirement": 6,
+      "supports": [
+        6
+      ],
+      "title": "Terraform formatting and validation passed",
+      "file": "06-create-iac-infrastructure-as-code-templates/E24.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Terraform 1.16.6",
+      "result": "PASSED",
+      "scope": "Actual fresh command output; no plan/apply or cloud recreation.",
+      "command": "terraform fmt -check -recursive; terraform validate",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/terraform-validation.txt",
+          "sha256": "00e88613d3c391d07091ee54997fa7a577bdc9ba5d58e6f281e3b45f7fcd8911"
+        }
+      ],
+      "view": "views/E24.html",
+      "sha256": "f4882214905da0b009df4c99e7a24f4dcb936b03e236806a07d7abd8c68b4e51"
+    },
+    {
+      "id": "E25",
+      "requirement": 6,
+      "supports": [
+        6
+      ],
+      "title": "Three Ansible syntax checks passed",
+      "file": "06-create-iac-infrastructure-as-code-templates/E25.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Ansible core 2.16.3 / Python 3.12.3",
+      "result": "PASSED",
+      "scope": "Actual fresh syntax output. No remote installation or cloud host validation.",
+      "command": "ansible-playbook --syntax-check prepare.yml / k3s.yml / kubeconfig.yml",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/ansible-validation.txt",
+          "sha256": "cf38138db35acf00e27ce400fbb316cdb2afa2f5854e3b1129cc7656f125b369"
+        }
+      ],
+      "view": "views/E25.html",
+      "sha256": "436c28d2650a02105ffb8ef9db0195f4c9b52e6c3a020fd345b068a9c2fc1579"
+    },
+    {
+      "id": "E26",
+      "requirement": 7,
+      "supports": [
+        7
+      ],
+      "title": "Application alert cleared after recovery",
+      "file": "07-monitor-the-application/E26.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Prometheus 3.15.0",
+      "result": "PASSED",
+      "scope": "Actual API record with alerts empty after the firing scenario; notification delivery not tested.",
+      "command": "GET http://127.0.0.1:18084/api/v1/alerts after backend restart",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/alert-resolved.json",
+          "sha256": "a56e00c147727b7ca9a1dbb653892d952a5e3a197139e1ad66640edbe913fd9d"
+        }
+      ],
+      "view": "views/E26.html",
+      "sha256": "99e39d1d39456ad1d4c81a71e8fe02623a34958a90a209f308ed430c3c9dcbe5"
+    },
+    {
+      "id": "E27",
+      "requirement": 7,
+      "supports": [
+        7
+      ],
+      "title": "ServiceMonitor implemented: runtime discovery pending",
+      "file": "07-monitor-the-application/E27.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "monitoring.coreos.com/v1 / chart 92.11.0",
+      "result": "PARTIALLY_VALIDATED",
+      "scope": "Rendered configuration only. The new ServiceMonitor was not live-tested against the hardened Kubernetes workloads.",
+      "command": "kubectl kustomize monitoring",
+      "kind": "configuration",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "monitoring/application-observability.yaml",
+          "sha256": "f892299f74f0b88147ec64bfd4436caf1f7a06ab17bc4ce99cc743b5aacb516f"
+        }
+      ],
+      "view": "views/E27.html",
+      "sha256": "c2e0c83ce287ca0d398bfcd65eac74d8b3e8118f111a89df1d978315c8619dbc"
+    },
+    {
+      "id": "E28",
+      "requirement": 8,
+      "supports": [
+        8
+      ],
+      "title": "Security before and after remediation",
+      "file": "08-think-about-security-devsecops/E28.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Trivy 0.76.1",
+      "result": "FAILED",
+      "scope": "Counts derived from archived reports, not a new scan. Different frontend stages are labeled explicitly; no claim that all findings are fixed.",
+      "command": "Compare original Trivy findings with final remediation scan counts",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/local-validation-evidence/security-findings.json",
+          "sha256": "39b00750744a8e6a04a5bf62e5f4cae082c2be2b2101422e8bac6b5a5bbd7bee"
+        },
+        {
+          "path": "docs/remediation-evidence/security-summary.json",
+          "sha256": "b9e50e1e88ed2220a56bb7e5bc93bf1edb8539a230071a9dfe45e19176b3ef64"
+        }
+      ],
+      "view": "views/E28.html",
+      "sha256": "a606d865cb524f2f03b7c80204d2ef1cb2b8862838d8afcbdfefb870d3f447e7"
+    },
+    {
+      "id": "E29",
+      "requirement": 8,
+      "supports": [
+        8
+      ],
+      "title": "Hosted backend security gate fails closed",
+      "file": "08-think-about-security-devsecops/E29.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "GitHub Actions",
+      "software": "Trivy 0.76.1 / 211199d",
+      "result": "FAILED",
+      "scope": "Actual failed job output; 44 HIGH and 0 CRITICAL. Publication remains blocked.",
+      "command": "trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 liora-backend:ci",
+      "kind": "archived-output",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39920280796/job/120303913550",
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/github-backend-scan-failed.txt",
+          "sha256": "ff882c8ff7656351b0dd5c9fd380f2304c6b37706d117602525cb3d050001cfc"
+        }
+      ],
+      "view": "views/E29.html",
+      "sha256": "869a3003ce4b31c08778a5aea34a522f3fa91f95df1ade8d30fe90fe158edbef"
+    },
+    {
+      "id": "E30",
+      "requirement": 8,
+      "supports": [
+        8
+      ],
+      "title": "Container security controls configured",
+      "file": "08-think-about-security-devsecops/E30.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Kubernetes manifests at 211199d",
+      "result": "PARTIALLY_VALIDATED",
+      "scope": "Static configuration. Fresh Docker fixture separately verified read-only/non-root operation; final Kubernetes deployment untested.",
+      "command": "Review rendered workload security contexts",
+      "kind": "configuration",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/container-security-context.txt",
+          "sha256": "d71a7e4b8c6f463ee0576013579358816d5906b0ad0c8c9e9679941ca4fb0015"
+        }
+      ],
+      "view": "views/E30.html",
+      "sha256": "5cff9d4f28512eb8c376c6d4f34b21bf48c84a31c4de7a14bef51d2a8b37e6d1"
+    },
+    {
+      "id": "E31",
+      "requirement": 8,
+      "supports": [
+        8
+      ],
+      "title": "Default-deny policy and explicit database traffic",
+      "file": "08-think-about-security-devsecops/E31.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "networking.k8s.io/v1",
+      "result": "PARTIALLY_VALIDATED",
+      "scope": "Configuration only. Policy enforcement on a live cluster remains NOT YET TESTED.",
+      "command": "Review NetworkPolicy resources; kubectl kustomize overlays",
+      "kind": "configuration",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "kubernetes/base/networkpolicy.yaml",
+          "sha256": "0af720a9552df109501981eed534f86fb450cd7b188fa58a2aaa7e298679a87d"
+        }
+      ],
+      "view": "views/E31.html",
+      "sha256": "f0aa4751ed699f28b8306b5feaf985be0ceb0154267537f317517b135334ed9a"
+    },
+    {
+      "id": "E32",
+      "requirement": 8,
+      "supports": [
+        8
+      ],
+      "title": "Temporary credential access removed",
+      "file": "08-think-about-security-devsecops/E32.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "GitHub API / 2026-10-23",
+      "result": "PASSED",
+      "scope": "Cleanup evidence only. A read-only repository deploy key was not verified or installed; no key material is shown.",
+      "command": "Exact public-key match; approved removal; API absence verified",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/key-cleanup.json",
+          "sha256": "99172215c7fdfba784e21e86d0bd4f041e935c934dc5a2b667168e0afba95e76"
+        }
+      ],
+      "view": "views/E32.html",
+      "sha256": "68fc7fcf29aecc4e0f581b2b806d7d39979a3128cb77386f93fec40eaeda51fb"
+    },
+    {
+      "id": "E33",
+      "requirement": 9,
+      "supports": [
+        9
+      ],
+      "title": "Actual backup creation and mode 0600",
+      "file": "09-think-about-disaster-recovery/E33.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "PostgreSQL 16.10 / Docker isolated fixture",
+      "result": "PASSED",
+      "scope": "Actual script via explicit kubectl-to-Docker adapter; no Kubernetes/cloud restore claim. Binary dump excluded from Git.",
+      "command": "bash scripts/backup-postgres.sh liora-dev; stat BACKUP",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/postgres16-browser-record-restore.txt",
+          "sha256": "62e35849b9c79ef167a340499690ddc17b01621b586eeeea14005108c52672a8"
+        }
+      ],
+      "view": "views/E33.html",
+      "sha256": "1e1f9910798102d1c75e5e13a408e565a638e634067fdf9db1134cca5ed0a7bf"
+    },
+    {
+      "id": "E34",
+      "requirement": 9,
+      "supports": [
+        9
+      ],
+      "title": "Restored record matches the browser-created item",
+      "file": "09-think-about-disaster-recovery/E34.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "PostgreSQL 16.10",
+      "result": "PASSED",
+      "scope": "Actual source/restored rows. Same synthetic UUID/title as E07. Existing user databases were untouched.",
+      "command": "pg_restore into NEW defense_restore; SELECT id,title FROM item",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/presentation-evidence/raw/postgres16-browser-record-restore.txt",
+          "sha256": "62e35849b9c79ef167a340499690ddc17b01621b586eeeea14005108c52672a8"
+        }
+      ],
+      "view": "views/E34.html",
+      "sha256": "3b8233f1c8adaa7e54333856afdcec94fce8963b388cf0eca4de60f0288f6b5c"
+    },
+    {
+      "id": "E35",
+      "requirement": 9,
+      "supports": [
+        9
+      ],
+      "title": "Failed backups leave no completed corrupt archive",
+      "file": "09-think-about-disaster-recovery/E35.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "PostgreSQL 16.10 / negative-control test",
+      "result": "PASSED",
+      "scope": "Actual prior test output. Expected command failure is a passing negative-control assertion, not a real backup success.",
+      "command": "Deliberately fail pg_dump; reject unrelated namespace",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/remediation-evidence/disaster-recovery.txt",
+          "sha256": "ff26ca48ff707e6de39c632d31aead32230f82850dfbfc2ab44d4efbd7ecaf74"
+        }
+      ],
+      "view": "views/E35.html",
+      "sha256": "9a2114bab953356c03e57575ee9bfb6a916e5c37b6eb8e93cbbc589ebfab378d"
+    },
+    {
+      "id": "E36",
+      "requirement": 10,
+      "supports": [
+        10
+      ],
+      "title": "Architecture and engineering boundaries",
+      "file": "10-documentation/E36.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Platform architecture at 211199d",
+      "result": "PASSED",
+      "scope": "Design diagram, not proof of a Hetzner deployment. Future cloud and manual production steps are labeled.",
+      "command": "Review architecture.md and the official requirement checklist",
+      "kind": "design",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/architecture.md",
+          "sha256": "0f8474872e20e6611a2e7d0a785fae067e9797af3212dca78b63cd47143e1e4e"
+        }
+      ],
+      "view": "views/E36.html",
+      "sha256": "9251803b25b578b91916ee0b9ea6fcf754f722c167bd9956a24b7fb5002809b7"
+    },
+    {
+      "id": "E37",
+      "requirement": 4,
+      "supports": [
+        4
+      ],
+      "title": "Historical ConfigMap, Ingress and rollout results",
+      "file": "04-container-orchestration-with-kubernetes/E37.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-22",
+      "environment": "Local",
+      "software": "k3d 5.9.0 / original first-pass images",
+      "result": "PASSED",
+      "scope": "Actual first-pass resource creation and rollout output. New security/metrics manifests were not deployed.",
+      "command": "kubectl apply local-dev.yaml; rollout status postgres/backend/frontend",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/local-validation-evidence/kubernetes-live.log",
+          "sha256": "37543c835eeaa64be065a5a02e17e7139f968df21d05d43d54dccf7be67da27a"
+        }
+      ],
+      "view": "views/E37.html",
+      "sha256": "b6a151a3a0b25a8a5cab336b8853fd994a4c03c3f189cbee8f2b983453c8d142"
+    },
+    {
+      "id": "E38",
+      "requirement": 5,
+      "supports": [
+        5
+      ],
+      "title": "Historical Argo components ready; sync still unproven",
+      "file": "05-automate-deployment-ci-cd-pipeline/E38.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-22",
+      "environment": "Local",
+      "software": "Argo CD 3.5.5 / local k3d",
+      "result": "PARTIALLY_VALIDATED",
+      "scope": "Actual running controllers/repository/server components. GitHub comparison failed afterward (E22); this is not Synced/Healthy application proof.",
+      "command": "kubectl -n argocd get pods,services; Argo health check",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/local-validation-evidence/argocd-live.log",
+          "sha256": "9957b7f688039df3a25e545695d3ee1d2aabde36feb97c281a5aee34d6e33e8b"
+        }
+      ],
+      "view": "views/E38.html",
+      "sha256": "0dfd7e9d395ca88b9d7fa816d1c297d27bb6d1f5d64de242fe3ab3b10041ef35"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Run: https://github.com/dionis1/liora-devops-platform/actions/runs/39920280796
+Commit: 211199da8c52caf07199b155fb6baf28deb5b1f4
+Created (UTC): 2026-10-23T07:48:44Z
+Overall conclusion: failure
+
+SUCCESS    backend-tests
+SUCCESS    platform / ansible
+SUCCESS    backend-lint
+SUCCESS    platform / kustomize
+SUCCESS    platform / terraform
+FAILURE    Build and scan before publication
+SKIPPED    Publish only scanned images
+SKIPPED    Promote validated manifests and scanned images

@@ -1,0 +1,438 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from backend.Dockerfile
+#1 transferring dockerfile: 1.17kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12
+#3 ...
+
+#4 [internal] load metadata for ghcr.io/astral-sh/uv:0.13.1
+#4 DONE 0.8s
+
+#3 [internal] load metadata for docker.io/library/python:3.12
+#3 DONE 2.0s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 116B done
+#5 DONE 0.0s
+
+#6 FROM ghcr.io/astral-sh/uv:0.13.1@sha256:4a1f3666816dafadd20ceb71eac9a7d56d7ef30279f7d64048519ab901ada336
+#6 resolve ghcr.io/astral-sh/uv:0.13.1@sha256:4a1f3666816dafadd20ceb71eac9a7d56d7ef30279f7d64048519ab901ada336 0.0s done
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 473.12kB 0.0s done
+#7 DONE 0.0s
+
+#8 [build 1/9] FROM docker.io/library/python:3.12@sha256:0d0db5b17f11b1b7d1aafa74ceadaa64ba0944b267ff6fc22008a197acd6b9ad
+#8 resolve docker.io/library/python:3.12@sha256:0d0db5b17f11b1b7d1aafa74ceadaa64ba0944b267ff6fc22008a197acd6b9ad 0.0s done
+#8 DONE 0.2s
+
+#9 [stage-1 1/4] FROM docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+#9 resolve docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 0.0s done
+#9 DONE 0.1s
+
+#10 [stage-1 2/4] WORKDIR /app
+#10 DONE 0.1s
+
+#8 [build 1/9] FROM docker.io/library/python:3.12@sha256:0d0db5b17f11b1b7d1aafa74ceadaa64ba0944b267ff6fc22008a197acd6b9ad
+#8 sha256:81c01e4d7d1c7eb7024b9278d2d38ee29083e758339c754b739df7f69db5a56b 0B / 249B 0.2s
+#8 sha256:81c01e4d7d1c7eb7024b9278d2d38ee29083e758339c754b739df7f69db5a56b 249B / 249B 0.2s done
+#8 sha256:57c559fa51a119abf4092d0fdd515a9c2ecbdb55d47ba33c6c6b6ae7e3aebe56 0B / 6.09MB 0.3s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 0B / 25.75MB 0.2s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 0B / 237.00MB 0.2s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 0B / 67.82MB 0.2s
+#8 sha256:57c559fa51a119abf4092d0fdd515a9c2ecbdb55d47ba33c6c6b6ae7e3aebe56 1.05MB / 6.09MB 0.6s
+#8 sha256:57c559fa51a119abf4092d0fdd515a9c2ecbdb55d47ba33c6c6b6ae7e3aebe56 3.15MB / 6.09MB 0.9s
+#8 sha256:57c559fa51a119abf4092d0fdd515a9c2ecbdb55d47ba33c6c6b6ae7e3aebe56 4.19MB / 6.09MB 1.1s
+#8 sha256:57c559fa51a119abf4092d0fdd515a9c2ecbdb55d47ba33c6c6b6ae7e3aebe56 5.24MB / 6.09MB 1.4s
+#8 sha256:57c559fa51a119abf4092d0fdd515a9c2ecbdb55d47ba33c6c6b6ae7e3aebe56 6.09MB / 6.09MB 1.4s done
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 0B / 25.64MB 0.2s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 2.10MB / 25.75MB 2.1s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 2.10MB / 25.64MB 0.8s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 4.19MB / 25.64MB 1.2s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 4.19MB / 25.75MB 3.2s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 6.29MB / 25.64MB 1.7s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 8.39MB / 25.64MB 2.1s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 10.49MB / 25.64MB 2.9s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 6.29MB / 25.75MB 4.5s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 12.58MB / 25.64MB 3.5s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 4.19MB / 67.82MB 5.0s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 4.19MB / 237.00MB 5.3s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 14.68MB / 25.64MB 4.2s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 8.39MB / 25.75MB 6.3s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 16.78MB / 25.64MB 5.0s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 18.87MB / 25.64MB 5.7s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 10.49MB / 25.75MB 8.0s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 20.97MB / 25.64MB 6.5s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 23.07MB / 25.64MB 7.2s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 25.17MB / 25.64MB 8.3s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 12.58MB / 25.75MB 9.9s
+#8 sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 25.64MB / 25.64MB 8.4s done
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 0B / 49.39MB 0.2s
+#8 ...
+
+#11 [stage-1 3/4] RUN apt-get update     && apt-get upgrade -y --no-install-recommends     && rm -rf /var/lib/apt/lists/*     && useradd --uid 10001 --create-home app
+#11 0.723 Hit:1 http://deb.debian.org/debian trixie InRelease
+#11 0.805 Get:2 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+#11 0.999 Get:3 http://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+#11 1.136 Get:4 http://deb.debian.org/debian trixie/main amd64 Packages [9678 kB]
+#11 ...
+
+#8 [build 1/9] FROM docker.io/library/python:3.12@sha256:0d0db5b17f11b1b7d1aafa74ceadaa64ba0944b267ff6fc22008a197acd6b9ad
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 8.39MB / 67.82MB 10.1s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 9.44MB / 237.00MB 10.4s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 14.68MB / 25.75MB 11.7s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 3.15MB / 49.39MB 2.4s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 6.29MB / 49.39MB 4.2s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 16.78MB / 25.75MB 14.6s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 12.58MB / 67.82MB 15.2s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 9.44MB / 49.39MB 5.6s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 13.63MB / 237.00MB 15.5s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 12.58MB / 49.39MB 6.9s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 18.87MB / 25.75MB 17.4s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 15.73MB / 49.39MB 8.3s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 18.87MB / 49.39MB 9.6s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 20.97MB / 25.75MB 19.7s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 15.73MB / 67.82MB 20.3s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 16.78MB / 237.00MB 20.6s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 22.02MB / 49.39MB 10.8s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 23.07MB / 25.75MB 21.5s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 25.17MB / 49.39MB 11.6s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 28.31MB / 49.39MB 12.2s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 25.17MB / 25.75MB 22.7s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 31.46MB / 49.39MB 12.8s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 19.92MB / 67.82MB 22.5s
+#8 sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 25.75MB / 25.75MB 23.1s done
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 34.60MB / 49.39MB 13.5s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 37.75MB / 49.39MB 14.3s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 40.89MB / 49.39MB 15.0s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 22.02MB / 237.00MB 25.7s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 24.12MB / 67.82MB 25.7s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 44.04MB / 49.39MB 16.1s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 47.19MB / 49.39MB 17.0s
+#8 sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 49.39MB / 49.39MB 17.6s done
+#8 extracting sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 28.31MB / 67.82MB 28.1s
+#8 extracting sha256:8d0037029946d2c6dabce18eceda79c533c5797ed1ee86f94084cb8cddaeea91 1.0s done
+#8 extracting sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4
+#8 extracting sha256:63040bd9752a74c5b1082903de92d441d30121f994018576b4a2f4cf8bb3bca4 0.5s done
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 32.51MB / 67.82MB 29.7s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 29.36MB / 237.00MB 30.8s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 36.70MB / 67.82MB 31.5s
+#8 ...
+
+#11 [stage-1 3/4] RUN apt-get update     && apt-get upgrade -y --no-install-recommends     && rm -rf /var/lib/apt/lists/*     && useradd --uid 10001 --create-home app
+#11 22.44 Get:5 http://deb.debian.org/debian trixie-updates/main amd64 Packages [720 B]
+#11 22.56 Get:6 http://deb.debian.org/debian-security trixie-security/main amd64 Packages [269 kB]
+#11 23.24 Fetched 10.0 MB in 23s (440 kB/s)
+#11 23.24 Reading package lists...
+#11 23.91 Reading package lists...
+#11 24.86 Building dependency tree...
+#11 25.04 Reading state information...
+#11 25.14 Calculating upgrade...
+#11 25.41 The following packages will be upgraded:
+#11 25.41   ca-certificates liblzma5 tzdata
+#11 25.61 3 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+#11 25.61 Need to get 737 kB of archives.
+#11 25.61 After this operation, 2048 B disk space will be freed.
+#11 25.61 Get:1 http://deb.debian.org/debian-security trixie-security/main amd64 liblzma5 amd64 5.8.1-1+deb13u2 [310 kB]
+#11 27.42 Get:2 http://deb.debian.org/debian trixie-updates/main amd64 tzdata all 2026e-0+deb13u1 [266 kB]
+#11 28.50 Get:3 http://deb.debian.org/debian-security trixie-security/main amd64 ca-certificates all 20250419+deb13u1 [161 kB]
+#11 30.61 debconf: unable to initialize frontend: Dialog
+#11 30.61 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#11 30.61 debconf: falling back to frontend: Readline
+#11 30.61 debconf: unable to initialize frontend: Readline
+#11 30.61 debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC entries checked: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.40.1 /usr/local/share/perl/5.40.1 /usr/lib/x86_64-linux-gnu/perl5/5.40 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.40 /usr/share/perl/5.40 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 8, <STDIN> line 3.)
+#11 30.61 debconf: falling back to frontend: Teletype
+#11 30.62 debconf: unable to initialize frontend: Teletype
+#11 30.62 debconf: (This frontend requires a controlling tty.)
+#11 30.62 debconf: falling back to frontend: Noninteractive
+#11 31.22 Preconfiguring packages ...
+#11 31.62 Fetched 737 kB in 5s (147 kB/s)
+#11 31.65 (Reading database ...
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 5660 files and directories currently installed.)
+#11 31.67 Preparing to unpack .../liblzma5_5.8.1-1+deb13u2_amd64.deb ...
+#11 31.68 Unpacking liblzma5:amd64 (5.8.1-1+deb13u2) over (5.8.1-1+deb13u1) ...
+#11 31.72 Setting up liblzma5:amd64 (5.8.1-1+deb13u2) ...
+#11 31.75 (Reading database ...
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 5660 files and directories currently installed.)
+#11 31.75 Preparing to unpack .../tzdata_2026e-0+deb13u1_all.deb ...
+#11 31.76 Unpacking tzdata (2026e-0+deb13u1) over (2026c-0+deb13u1) ...
+#11 ...
+
+#8 [build 1/9] FROM docker.io/library/python:3.12@sha256:0d0db5b17f11b1b7d1aafa74ceadaa64ba0944b267ff6fc22008a197acd6b9ad
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 40.89MB / 67.82MB 32.9s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 45.09MB / 67.82MB 34.1s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 41.94MB / 237.00MB 35.0s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 49.28MB / 67.82MB 35.1s
+#8 ...
+
+#11 [stage-1 3/4] RUN apt-get update     && apt-get upgrade -y --no-install-recommends     && rm -rf /var/lib/apt/lists/*     && useradd --uid 10001 --create-home app
+#11 32.75 Preparing to unpack .../ca-certificates_20250419+deb13u1_all.deb ...
+#11 32.76 Unpacking ca-certificates (20250419+deb13u1) over (20250419) ...
+#11 33.15 Setting up tzdata (2026e-0+deb13u1) ...
+#11 33.22 debconf: unable to initialize frontend: Dialog
+#11 33.22 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#11 33.22 debconf: falling back to frontend: Readline
+#11 33.22 debconf: unable to initialize frontend: Readline
+#11 33.22 debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC entries checked: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.40.1 /usr/local/share/perl/5.40.1 /usr/lib/x86_64-linux-gnu/perl5/5.40 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.40 /usr/share/perl/5.40 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 8.)
+#11 33.22 debconf: falling back to frontend: Teletype
+#11 33.22 debconf: unable to initialize frontend: Teletype
+#11 33.22 debconf: (This frontend requires a controlling tty.)
+#11 33.22 debconf: falling back to frontend: Noninteractive
+#11 33.25
+#11 33.25 Current default time zone: 'Etc/UTC'
+#11 33.25 Local time is now:      Fri Oct 23 07:27:23 UTC 2026.
+#11 33.25 Universal Time is now:  Fri Oct 23 07:27:23 UTC 2026.
+#11 33.25 Run 'dpkg-reconfigure tzdata' if you wish to change it.
+#11 33.25
+#11 33.26 Setting up ca-certificates (20250419+deb13u1) ...
+#11 33.34 debconf: unable to initialize frontend: Dialog
+#11 33.34 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#11 33.34 debconf: falling back to frontend: Readline
+#11 33.34 debconf: unable to initialize frontend: Readline
+#11 33.34 debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC entries checked: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.40.1 /usr/local/share/perl/5.40.1 /usr/lib/x86_64-linux-gnu/perl5/5.40 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.40 /usr/share/perl/5.40 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 8.)
+#11 33.34 debconf: falling back to frontend: Teletype
+#11 33.35 debconf: unable to initialize frontend: Teletype
+#11 33.35 debconf: (This frontend requires a controlling tty.)
+#11 33.35 debconf: falling back to frontend: Noninteractive
+#11 34.59 Updating certificates in /etc/ssl/certs...
+#11 35.32 rehash: warning: skipping ca-certificates.crt, it does not contain exactly one certificate or CRL
+#11 35.32 0 added, 2 removed; done.
+#11 35.34 Processing triggers for libc-bin (2.41-12+deb13u4) ...
+#11 35.38 Processing triggers for ca-certificates (20250419+deb13u1) ...
+#11 35.39 Updating certificates in /etc/ssl/certs...
+#11 35.82 0 added, 0 removed; done.
+#11 35.82 Running hooks in /etc/ca-certificates/update.d...
+#11 35.83 done.
+#11 DONE 36.0s
+
+#8 [build 1/9] FROM docker.io/library/python:3.12@sha256:0d0db5b17f11b1b7d1aafa74ceadaa64ba0944b267ff6fc22008a197acd6b9ad
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 53.48MB / 67.82MB 36.5s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 57.67MB / 67.82MB 38.1s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 53.48MB / 237.00MB 40.1s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 61.87MB / 67.82MB 41.7s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 66.06MB / 67.82MB 43.2s
+#8 sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 67.82MB / 67.82MB 43.7s done
+#8 extracting sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 66.06MB / 237.00MB 44.7s
+#8 extracting sha256:7046f4e749f0e32d9fc67f654ad5e33cc555534f82a9971e45a00dbdb899e309 1.5s done
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 78.64MB / 237.00MB 47.9s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 91.23MB / 237.00MB 49.7s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 104.86MB / 237.00MB 51.0s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 118.49MB / 237.00MB 52.7s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 131.07MB / 237.00MB 54.9s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 143.65MB / 237.00MB 56.9s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 156.24MB / 237.00MB 59.3s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 168.82MB / 237.00MB 61.2s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 181.40MB / 237.00MB 63.3s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 193.99MB / 237.00MB 65.4s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 206.57MB / 237.00MB 68.1s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 219.15MB / 237.00MB 70.1s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 231.74MB / 237.00MB 72.3s
+#8 sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 237.00MB / 237.00MB 73.2s done
+#8 extracting sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4
+#8 extracting sha256:992d9e06c2e85b99901bc1e8b27e557e9537e4d0eee8d4cdff13bc0f9bdee2e4 5.7s done
+#8 DONE 79.1s
+
+#8 [build 1/9] FROM docker.io/library/python:3.12@sha256:0d0db5b17f11b1b7d1aafa74ceadaa64ba0944b267ff6fc22008a197acd6b9ad
+#8 extracting sha256:57c559fa51a119abf4092d0fdd515a9c2ecbdb55d47ba33c6c6b6ae7e3aebe56
+#8 extracting sha256:57c559fa51a119abf4092d0fdd515a9c2ecbdb55d47ba33c6c6b6ae7e3aebe56 0.2s done
+#8 DONE 79.2s
+
+#8 [build 1/9] FROM docker.io/library/python:3.12@sha256:0d0db5b17f11b1b7d1aafa74ceadaa64ba0944b267ff6fc22008a197acd6b9ad
+#8 extracting sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805
+#8 extracting sha256:b23402e9b82f4228aa5725af5a918e303c15e562333e77c986e8cc7190ffd805 0.7s done
+#8 DONE 79.9s
+
+#8 [build 1/9] FROM docker.io/library/python:3.12@sha256:0d0db5b17f11b1b7d1aafa74ceadaa64ba0944b267ff6fc22008a197acd6b9ad
+#8 extracting sha256:81c01e4d7d1c7eb7024b9278d2d38ee29083e758339c754b739df7f69db5a56b 0.0s done
+#8 DONE 80.0s
+
+#12 [build 2/9] COPY --from=ghcr.io/astral-sh/uv:0.13.1 /uv /bin/uv
+#12 DONE 0.5s
+
+#13 [build 3/9] WORKDIR /app
+#13 DONE 0.1s
+
+#14 [build 4/9] COPY pyproject.toml uv.lock ./
+#14 DONE 0.1s
+
+#15 [build 5/9] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
+#15 1.488 warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+#15 1.943 Using CPython 3.12.15 interpreter at: /usr/local/bin/python3
+#15 1.943 Creating virtual environment at: .venv
+#15 2.307 Downloading pygments (1.2MiB)
+#15 2.307 Downloading lxml (5.0MiB)
+#15 2.307 Downloading uvloop (4.3MiB)
+#15 2.307 Downloading sqlalchemy (4.5MiB)
+#15 2.320 Downloading chardet (1.6MiB)
+#15 2.321 Downloading psycopg-binary (5.0MiB)
+#15 2.322 Downloading pydantic-core (2.1MiB)
+#15 5.407  Downloaded pygments
+#15 5.624  Downloaded chardet
+#15 5.891  Downloaded pydantic-core
+#15 6.821  Downloaded uvloop
+#15 6.897  Downloaded sqlalchemy
+#15 7.025  Downloaded psycopg-binary
+#15 7.047  Downloaded lxml
+#15 7.048 Prepared 77 packages in 5.09s
+#15 7.314 Installed 77 packages in 266ms
+#15 11.25 Bytecode compiled 2891 files in 3.93s
+#15 11.25  + alembic==1.20.1
+#15 11.25  + annotated-doc==0.0.5
+#15 11.25  + annotated-types==0.8.0
+#15 11.25  + anyio==4.15.1
+#15 11.25  + bcrypt==4.0.1
+#15 11.25  + cachetools==7.2.4
+#15 11.25  + certifi==2026.10.19
+#15 11.25  + chardet==7.7.0
+#15 11.25  + charset-normalizer==3.5.2
+#15 11.25  + click==8.5.0
+#15 11.25  + cssselect==1.6.0
+#15 11.25  + cssutils==2.15.0
+#15 11.25  + dnspython==2.9.0
+#15 11.25  + email-validator==2.3.0
+#15 11.25  + emails==0.6
+#15 11.25  + encutils==1.0.0
+#15 11.25  + fastapi==0.161.0
+#15 11.25  + fastapi-cli==0.0.32
+#15 11.25  + googleapis-common-protos==1.75.5
+#15 11.25  + h11==0.16.0
+#15 11.25  + httpcore==1.0.9
+#15 11.25  + httpcore2==2.16.0
+#15 11.25  + httptools==0.9.0
+#15 11.25  + httpx==0.28.1
+#15 11.25  + httpx2==2.16.0
+#15 11.25  + idna==3.20
+#15 11.25  + jinja2==3.1.6
+#15 11.25  + lxml==6.1.3
+#15 11.25  + mako==1.4.3
+#15 11.25  + markdown-it-py==4.2.0
+#15 11.25  + markupsafe==3.0.4
+#15 11.25  + mdurl==0.1.2
+#15 11.25  + more-itertools==11.2.1
+#15 11.25  + opentelemetry-api==1.45.1
+#15 11.25  + opentelemetry-exporter-http-transport==0.66b1
+#15 11.25  + opentelemetry-exporter-otlp-common==0.66b1
+#15 11.25  + opentelemetry-exporter-otlp-proto-common==1.45.1
+#15 11.25  + opentelemetry-exporter-otlp-proto-http==1.45.1
+#15 11.25  + opentelemetry-proto==1.45.1
+#15 11.25  + opentelemetry-sdk==1.45.1
+#15 11.25  + opentelemetry-semantic-conventions==0.66b1
+#15 11.25  + passlib==1.7.4
+#15 11.25  + premailer==3.10.0
+#15 11.25  + prometheus-client==0.26.0
+#15 11.25  + protobuf==7.36.2
+#15 11.25  + psycopg==3.3.6
+#15 11.25  + psycopg-binary==3.3.6
+#15 11.25  + pydantic==2.14.1
+#15 11.25  + pydantic-core==2.50.1
+#15 11.25  + pydantic-extra-types==2.11.1
+#15 11.25  + pydantic-settings==2.16.1
+#15 11.25  + pygments==2.21.0
+#15 11.25  + pyjwt==2.15.1
+#15 11.25  + python-dateutil==3.0.0
+#15 11.25  + python-dotenv==1.2.4
+#15 11.25  + python-multipart==0.0.32
+#15 11.25  + pyyaml==6.0.3
+#15 11.25  + requests==2.34.2
+#15 11.25  + rich==15.0.0
+#15 11.25  + rich-toolkit==0.20.6
+#15 11.26  + sentry-sdk==2.73.0
+#15 11.26  + shellingham==1.5.4
+#15 11.26  + six==1.17.0
+#15 11.26  + sqlalchemy==2.1.6
+#15 11.26  + sqlmodel==0.0.48
+#15 11.26  + starlette==1.9.0
+#15 11.26  + tenacity==8.5.0
+#15 11.26  + truststore==0.10.5
+#15 11.26  + typer==0.27.3
+#15 11.26  + typing-extensions==4.16.0
+#15 11.26  + typing-inspection==0.4.4
+#15 11.26  + tzdata==2026.5
+#15 11.26  + urllib3==2.8.0
+#15 11.26  + uvicorn==0.54.0
+#15 11.26  + uvloop==0.23.0
+#15 11.26  + watchfiles==1.3.0
+#15 11.26  + websockets==17.3
+#15 DONE 11.5s
+
+#16 [build 6/9] COPY scripts ./scripts
+#16 DONE 0.2s
+
+#17 [build 7/9] COPY alembic.ini ./
+#17 DONE 0.1s
+
+#18 [build 8/9] COPY app ./app
+#18 DONE 0.1s
+
+#19 [build 9/9] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
+#19 0.343 warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
+#19 0.661    Building app @ file:///app
+#19 3.600       Built app @ file:///app
+#19 3.601 Prepared 1 package in 2.94s
+#19 3.602 Installed 1 package in 0.86ms
+#19 3.825 Bytecode compiled 2891 files in 222ms
+#19 3.825  + app==0.1.0 (from file:///app)
+#19 DONE 4.0s
+
+#20 [stage-1 4/4] COPY --from=build --chown=10001:10001 /app /app
+#20 DONE 1.4s
+
+#21 exporting to image
+#21 exporting layers
+#21 exporting layers 8.9s done
+#21 exporting manifest sha256:d9e534b8e9f979bc33bfeb3b0f5c92216cef5566656dac3351fb82d77e8a59ee 0.0s done
+#21 exporting config sha256:80b5116fcd517df10d7ab092c29dbb43d4afda6e37cdccaf656409eaab196293 0.0s done
+#21 exporting attestation manifest sha256:aa5e05a3970bada5f1a746c147f1cace8424bc8d1e7d387786a590d75ab76c7a 0.0s done
+#21 exporting manifest list sha256:f87379347155f7edd7ba812035f9fe4632e8b79ec080c0f5e2ed85e2c05837d6 0.0s done
+#21 naming to docker.io/library/liora-remediation-backend:local done
+#21 unpacking to docker.io/library/liora-remediation-backend:local
+#21 unpacking to docker.io/library/liora-remediation-backend:local 4.6s done
+#21 DONE 13.7s

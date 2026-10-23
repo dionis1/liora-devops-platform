@@ -1,0 +1,14 @@
+Run: https://github.com/dionis1/liora-devops-platform/actions/runs/39802778100
+Commit: 3ca992543988c25ba644f130f06dcb1289f38a51
+Created (UTC): 2026-10-22T15:13:28Z
+Overall conclusion: success
+
+SUCCESS    Backend lint
+SUCCESS    PostgreSQL and pytest
+SUCCESS    Publish backend and frontend to GHCR
+    SUCCESS    Publish backend
+    SUCCESS    Publish frontend
+    SUCCESS    Post Publish frontend
+    SUCCESS    Post Publish backend
+SKIPPED    Validate Docker images
+SUCCESS    Promote published images to dev GitOps branch

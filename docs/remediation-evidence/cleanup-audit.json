@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-23",
+  "temporary_test_containers_and_networks_removed": true,
+  "temporary_image_tags_removed": true,
+  "temporary_github_account_key_removed_and_verified": true,
+  "existing_running_containers_preserved": [
+    "ae311182c043",
+    "b713c0e6b5fa",
+    "5783f938700e",
+    "852b0c58d8a4"
+  ],
+  "existing_stopped_clusters_preserved": [
+    "flagship-platform",
+    "gitlab-gitops"
+  ],
+  "generated_credentials_and_dumps_committed": false
+}

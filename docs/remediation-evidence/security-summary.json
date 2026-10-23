@@ -1,0 +1,42 @@
+{
+  "source": {
+    "counts": {},
+    "targets": [
+      "backend/uv.lock",
+      "frontend/package-lock.json"
+    ],
+    "scanner": "Trivy 0.76.1",
+    "include_unfixed": true
+  },
+  "backend_image": {
+    "counts": {
+      "HIGH": 44
+    },
+    "targets": [
+      "liora-remediation-backend:local (debian 13.7)",
+      "Python"
+    ],
+    "scanner": "Trivy 0.76.1",
+    "include_unfixed": true
+  },
+  "frontend_image": {
+    "counts": {},
+    "targets": [
+      "liora-remediation-frontend:local (alpine 3.24.2)"
+    ],
+    "scanner": "Trivy 0.76.1",
+    "include_unfixed": true
+  },
+  "config_docker": {
+    "failures": 0,
+    "targets": 2
+  },
+  "config_kubernetes": {
+    "failures": 0,
+    "targets": 8
+  },
+  "config_infrastructure": {
+    "failures": 0,
+    "targets": 1
+  }
+}
