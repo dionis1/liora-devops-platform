@@ -2,23 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: liora-dev
 resources:
-  - ../../base
+- ../../base
+- namespace.yaml
 images:
-  - name: ghcr.io/dionis1/liora-devops-platform-backend
-    newTag: sha-3ca992543988c25ba644f130f06dcb1289f38a51
-  - name: ghcr.io/dionis1/liora-devops-platform-frontend
-    newTag: sha-3ca992543988c25ba644f130f06dcb1289f38a51
+- name: ghcr.io/dionis1/liora-devops-platform-backend
+  newTag: sha-bootstrap
+- name: ghcr.io/dionis1/liora-devops-platform-frontend
+  newTag: sha-bootstrap
 patches:
-  - target:
-      kind: ConfigMap
-      name: course-app-config
-    patch: |-
-      - op: replace
-        path: /data/ENVIRONMENT
-        value: staging
-      - op: replace
-        path: /data/FRONTEND_HOST
-        value: http://dev.example.invalid
-      - op: replace
-        path: /data/BACKEND_CORS_ORIGINS
-        value: http://dev.example.invalid
+- target:
+    kind: ConfigMap
+    name: course-app-config
+  patch: "- op: replace\n  path: /data/ENVIRONMENT\n  value: staging\n- op: replace\n\
+    \  path: /data/FRONTEND_HOST\n  value: http://dev.example.invalid\n- op: replace\n\
+    \  path: /data/BACKEND_CORS_ORIGINS\n  value: http://dev.example.invalid"

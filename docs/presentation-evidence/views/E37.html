@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>E37 · Historical ConfigMap, Ingress and rollout results</title><style>*{box-sizing:border-box}body{margin:0;background:#f0f3f7;color:#142338;font-family:Arial,sans-serif}main{max-width:1400px;margin:auto;padding:24px 32px}header{border-top:7px solid #176b8a;background:white;padding:18px 24px}h1{font-size:26px;line-height:1.15;margin:9px 0}h2{font-size:19px;margin:10px 0}.eyebrow{font-size:12px;font-weight:bold;letter-spacing:1.3px;color:#176b8a}.status{font-size:13px;font-weight:bold;color:#8a4200}.scope{font-size:15px;line-height:1.4;margin:10px 0}.command{font:13px monospace;overflow-wrap:anywhere}.panel{background:white;padding:18px 24px;margin-top:12px;border:1px solid #d4dee8}pre{font:15px/1.42 'DejaVu Sans Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#142338}footer{font-size:11px;line-height:1.5;overflow-wrap:anywhere;padding:12px 4px;color:#47566a}.flow{display:flex;gap:12px;align-items:stretch;margin:15px 0}.box{background:#e9f2f7;border:1px solid #9dbbcb;flex:1;padding:15px;font-size:16px;line-height:1.45}.future{background:#fff4e0;border-color:#dcb568}a{color:#176b8a}img{max-width:100%;border:1px solid #d4dee8}.card{background:white;margin:18px 0;padding:20px}.metadata{font-size:14px;line-height:1.5}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px}@media print{.card{break-inside:avoid}}</style><main><header><div class="eyebrow">ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</div><h1>E37 · Historical ConfigMap, Ingress and rollout results</h1><div class="status">PASSED · Local</div><p class="scope">Actual first-pass resource creation and rollout output. New security/metrics manifests were not deployed.</p><div class="command">kubectl apply local-dev.yaml; rollout status postgres/backend/frontend</div></header><section class="panel"><pre>configmap/course-app-config created
+service/backend created
+service/frontend created
+service/postgres created
+deployment.apps/backend created
+deployment.apps/frontend created
+statefulset.apps/postgres created
+ingress.networking.k8s.io/course-app created
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n liora-dev rollout status statefulset/postgres --timeout=180s
+Waiting for statefulset spec update to be observed...
+Waiting for 1 pods to be ready...
+Waiting for 1 pods to be ready...
+partitioned roll out complete: 1 new pods have been updated...
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n liora-dev rollout status deployment/backend --timeout=180s
+Waiting for deployment &quot;backend&quot; rollout to finish: 0 of 1 updated replicas are available...
+deployment &quot;backend&quot; successfully rolled out
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n liora-dev rollout status deployment/frontend --timeout=120s
+deployment &quot;frontend&quot; successfully rolled out
+$ kubectl --kubeconfig /tmp/liora-validation/kubeconfig -n liora-dev get pods,services,pvc -o wide
+NAME                            READY   STATUS    RESTARTS   AGE   IP           NODE                                     NOMINATED NODE   READINESS GATES</pre></section><footer>Requirement 4. Container Orchestration with Kubernetes<br>Observed: 2026-10-22 · Screenshot capture: 2026-10-23 · Software: k3d 5.9.0 / original first-pass images<br>docs/local-validation-evidence/kubernetes-live.log<br>SHA-256 37543c835eeaa64be065a5a02e17e7139f968df21d05d43d54dccf7be67da27a</footer></main></html>

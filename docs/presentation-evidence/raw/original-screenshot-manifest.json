@@ -1,0 +1,41 @@
+{
+  "captured_on": "2026-10-23",
+  "environment": "Isolated, loopback-only Docker fixture; no full application/database or Kubernetes monitoring stack running",
+  "screenshots": [
+    {
+      "file": "01-fastapi-docs.jpg",
+      "title": "FastAPI Swagger UI",
+      "source_url": "http://127.0.0.1:18000/docs",
+      "scope": "Real patched upstream API; no DB in screenshot fixture.",
+      "sha256": "a13cac067cbcb8d1ef41ecaaee520019711a7fa9109941e61386709540c6511a"
+    },
+    {
+      "file": "02-react-login.jpg",
+      "title": "React login page",
+      "source_url": "http://127.0.0.1:18081/login",
+      "scope": "Actual production frontend build; login form rendering, not an authenticated user session.",
+      "sha256": "054ecbf539b63d0583ce8b8d8e41c8cbed77ac3443dac0f46931d31f64ca48b9"
+    },
+    {
+      "file": "03-prometheus-targets.jpg",
+      "title": "Prometheus targets",
+      "source_url": "http://127.0.0.1:18084/targets",
+      "scope": "All three isolated Docker targets UP, including Grafana.",
+      "sha256": "05783056cf2c08e11a2101d80347f153ae5f9690dc0eb4bd259c9d0a7f133ad3"
+    },
+    {
+      "file": "04-grafana-dashboard.jpg",
+      "title": "Grafana application dashboard",
+      "source_url": "http://127.0.0.1:18083/d/liora-fastapi",
+      "scope": "Synthetic local health requests and intentional 404s; not production traffic.",
+      "sha256": "04ac6f7b5199a508a841d77faf261c0c237d72f029aca6772c30ad17eb354dc0"
+    },
+    {
+      "file": "05-application-alert-firing.jpg",
+      "title": "Application unavailable firing",
+      "source_url": "http://127.0.0.1:18084/alerts",
+      "scope": "Disposable backend stopped; unchanged one-minute production alert rule evaluated by standalone Prometheus.",
+      "sha256": "4952c641c05587f701248ccbf9d6ac0a3d866aeec9ed673eee40b17184b40310"
+    }
+  ]
+}

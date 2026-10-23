@@ -1,0 +1,9 @@
+2026-10-23
+PASS Terraform fmt -check -recursive; init -backend=false; validate
+PASS Ansible syntax: prepare.yml, k3s.yml, kubeconfig.yml
+PASS kubectl kustomize: dev, prod, monitoring
+PASS parsed workflow YAML; production Application has no automated sync
+PASS rendered workload read-only filesystems, dropped ALL capabilities, token automount disabled
+PASS production TLS secret/host reference; NetworkPolicy resources
+PASS shell syntax; reviewed submodule patch apply/check/reverse check
+These are static checks, not an additional Kubernetes runtime deployment.

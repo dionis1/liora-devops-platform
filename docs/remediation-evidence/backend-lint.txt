@@ -1,0 +1,7 @@
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
++ mypy app
+Success: no issues found in 39 source files
++ ruff check app
+All checks passed!
++ ruff format app --check
+39 files already formatted

@@ -1,0 +1,222 @@
+[
+  {
+    "id": 39802778100,
+    "name": "FastAPI course application CI",
+    "head_sha": "3ca992543988c25ba644f130f06dcb1289f38a51",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39802778100",
+    "created_at": "2026-10-22T15:13:28Z"
+  },
+  {
+    "id": 39802778090,
+    "name": "Validate platform manifests",
+    "head_sha": "3ca992543988c25ba644f130f06dcb1289f38a51",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39802778090",
+    "created_at": "2026-10-22T15:13:28Z"
+  },
+  {
+    "id": 39802778052,
+    "name": "Security audit",
+    "head_sha": "3ca992543988c25ba644f130f06dcb1289f38a51",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39802778052",
+    "created_at": "2026-10-22T15:13:28Z"
+  },
+  {
+    "id": 39802012026,
+    "name": "FastAPI course application CI",
+    "head_sha": "647c57cf5b726728b068056948539992496af8d9",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "branch": "chore/checkout-v7-resolve-dependabot",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39802012026",
+    "created_at": "2026-10-22T15:08:36Z"
+  },
+  {
+    "id": 39802011960,
+    "name": "Validate platform manifests",
+    "head_sha": "647c57cf5b726728b068056948539992496af8d9",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "branch": "chore/checkout-v7-resolve-dependabot",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39802011960",
+    "created_at": "2026-10-22T15:08:36Z"
+  },
+  {
+    "id": 39802011799,
+    "name": "Security audit",
+    "head_sha": "647c57cf5b726728b068056948539992496af8d9",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "branch": "chore/checkout-v7-resolve-dependabot",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39802011799",
+    "created_at": "2026-10-22T15:08:36Z"
+  },
+  {
+    "id": 39801854894,
+    "name": "FastAPI course application CI",
+    "head_sha": "960999fef34ecc6d6c75e55cd938a43a48da5caa",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "branch": "dependabot/github_actions/actions/checkout-7",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801854894",
+    "created_at": "2026-10-22T15:07:36Z"
+  },
+  {
+    "id": 39801854500,
+    "name": "Validate platform manifests",
+    "head_sha": "960999fef34ecc6d6c75e55cd938a43a48da5caa",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "branch": "dependabot/github_actions/actions/checkout-7",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801854500",
+    "created_at": "2026-10-22T15:07:36Z"
+  },
+  {
+    "id": 39801854109,
+    "name": "Security audit",
+    "head_sha": "960999fef34ecc6d6c75e55cd938a43a48da5caa",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "branch": "dependabot/github_actions/actions/checkout-7",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801854109",
+    "created_at": "2026-10-22T15:07:36Z"
+  },
+  {
+    "id": 39801732443,
+    "name": "FastAPI course application CI",
+    "head_sha": "78e5f00c434c932d135430291f06e1bf1fd0a4ca",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801732443",
+    "created_at": "2026-10-22T15:06:49Z"
+  },
+  {
+    "id": 39801732385,
+    "name": "Validate platform manifests",
+    "head_sha": "78e5f00c434c932d135430291f06e1bf1fd0a4ca",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801732385",
+    "created_at": "2026-10-22T15:06:49Z"
+  },
+  {
+    "id": 39801732256,
+    "name": "Security audit",
+    "head_sha": "78e5f00c434c932d135430291f06e1bf1fd0a4ca",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801732256",
+    "created_at": "2026-10-22T15:06:49Z"
+  },
+  {
+    "id": 39801721315,
+    "name": "github_actions in / for actions/checkout - Update #1645495371",
+    "head_sha": "7e17616c545e1a5583a3b25d04235ddb22f4f0b1",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "dynamic",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801721315",
+    "created_at": "2026-10-22T15:06:44Z"
+  },
+  {
+    "id": 39801641347,
+    "name": "FastAPI course application CI",
+    "head_sha": "7e17616c545e1a5583a3b25d04235ddb22f4f0b1",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801641347",
+    "created_at": "2026-10-22T15:06:14Z"
+  },
+  {
+    "id": 39801641199,
+    "name": "Security audit",
+    "head_sha": "7e17616c545e1a5583a3b25d04235ddb22f4f0b1",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801641199",
+    "created_at": "2026-10-22T15:06:13Z"
+  },
+  {
+    "id": 39801508961,
+    "name": "Security audit",
+    "head_sha": "2d3fb790efed904f636c0fc17561eb37efd89f90",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801508961",
+    "created_at": "2026-10-22T15:05:23Z"
+  },
+  {
+    "id": 39801508949,
+    "name": "FastAPI course application CI",
+    "head_sha": "2d3fb790efed904f636c0fc17561eb37efd89f90",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "event": "push",
+    "branch": "main",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39801508949",
+    "created_at": "2026-10-22T15:05:23Z"
+  },
+  {
+    "id": 39800963988,
+    "name": "FastAPI course application CI",
+    "head_sha": "cc7032cc1304f399d0539e31e537c4275173f8f5",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "branch": "dependabot/github_actions/docker/login-action-4",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39800963988",
+    "created_at": "2026-10-22T15:01:53Z"
+  },
+  {
+    "id": 39800963771,
+    "name": "Security audit",
+    "head_sha": "cc7032cc1304f399d0539e31e537c4275173f8f5",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "branch": "dependabot/github_actions/docker/login-action-4",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39800963771",
+    "created_at": "2026-10-22T15:01:53Z"
+  },
+  {
+    "id": 39800959923,
+    "name": "FastAPI course application CI",
+    "head_sha": "78964afebcae4583646f8b5c888997dbff966374",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "pull_request",
+    "branch": "dependabot/github_actions/docker/build-push-action-7",
+    "url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39800959923",
+    "created_at": "2026-10-22T15:01:51Z"
+  }
+]

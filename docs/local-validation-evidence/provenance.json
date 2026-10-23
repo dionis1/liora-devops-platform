@@ -1,0 +1,490 @@
+{
+  "repository": "https://github.com/dionis1/liora-devops-platform",
+  "sourceCommit": "3ca992543988c25ba644f130f06dcb1289f38a51",
+  "submoduleCommit": "f3c874cc0f4951b422b883b26a1ceef6cad141aa",
+  "acquisition": "GitHub connector source snapshot; authenticated CLI clone unavailable; original blobs hash verified",
+  "blobs": [
+    {
+      "path": ".github/dependabot.yml",
+      "sha": "80049834289c86e55d0fe144de3d59519386dd0a"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha": "7efcc231246946e082d572bae90c8a7ed7b67cdd"
+    },
+    {
+      "path": ".github/workflows/security.yml",
+      "sha": "26ccff77b07a855e1a7de96bf43421e4c4b4b118"
+    },
+    {
+      "path": ".github/workflows/validate-platform.yml",
+      "sha": "734de8dfe1d903b65ba9c13df7ad7da6aa8cad78"
+    },
+    {
+      "path": ".gitignore",
+      "sha": "29f3d19223a325d46d0e50f33f06806f7b8a3ac9"
+    },
+    {
+      "path": ".gitmodules",
+      "sha": "8561fea1247ff860e9034633e6904e69362086a6"
+    },
+    {
+      "path": "README.md",
+      "sha": "2f5a624a9666525955229acb50d082fc8715c42c"
+    },
+    {
+      "path": "ansible/ansible.cfg",
+      "sha": "0a549a9f4c764a608e019436e9503b6717cdd762"
+    },
+    {
+      "path": "ansible/inventory/hosts.ini.example",
+      "sha": "d5932635cac7346e901f4be79e0fff697ed8e938"
+    },
+    {
+      "path": "ansible/playbooks/group_vars/all.yml",
+      "sha": "8129a8ca18a65320346cf8bdcc2d0cd1dc15b22e"
+    },
+    {
+      "path": "ansible/playbooks/k3s.yml",
+      "sha": "3be8f0117e925dafe2127f7c3c2812fb312daa48"
+    },
+    {
+      "path": "ansible/playbooks/kubeconfig.yml",
+      "sha": "18788b09bd0401aa4e83e0412380ed03c22687e7"
+    },
+    {
+      "path": "ansible/playbooks/prepare.yml",
+      "sha": "63cdd62c200e288786704fc34280dbe55014f543"
+    },
+    {
+      "path": "docs/architecture.md",
+      "sha": "51d0b83b21f2bf7294ee343eb2823aa5448f3f0c"
+    },
+    {
+      "path": "docs/deployment.md",
+      "sha": "43df9d1908c688a6482900f70f6855601ad386c9"
+    },
+    {
+      "path": "docs/disaster-recovery.md",
+      "sha": "7d2b0a4dab94ddbe9b844a5a2157dbf75ac3b7b9"
+    },
+    {
+      "path": "docs/phase-1.md",
+      "sha": "a890d98733ab24cbe269fd6384c66ba68790b5e0"
+    },
+    {
+      "path": "gitops/applications.yaml",
+      "sha": "654f1456e77b07d80cfabe66b3d98d3002d799f8"
+    },
+    {
+      "path": "infrastructure/terraform/main.tf",
+      "sha": "ea22e0a1eea24fbea8de7d3620649b2c8cb9429f"
+    },
+    {
+      "path": "infrastructure/terraform/outputs.tf",
+      "sha": "2192ad302a1866bea7f429169ace584644e7356b"
+    },
+    {
+      "path": "infrastructure/terraform/terraform.tfvars.example",
+      "sha": "4d6ab846c2b752c6b2fa55a71e25343dfdcc5f23"
+    },
+    {
+      "path": "infrastructure/terraform/variables.tf",
+      "sha": "a759d2d8e5fa62d7e94a7cb15f07d377fc3344df"
+    },
+    {
+      "path": "infrastructure/terraform/versions.tf",
+      "sha": "0bb7fa0fd27366b080feef3d3e3b7084729fd3c4"
+    },
+    {
+      "path": "kubernetes/base/backend.yaml",
+      "sha": "40d2ad0127b22a6f5a92f1a41ac0f90a2bd83157"
+    },
+    {
+      "path": "kubernetes/base/configmap.yaml",
+      "sha": "ade2e6ac3f2cb2879d7a56a9bba31d765648d5f9"
+    },
+    {
+      "path": "kubernetes/base/database.yaml",
+      "sha": "d638907da9e6cc4a98e04b88f88ad7a244858266"
+    },
+    {
+      "path": "kubernetes/base/frontend.yaml",
+      "sha": "75da82668372ce4b7f87996c24df0173cf5e5914"
+    },
+    {
+      "path": "kubernetes/base/ingress.yaml",
+      "sha": "9b2044137d6e45c8d967aa599b8b1e3caeeddd59"
+    },
+    {
+      "path": "kubernetes/base/kustomization.yaml",
+      "sha": "b5ac1503e94b499f9b3d530bbc239fa39e3f97b7"
+    },
+    {
+      "path": "kubernetes/overlays/dev/kustomization.yaml",
+      "sha": "f138eeed88c3d832006d24ac2522f8f2a0c53558"
+    },
+    {
+      "path": "kubernetes/overlays/prod/kustomization.yaml",
+      "sha": "f5759148aff359fa74bedb88826f123aad76d481"
+    },
+    {
+      "path": "monitoring/README.md",
+      "sha": "a13edcdee419cc356001053333d69d640db9bfbc"
+    },
+    {
+      "path": "monitoring/kube-prometheus-stack-values.yaml",
+      "sha": "f006b18709391b0e2d4196733edf9ae21dc12ca1"
+    },
+    {
+      "path": "scripts/backup-postgres.sh",
+      "sha": "f8e6a78a5c506556eac44965398f9147845ec4a0"
+    },
+    {
+      "path": "scripts/create-inventory.sh",
+      "sha": "b6dc883feeb6d696fbc09b0f266e92272fd5d9a4"
+    },
+    {
+      "path": "scripts/create-secrets.example.sh",
+      "sha": "14f33255fc09873f624472c6db30cefbbd59240f"
+    }
+  ],
+  "ciJobs": {
+    "39802778100": [
+      {
+        "id": 119907808624,
+        "name": "Backend lint",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v6",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run astral-sh/setup-uv@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run upstream lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run astral-sh/setup-uv@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v6",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 119907808979,
+        "name": "PostgreSQL and pytest",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v6",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run astral-sh/setup-uv@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Start test dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run upstream migrations",
+            "conclusion": "success"
+          },
+          {
+            "name": "Execute API tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Clean up",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run astral-sh/setup-uv@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v6",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 119908374581,
+        "name": "Publish backend and frontend to GHCR",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run docker/setup-buildx-action@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Authenticate to GHCR",
+            "conclusion": "success"
+          },
+          {
+            "name": "Publish backend",
+            "conclusion": "success"
+          },
+          {
+            "name": "Publish frontend",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Publish frontend",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Publish backend",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Authenticate to GHCR",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run docker/setup-buildx-action@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 119908416094,
+        "name": "Validate Docker images",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 119908684739,
+        "name": "Promote published images to dev GitOps branch",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Update dev image tags in Git (not direct cluster access)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ],
+    "39802778090": [
+      {
+        "id": 119907808822,
+        "name": "terraform",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run hashicorp/setup-terraform@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Format configuration",
+            "conclusion": "success"
+          },
+          {
+            "name": "Initialize without connecting to Hetzner",
+            "conclusion": "success"
+          },
+          {
+            "name": "Validate Terraform configuration offline",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 119907809042,
+        "name": "ansible",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v6",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Ansible",
+            "conclusion": "success"
+          },
+          {
+            "name": "Syntax validation",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v6",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 119907809153,
+        "name": "kustomize",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run azure/setup-kubectl@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Render development",
+            "conclusion": "success"
+          },
+          {
+            "name": "Render production",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ],
+    "39802778052": [
+      {
+        "id": 119907808331,
+        "name": "trivy-source",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Scan dependencies and configuration for vulnerabilities",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Scan dependencies and configuration for vulnerabilities",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v7",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+# Preserve unified patch context and historical validation logs verbatim.
+*.patch -whitespace
+docs/local-validation-evidence/*.log -whitespace
+
+# Raw command artifacts and generated excerpts preserve source whitespace.
+docs/presentation-evidence/raw/* -whitespace
+docs/presentation-evidence/views/*.html -whitespace

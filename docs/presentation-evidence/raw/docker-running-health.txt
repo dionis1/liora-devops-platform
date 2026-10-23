@@ -1,0 +1,11 @@
+Captured UTC: 2026-10-23T08:10:28.808532+00:00
+$ docker ps --filter name=liora-defense-app-20261023
+NAMES                                   STATUS                    PORTS
+liora-defense-app-20261023-frontend-1   Up 39 seconds (healthy)   127.0.0.1:18081->8080/tcp
+liora-defense-app-20261023-backend-1    Up 39 seconds (healthy)   127.0.0.1:18000->8000/tcp
+liora-defense-app-20261023-postgres-1   Up 52 seconds (healthy)   5432/tcp
+
+$ docker inspect (selected non-secret fields only)
+name=/liora-defense-app-20261023-backend-1 user=10001:10001 read_only=true health=healthy
+$ docker inspect (selected non-secret fields only)
+name=/liora-defense-app-20261023-frontend-1 user=101:101 read_only=true health=healthy

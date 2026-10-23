@@ -1,0 +1,5 @@
+PASS shell syntax for all three repository scripts
+Backup saved to /tmp/liora-validation/dr-backups/liora-dev-20261022T205211Z.PumQg4.dump (copy to offline/encrypted storage)
+PASS real pg_dump custom archive, 0600 permissions, pg_restore into NEW database, all 3 rows match
+PASS failed pg_dump leaves no incomplete .dump or temporary file
+PASS invalid namespace rejected without touching backups

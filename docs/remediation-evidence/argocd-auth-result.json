@@ -1,0 +1,10 @@
+{
+  "repository": "git@github.com:dionis1/liora-devops-platform.git",
+  "expected_head": "3ca992543988c25ba644f130f06dcb1289f38a51",
+  "read_only_key_git_ls_remote": "Key access PASS; read-only scope NOT VERIFIED",
+  "date": "2026-10-23",
+  "argo_reconciliation": "SKIPPED: memory gate and read-only credential scope unverified",
+  "isolated_key_test": "PASS (-F /dev/null, IdentityAgent=none)",
+  "repository_deploy_keys_listed": 0,
+  "temporary_key_cleanup": "Exact account-level key removed with explicit user approval; absence verified"
+}

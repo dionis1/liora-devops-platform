@@ -1,0 +1,74 @@
+warning: The `tool.uv.dev-dependencies` field (used in `pyproject.toml`) is deprecated and will be removed in a future release; use `dependency-groups.dev` instead
++ python app/tests_pre_start.py
+INFO:__main__:Initializing service
+INFO:__main__:Starting call to '__main__.init', this is the 1st time calling it.
+INFO:__main__:Service finished initializing
++ bash scripts/test.sh
++ coverage run --source=app -m pytest
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-7.4.4, pluggy-1.5.0
+rootdir: /home/dionis/backup/liora-devops-platform/course-app/backend
+plugins: anyio-4.6.0
+collected 55 items
+
+app/tests/api/routes/test_items.py ...........                           [ 20%]
+app/tests/api/routes/test_login.py .......                               [ 32%]
+app/tests/api/routes/test_private.py .                                   [ 34%]
+app/tests/api/routes/test_users.py .........................             [ 80%]
+app/tests/crud/test_user.py .........                                    [ 96%]
+app/tests/scripts/test_backend_pre_start.py .                            [ 98%]
+app/tests/scripts/test_test_pre_start.py .                               [100%]
+
+=============================== warnings summary ===============================
+app/tests/scripts/test_backend_pre_start.py::test_init_successful_connection
+app/tests/scripts/test_test_pre_start.py::test_init_successful_connection
+  /home/dionis/backup/liora-devops-platform/course-app/backend/.venv/lib/python3.10/site-packages/sqlmodel/orm/session.py:66: SAWarning: The engine provided as bind produced a connection that is already in a transaction. This is usually caused by a core event, such as 'engine_connect', that has left a transaction open. The effective join transaction mode used by this session is 'create_savepoint'. To silence this warning, do not leave transactions open
+    results = super().execute(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 55 passed, 2 warnings in 15.67s ========================
++ coverage report --show-missing
+Name                                          Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------
+app/__init__.py                                   0      0   100%
+app/api/__init__.py                               0      0   100%
+app/api/deps.py                                  35      4    89%   36-37, 43, 45
+app/api/main.py                                  10      0   100%
+app/api/routes/__init__.py                        0      0   100%
+app/api/routes/items.py                          57      4    93%   27-39
+app/api/routes/login.py                          57      9    84%   37, 88, 93, 110-122
+app/api/routes/private.py                        18      0   100%
+app/api/routes/users.py                         100      0   100%
+app/api/routes/utils.py                          14      4    71%   20-26, 31
+app/backend_pre_start.py                         23      7    70%   27-29, 33-35, 39
+app/core/__init__.py                              0      0   100%
+app/core/config.py                               70      7    90%   22-24, 100-107
+app/core/db.py                                   10      2    80%   28-33
+app/core/security.py                             16      0   100%
+app/crud.py                                      40      0   100%
+app/initial_data.py                              14     14     0%   1-23
+app/main.py                                      14      1    93%   15
+app/models.py                                    59      0   100%
+app/tests/__init__.py                             0      0   100%
+app/tests/api/__init__.py                         0      0   100%
+app/tests/api/routes/__init__.py                  0      0   100%
+app/tests/api/routes/test_items.py               81      0   100%
+app/tests/api/routes/test_login.py               57      0   100%
+app/tests/api/routes/test_private.py             12      0   100%
+app/tests/api/routes/test_users.py              263      0   100%
+app/tests/conftest.py                            30      0   100%
+app/tests/crud/__init__.py                        0      0   100%
+app/tests/crud/test_user.py                      72      0   100%
+app/tests/scripts/__init__.py                     0      0   100%
+app/tests/scripts/test_backend_pre_start.py      16      2    88%   24-25
+app/tests/scripts/test_test_pre_start.py         16      2    88%   24-25
+app/tests/utils/__init__.py                       0      0   100%
+app/tests/utils/item.py                          13      0   100%
+app/tests/utils/user.py                          30      1    97%   46
+app/tests/utils/utils.py                         15      0   100%
+app/tests_pre_start.py                           23      7    70%   27-29, 33-35, 39
+app/utils.py                                     64      7    89%   47, 49, 53, 59-65
+---------------------------------------------------------------------------
+TOTAL                                          1229     71    94%
++ coverage html --title coverage
+Wrote HTML report to htmlcov/index.html

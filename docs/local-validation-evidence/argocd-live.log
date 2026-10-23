@@ -1,0 +1,127 @@
+MemAvailable KiB 4572184
+$ helm template argocd argo-cd --repo https://argoproj.github.io/argo-helm --version 10.10.5 -n argocd -f /tmp/liora-validation/argocd-values.yaml
+$ k3d cluster create liora-argocd-validation-20261022 --servers 1 --agents 0 --servers-memory 2048m --no-lb --api-port 127.0.0.1:16551 --kubeconfig-update-default=false --kubeconfig-switch-context=false --k3s-arg --disable=traefik,metrics-server@server:0 --timeout 120s
+[36mINFO[0m[0000] Prep: Network                                
+[36mINFO[0m[0000] Created network 'k3d-liora-argocd-validation-20261022' 
+[36mINFO[0m[0000] Created image volume k3d-liora-argocd-validation-20261022-images 
+[36mINFO[0m[0000] Starting new tools node...                   
+[36mINFO[0m[0000] Starting node 'k3d-liora-argocd-validation-20261022-tools' 
+[36mINFO[0m[0001] Creating node 'k3d-liora-argocd-validation-20261022-server-0' 
+[36mINFO[0m[0001] Using the k3d-tools node to gather environment information 
+[36mINFO[0m[0001] HostIP: using network gateway 172.28.0.1 address 
+[36mINFO[0m[0001] Starting cluster 'liora-argocd-validation-20261022' 
+[36mINFO[0m[0001] Starting servers...                          
+[36mINFO[0m[0001] Starting node 'k3d-liora-argocd-validation-20261022-server-0' 
+[36mINFO[0m[0007] All agents already running.                  
+[36mINFO[0m[0007] All helpers already running.                 
+[36mINFO[0m[0007] Injecting records for hostAliases (incl. host.k3d.internal) and for 1 network members into CoreDNS configmap... 
+[36mINFO[0m[0009] Cluster 'liora-argocd-validation-20261022' created successfully! 
+[36mINFO[0m[0009] You can now use it like this:                
+export KUBECONFIG=$(k3d kubeconfig write liora-argocd-validation-20261022)
+kubectl cluster-info
+$ k3d kubeconfig get liora-argocd-validation-20261022
+$ helm --kubeconfig /tmp/liora-validation/argocd-kubeconfig install argocd argo-cd --repo https://argoproj.github.io/argo-helm --version 10.10.5 -n argocd --create-namespace -f /tmp/liora-validation/argocd-values.yaml --wait --timeout 180s
+NAME: argocd
+LAST DEPLOYED: Thu Oct 22 22:27:28 2026
+NAMESPACE: argocd
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+In order to access the server UI you have the following options:
+
+1. kubectl port-forward service/argocd-server -n argocd 8080:443
+
+    and then open the browser on http://localhost:8080 and accept the certificate
+
+2. enable ingress in the values file `server.ingress.enabled` and either
+      - Add the annotation for ssl passthrough: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-1-ssl-passthrough
+      - Set the `configs.params."server.insecure"` in the values file and terminate SSL at your ingress: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-2-multiple-ingress-objects-and-hosts
+
+
+After reaching the UI the first time you can login with username: admin and the random password generated during the installation. You can find the password by running:
+
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+(You should delete the initial secret afterwards as suggested by the Getting Started Guide: https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli)
+$ kubectl --kubeconfig /tmp/liora-validation/argocd-kubeconfig -n argocd get pods,services
+NAME                                                   READY   STATUS      RESTARTS   AGE
+pod/argocd-application-controller-0                    1/1     Running     0          17s
+pod/argocd-applicationset-controller-dff475989-qlm4j   1/1     Running     0          17s
+pod/argocd-redis-785cddd5b5-zhfsj                      1/1     Running     0          17s
+pod/argocd-redis-secret-init-lgk4j                     0/1     Completed   0          105s
+pod/argocd-repo-server-7f999c98c6-2kf4q                1/1     Running     0          17s
+pod/argocd-server-57cd46f4d8-mx7w2                     1/1     Running     0          17s
+
+NAME                                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/argocd-applicationset-controller   ClusterIP   10.43.179.153   <none>        7000/TCP         18s
+service/argocd-redis                       ClusterIP   10.43.106.160   <none>        6379/TCP         18s
+service/argocd-repo-server                 ClusterIP   10.43.179.20    <none>        8081/TCP         18s
+service/argocd-server                      ClusterIP   10.43.153.251   <none>        80/TCP,443/TCP   18s
+PASS Argo CD health HTTP 200
+$ kubectl --kubeconfig /tmp/liora-validation/argocd-kubeconfig apply -f /home/dionis/backup/liora-devops-platform/gitops/applications.yaml
+application.argoproj.io/liora-dev created
+application.argoproj.io/liora-prod created
+APPLICATION liora-dev sync Unknown conditions [{"lastTransitionTime": "2026-10-22T20:29:17Z", "message": "Failed to load target state: failed to generate manifest for source 1 of 1: rpc error: code = Unknown desc = failed to list refs: authentication required: Repository not found.", "type": "ComparisonError"}]
+APPLICATION liora-prod sync Unknown conditions [{"lastTransitionTime": "2026-10-22T20:29:17Z", "message": "Failed to load target state: failed to generate manifest for source 1 of 1: rpc error: code = Unknown desc = failed to list refs: authentication required: Repository not found.", "type": "ComparisonError"}]
+Private repository sync cannot pass until read-only repository credentials are configured; no credentials were supplied or extracted.
+NAME                                                   READY   STATUS      RESTARTS   AGE
+pod/argocd-application-controller-0                    1/1     Running     0          21s
+pod/argocd-applicationset-controller-dff475989-qlm4j   1/1     Running     0          21s
+pod/argocd-redis-785cddd5b5-zhfsj                      1/1     Running     0          21s
+pod/argocd-redis-secret-init-lgk4j                     0/1     Completed   0          109s
+pod/argocd-repo-server-7f999c98c6-2kf4q                1/1     Running     0          21s
+pod/argocd-server-57cd46f4d8-mx7w2                     1/1     Running     0          21s
+
+LAST SEEN   TYPE     REASON              OBJECT                                                  MESSAGE
+21s         Normal   Scheduled           pod/argocd-application-controller-0                     Successfully assigned argocd/argocd-application-controller-0 to k3d-liora-argocd-validation-20261022-server-0
+21s         Normal   Pulled              pod/argocd-application-controller-0                     Container image "quay.io/argoproj/argocd:v3.5.5" already present on machine and can be accessed by the pod
+21s         Normal   Created             pod/argocd-application-controller-0                     Container created
+20s         Normal   Started             pod/argocd-application-controller-0                     Container started
+21s         Normal   SuccessfulCreate    statefulset/argocd-application-controller               Create Pod argocd-application-controller-0 in StatefulSet argocd-application-controller successful
+21s         Normal   Scheduled           pod/argocd-applicationset-controller-dff475989-qlm4j    Successfully assigned argocd/argocd-applicationset-controller-dff475989-qlm4j to k3d-liora-argocd-validation-20261022-server-0
+21s         Normal   Pulled              pod/argocd-applicationset-controller-dff475989-qlm4j    Container image "quay.io/argoproj/argocd:v3.5.5" already present on machine and can be accessed by the pod
+21s         Normal   Created             pod/argocd-applicationset-controller-dff475989-qlm4j    Container created
+21s         Normal   Started             pod/argocd-applicationset-controller-dff475989-qlm4j    Container started
+21s         Normal   SuccessfulCreate    replicaset/argocd-applicationset-controller-dff475989   Created pod: argocd-applicationset-controller-dff475989-qlm4j
+22s         Normal   ScalingReplicaSet   deployment/argocd-applicationset-controller             Scaled up replica set argocd-applicationset-controller-dff475989 from 0 to 1
+21s         Normal   Scheduled           pod/argocd-redis-785cddd5b5-zhfsj                       Successfully assigned argocd/argocd-redis-785cddd5b5-zhfsj to k3d-liora-argocd-validation-20261022-server-0
+21s         Normal   Pulling             pod/argocd-redis-785cddd5b5-zhfsj                       Pulling image "ecr-public.aws.com/docker/library/redis:8.6.4-alpine"
+6s          Normal   Pulled              pod/argocd-redis-785cddd5b5-zhfsj                       Successfully pulled image "ecr-public.aws.com/docker/library/redis:8.6.4-alpine" in 15.239s (15.239s including waiting). Image size: 34498212 bytes.
+6s          Normal   Created             pod/argocd-redis-785cddd5b5-zhfsj                       Container created
+5s          Normal   Started             pod/argocd-redis-785cddd5b5-zhfsj                       Container started
+21s         Normal   SuccessfulCreate    replicaset/argocd-redis-785cddd5b5                      Created pod: argocd-redis-785cddd5b5-zhfsj
+108s        Normal   Scheduled           pod/argocd-redis-secret-init-lgk4j                      Successfully assigned argocd/argocd-redis-secret-init-lgk4j to k3d-liora-argocd-validation-20261022-server-0
+105s        Normal   Pulling             pod/argocd-redis-secret-init-lgk4j                      Pulling image "quay.io/argoproj/argocd:v3.5.5"
+27s         Normal   Pulled              pod/argocd-redis-secret-init-lgk4j                      Successfully pulled image "quay.io/argoproj/argocd:v3.5.5" in 1m18.504s (1m18.504s including waiting). Image size: 221565168 bytes.
+27s         Normal   Created             pod/argocd-redis-secret-init-lgk4j                      Container created
+27s         Normal   Started             pod/argocd-redis-secret-init-lgk4j                      Container started
+109s        Normal   SuccessfulCreate    job/argocd-redis-secret-init                            Created pod: argocd-redis-secret-init-lgk4j
+22s         Normal   Completed           job/argocd-redis-secret-init                            Job completed
+22s         Normal   ScalingReplicaSet   deployment/argocd-redis                                 Scaled up replica set argocd-redis-785cddd5b5 from 0 to 1
+21s         Normal   Scheduled           pod/argocd-repo-server-7f999c98c6-2kf4q                 Successfully assigned argocd/argocd-repo-server-7f999c98c6-2kf4q to k3d-liora-argocd-validation-20261022-server-0
+21s         Normal   Pulled              pod/argocd-repo-server-7f999c98c6-2kf4q                 Container image "quay.io/argoproj/argocd:v3.5.5" already present on machine and can be accessed by the pod
+21s         Normal   Created             pod/argocd-repo-server-7f999c98c6-2kf4q                 Container created
+21s         Normal   Started             pod/argocd-repo-server-7f999c98c6-2kf4q                 Container started
+18s         Normal   Pulled              pod/argocd-repo-server-7f999c98c6-2kf4q                 Container image "quay.io/argoproj/argocd:v3.5.5" already present on machine and can be accessed by the pod
+18s         Normal   Created             pod/argocd-repo-server-7f999c98c6-2kf4q                 Container created
+18s         Normal   Started             pod/argocd-repo-server-7f999c98c6-2kf4q                 Container started
+21s         Normal   SuccessfulCreate    replicaset/argocd-repo-server-7f999c98c6                Created pod: argocd-repo-server-7f999c98c6-2kf4q
+22s         Normal   ScalingReplicaSet   deployment/argocd-repo-server                           Scaled up replica set argocd-repo-server-7f999c98c6 from 0 to 1
+21s         Normal   Scheduled           pod/argocd-server-57cd46f4d8-mx7w2                      Successfully assigned argocd/argocd-server-57cd46f4d8-mx7w2 to k3d-liora-argocd-validation-20261022-server-0
+21s         Normal   Pulled              pod/argocd-server-57cd46f4d8-mx7w2                      Container image "quay.io/argoproj/argocd:v3.5.5" already present on machine and can be accessed by the pod
+21s         Normal   Created             pod/argocd-server-57cd46f4d8-mx7w2                      Container created
+21s         Normal   Started             pod/argocd-server-57cd46f4d8-mx7w2                      Container started
+21s         Normal   SuccessfulCreate    replicaset/argocd-server-57cd46f4d8                     Created pod: argocd-server-57cd46f4d8-mx7w2
+22s         Normal   ScalingReplicaSet   deployment/argocd-server                                Scaled up replica set argocd-server-57cd46f4d8 from 0 to 1
+1s          Normal   ResourceUpdated     application/liora-dev                                   Updated sync status:  -> Unknown
+1s          Normal   ResourceUpdated     application/liora-dev                                   Updated health status:  -> Healthy
+1s          Normal   ResourceUpdated     application/liora-prod                                  Updated sync status:  -> Unknown
+1s          Normal   ResourceUpdated     application/liora-prod                                  Updated health status:  -> Healthy
+[36mINFO[0m[0000] Deleting cluster 'liora-argocd-validation-20261022' 
+[36mINFO[0m[0001] Deleting cluster network 'k3d-liora-argocd-validation-20261022' 
+[36mINFO[0m[0001] Deleting 1 attached volumes...               
+[36mINFO[0m[0001] Removing cluster details from default kubeconfig... 
+[36mINFO[0m[0001] Removing standalone kubeconfig file (if there is one)... 
+[36mINFO[0m[0001] Successfully deleted cluster liora-argocd-validation-20261022! 

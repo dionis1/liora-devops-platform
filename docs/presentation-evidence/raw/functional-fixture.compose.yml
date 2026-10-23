@@ -1,0 +1,51 @@
+services:
+  backend:
+    cap_drop:
+    - ALL
+    env_file:
+    - backend.env
+    image: liora-defense-backend:local
+    mem_limit: 192m
+    ports:
+    - 127.0.0.1:18000:8000
+    read_only: true
+    security_opt:
+    - no-new-privileges:true
+    tmpfs:
+    - /tmp:size=32m
+  frontend:
+    cap_drop:
+    - ALL
+    image: liora-defense-frontend:local
+    mem_limit: 64m
+    ports:
+    - 127.0.0.1:18081:8080
+    read_only: true
+    security_opt:
+    - no-new-privileges:true
+    tmpfs:
+    - /tmp:size=32m
+    volumes:
+    - /tmp/liora-defense/application/api-proxy.conf:/etc/nginx/extra-conf.d/backend-not-found.conf:ro
+  postgres:
+    cap_drop:
+    - ALL
+    env_file:
+    - backend.env
+    healthcheck:
+      interval: 2s
+      retries: 30
+      test:
+      - CMD-SHELL
+      - pg_isready -U app -d app
+      timeout: 3s
+    image: postgres:16.10
+    mem_limit: 256m
+    read_only: true
+    security_opt:
+    - no-new-privileges:true
+    tmpfs:
+    - /var/lib/postgresql/data:size=256m,uid=999,gid=999
+    - /tmp:size=16m,uid=999,gid=999
+    - /var/run/postgresql:size=16m,uid=999,gid=999
+    user: 999:999

@@ -6,9 +6,9 @@ spec:
   selector:
     app: postgres
   ports:
-    - name: db
-      port: 5432
-      targetPort: 5432
+  - name: db
+    port: 5432
+    targetPort: 5432
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -25,50 +25,97 @@ spec:
       labels:
         app: postgres
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
       containers:
-        - name: postgres
-          image: postgres:16.10
-          ports:
-            - containerPort: 5432
-              name: db
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: course-app-config
-                  key: POSTGRES_USER
-            - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: course-app-config
-                  key: POSTGRES_DB
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: course-app-secrets
-                  key: POSTGRES_PASSWORD
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
-          resources:
-            requests:
-              cpu: 100m
-              memory: 256Mi
-            limits:
-              memory: 1Gi
-          readinessProbe:
-            exec:
-              command: ["sh", "-c", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          volumeMounts:
-            - name: dbdata
-              mountPath: /var/lib/postgresql/data
-  volumeClaimTemplates:
-    - metadata:
-        name: dbdata
-      spec:
-        storageClassName: local-path
-        accessModes: [ReadWriteOnce]
+      - name: postgres
+        image: postgres:16.10
+        ports:
+        - containerPort: 5432
+          name: db
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: course-app-config
+              key: POSTGRES_USER
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: course-app-config
+              key: POSTGRES_DB
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: course-app-secrets
+              key: POSTGRES_PASSWORD
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
         resources:
           requests:
-            storage: 8Gi
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            memory: 1Gi
+            cpu: '1'
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: dbdata
+          mountPath: /var/lib/postgresql/data
+        - name: tmp
+          mountPath: /tmp
+        - name: pg-run
+          mountPath: /var/run/postgresql
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        startupProbe:
+          exec: &id001
+            command:
+            - sh
+            - -c
+            - pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 30
+        livenessProbe:
+          exec: *id001
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 6
+          initialDelaySeconds: 10
+      volumes:
+      - name: tmp
+        emptyDir:
+          medium: Memory
+          sizeLimit: 64Mi
+      - name: pg-run
+        emptyDir:
+          medium: Memory
+          sizeLimit: 16Mi
+  volumeClaimTemplates:
+  - metadata:
+      name: dbdata
+    spec:
+      storageClassName: local-path
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 8Gi

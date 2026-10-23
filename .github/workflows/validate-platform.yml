@@ -1,5 +1,6 @@
 name: Validate platform manifests
 on:
+  workflow_call:
   pull_request:
     paths:
       - "infrastructure/**"
@@ -25,12 +26,12 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: "1.14.6"
       - name: Format configuration
-        run: terraform -chdir=infrastructure/terraform fmt -recursive
+        run: terraform -chdir=infrastructure/terraform fmt -check -recursive
       - name: Initialize without connecting to Hetzner
         run: terraform -chdir=infrastructure/terraform init -backend=false
       - name: Validate Terraform configuration offline
@@ -39,20 +40,22 @@ jobs:
   kustomize:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: azure/setup-kubectl@v5
         with:
           version: "v1.34.0"
       - name: Render development
         run: kubectl kustomize kubernetes/overlays/dev > /tmp/dev.yaml
+      - name: Render monitoring
+        run: kubectl kustomize monitoring > /tmp/monitoring.yaml
       - name: Render production
         run: kubectl kustomize kubernetes/overlays/prod > /tmp/prod.yaml
 
   ansible:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Install Ansible

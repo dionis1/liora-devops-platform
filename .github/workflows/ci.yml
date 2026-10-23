@@ -1,5 +1,4 @@
 name: FastAPI course application CI
-
 on:
   pull_request:
     branches: [main]
@@ -15,132 +14,124 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  platform:
+    uses: ./.github/workflows/validate-platform.yml
+
   backend-lint:
-    name: Backend lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: "3.10"
-      - uses: astral-sh/setup-uv@v5
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v7
         with:
-          version: "0.4.15"
+          version: "0.13.1"
           enable-cache: true
-          cache-dependency-glob: "course-app/backend/uv.lock"
+          cache-dependency-glob: patches/course-app-platform.patch
+      - run: bash scripts/prepare-course-app.sh
       - name: Run upstream lint
         working-directory: course-app/backend
         run: uv run --frozen bash scripts/lint.sh
 
   backend-tests:
-    name: PostgreSQL and pytest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
-          python-version: "3.10"
-      - uses: astral-sh/setup-uv@v5
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v7
         with:
-          version: "0.4.15"
+          version: "0.13.1"
           enable-cache: true
-          cache-dependency-glob: "course-app/backend/uv.lock"
-      - name: Start test dependencies
-        working-directory: course-app
-        run: docker compose up -d --wait db mailcatcher
-      - name: Run upstream migrations
-        working-directory: course-app/backend
-        run: uv run --frozen bash scripts/prestart.sh
-      - name: Execute API tests
-        working-directory: course-app/backend
-        run: uv run --frozen bash scripts/tests-start.sh "CI coverage"
-      - name: Clean up
-        if: always()
-        working-directory: course-app
-        run: docker compose down -v --remove-orphans
+          cache-dependency-glob: patches/course-app-platform.patch
+      - name: PostgreSQL 16, migrations, upstream tests and platform metrics
+        run: bash scripts/test-backend.sh
 
-  build-pr:
-    name: Validate Docker images
-    if: github.event_name == 'pull_request'
-    needs: [backend-lint, backend-tests]
+  build-scan:
+    name: Build and scan before publication
+    needs: [platform, backend-lint, backend-tests]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
           persist-credentials: false
+      - run: bash scripts/prepare-course-app.sh
       - uses: docker/setup-buildx-action@v4
-      - uses: docker/build-push-action@v6
+      - uses: aquasecurity/setup-trivy@v0.3.1
         with:
-          context: course-app/backend
-          push: false
-          cache-from: type=gha,scope=backend
-          cache-to: type=gha,mode=max,scope=backend
-      - uses: docker/build-push-action@v6
+          version: v0.76.1
+          cache: true
+      - name: Gate dependencies, deployed configuration and secrets
+        run: bash scripts/scan-security.sh
+      - name: Build backend
+        run: docker build -f docker/backend.Dockerfile -t liora-backend:ci course-app/backend
+      - name: Test backend image against PostgreSQL 16
+        run: python3 scripts/test-backend-image.py liora-backend:ci
+      - name: Scan backend before publication
+        run: trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 liora-backend:ci
+      - name: Build frontend
+        run: docker build -f docker/frontend.Dockerfile -t liora-frontend:ci course-app/frontend
+      - name: Scan frontend before publication
+        run: trivy image --parallel 1 --severity HIGH,CRITICAL --exit-code 1 liora-frontend:ci
+      - name: Save the exact scanned images
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: docker save -o /tmp/scanned-images.tar liora-backend:ci liora-frontend:ci
+      - uses: actions/upload-artifact@v7.0.2
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
-          context: course-app/frontend
-          push: false
-          build-args: |
-            VITE_API_URL=
-          cache-from: type=gha,scope=frontend
-          cache-to: type=gha,mode=max,scope=frontend
+          name: scanned-images
+          path: /tmp/scanned-images.tar
+          retention-days: 1
+          compression-level: 1
 
   publish:
-    name: Publish backend and frontend to GHCR
+    name: Publish only scanned images
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [backend-lint, backend-tests]
+    needs: [build-scan]
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v8.0.2
         with:
-          submodules: true
-          persist-credentials: false
-      - uses: docker/setup-buildx-action@v4
-      - name: Authenticate to GHCR
-        uses: docker/login-action@v3
+          name: scanned-images
+          path: /tmp
+      - run: docker load -i /tmp/scanned-images.tar
+      - uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish backend
-        uses: docker/build-push-action@v6
-        with:
-          context: course-app/backend
-          push: true
-          tags: ghcr.io/dionis1/liora-devops-platform-backend:sha-${{ github.sha }}
-          cache-from: type=gha,scope=backend
-          cache-to: type=gha,mode=max,scope=backend
-      - name: Publish frontend
-        uses: docker/build-push-action@v6
-        with:
-          context: course-app/frontend
-          push: true
-          build-args: |
-            VITE_API_URL=
-          tags: ghcr.io/dionis1/liora-devops-platform-frontend:sha-${{ github.sha }}
-          cache-from: type=gha,scope=frontend
-          cache-to: type=gha,mode=max,scope=frontend
+      - name: Tag and push the scanned backend and frontend
+        env:
+          IMAGE_TAG: sha-${{ github.sha }}
+        run: |
+          docker tag liora-backend:ci ghcr.io/dionis1/liora-devops-platform-backend:$IMAGE_TAG
+          docker push ghcr.io/dionis1/liora-devops-platform-backend:$IMAGE_TAG
+          docker tag liora-frontend:ci ghcr.io/dionis1/liora-devops-platform-frontend:$IMAGE_TAG
+          docker push ghcr.io/dionis1/liora-devops-platform-frontend:$IMAGE_TAG
 
   promote-dev:
-    name: Promote published images to dev GitOps branch
+    name: Promote validated manifests and scanned images
     needs: [publish]
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Update dev image tags in Git (not direct cluster access)
+      - name: Update dev in Git; production remains manual
         env:
           IMAGE_TAG: sha-${{ github.sha }}
         run: |
@@ -149,12 +140,13 @@ jobs:
           if git ls-remote --exit-code --heads origin deploy/dev >/dev/null; then
             git fetch origin deploy/dev
             git switch -c deploy/dev --track origin/deploy/dev
+            git merge --no-edit "$GITHUB_SHA"
           else
             git switch -c deploy/dev
           fi
-          sed -i -E "s/(newTag: )sha-[a-z0-9]+/\\1${IMAGE_TAG}/g" kubernetes/overlays/dev/kustomization.yaml
+          sed -i -E "s/(newTag: )sha-[a-z0-9]+/\\1$IMAGE_TAG/g" kubernetes/overlays/dev/kustomization.yaml
           git add kubernetes/overlays/dev/kustomization.yaml
           if ! git diff --cached --quiet; then
-            git commit -m "chore(gitops): promote dev images to ${IMAGE_TAG}"
+            git commit -m "chore(gitops): promote scanned dev images to $IMAGE_TAG"
             git push origin HEAD:refs/heads/deploy/dev
           fi

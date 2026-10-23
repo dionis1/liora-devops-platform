@@ -1,0 +1,52 @@
+[
+  {
+    "number": 1,
+    "title": "Dockerize Your Application",
+    "directory": "01-dockerize-your-application"
+  },
+  {
+    "number": 2,
+    "title": "Deploy the Application in Multiple Environments (Dev & Prod)",
+    "directory": "02-deploy-the-application-in-multiple-environments-dev-prod"
+  },
+  {
+    "number": 3,
+    "title": "Run Tests on the Application",
+    "directory": "03-run-tests-on-the-application"
+  },
+  {
+    "number": 4,
+    "title": "Container Orchestration with Kubernetes",
+    "directory": "04-container-orchestration-with-kubernetes"
+  },
+  {
+    "number": 5,
+    "title": "Automate Deployment (CI/CD Pipeline)",
+    "directory": "05-automate-deployment-ci-cd-pipeline"
+  },
+  {
+    "number": 6,
+    "title": "Create IaC (Infrastructure as Code) Templates",
+    "directory": "06-create-iac-infrastructure-as-code-templates"
+  },
+  {
+    "number": 7,
+    "title": "Monitor the Application",
+    "directory": "07-monitor-the-application"
+  },
+  {
+    "number": 8,
+    "title": "Think About Security (DevSecOps)",
+    "directory": "08-think-about-security-devsecops"
+  },
+  {
+    "number": 9,
+    "title": "Think About Disaster Recovery",
+    "directory": "09-think-about-disaster-recovery"
+  },
+  {
+    "number": 10,
+    "title": "Documentation",
+    "directory": "10-documentation"
+  }
+]

@@ -1,0 +1,24 @@
+Captured UTC: 2026-10-23T08:09:10.312738+00:00
+$ ansible-playbook --version
+ansible-playbook [core 2.16.3]
+  config file = None
+  configured module search path = ['/home/dionis/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  ansible collection location = /home/dionis/.ansible/collections:/usr/share/ansible/collections
+  executable location = /usr/bin/ansible-playbook
+  python version = 3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0] (/usr/bin/python3)
+  jinja version = 3.1.2
+  libyaml = True
+Exit code: 0
+$ ansible-playbook -i ansible/inventory/hosts.ini.example --syntax-check ansible/playbooks/prepare.yml
+
+playbook: ansible/playbooks/prepare.yml
+Exit code: 0
+$ ansible-playbook -i ansible/inventory/hosts.ini.example --syntax-check ansible/playbooks/k3s.yml
+
+playbook: ansible/playbooks/k3s.yml
+Exit code: 0
+$ ansible-playbook -i ansible/inventory/hosts.ini.example --syntax-check ansible/playbooks/kubeconfig.yml
+
+playbook: ansible/playbooks/kubeconfig.yml
+Exit code: 0
