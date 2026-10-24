@@ -1,6 +1,6 @@
 # Deferred deployment: from GitHub code to a Hetzner k3s host
 
-**Nothing in this guide has been applied to a host yet.** Do this only when the VM is available. All secrets, Terraform state and kubeconfig must remain outside Git.
+**The cloud steps below have not been applied to a Hetzner host.** Both current dev/prod overlays were deployed and tested sequentially in disposable local k3s on 2026-10-24; [commands, release identifiers and evidence](environment-validation.md). All secrets, Terraform state and kubeconfig remain outside Git.
 
 ## 0. Tools and prerequisites
 
@@ -91,7 +91,7 @@ Replace `dev.example.invalid` and `app.example.invalid` in manifests with real D
 
 Important: the original React SDK already sends requests starting with `/api/v1`. The frontend Docker build sets `VITE_API_URL` to an empty string; ingress routes `/api` to backend and `/` to frontend. Do not configure `VITE_API_URL=/api`, which would duplicate the prefix.
 
-Both overlays currently have `sha-bootstrap` placeholder image tags. Successful GitHub Actions publish updates **dev** on `deploy/dev`. For **prod**, change the two image tags in `kubernetes/overlays/prod/kustomization.yaml` to the approved SHA, merge to main, and manually sync. Do not try to deploy an unbuilt bootstrap tag.
+Production now has verified immutable backend/frontend `digest: sha256:...` entries for scanned/published main ef41449; dev uses its SHA tag. Kustomize replaces the migration init-container as well. For a new release, first verify the successful main publication job and anonymous registry manifest digests, update the two production digest entries in a reviewed PR, merge to main, then manually sync prod. CI updates only dev on `deploy/dev`; it does not approve or synchronize production. Never substitute an unverified bootstrap tag or promote an image based only on a successful build.
 
 ## 6. Monitoring and backups
 
@@ -120,9 +120,15 @@ Create the Argo repository Secret locally with the secret-type label `repository
 read from the private file. Do not save the Secret in this repository or print it.
 Configure verified GitHub SSH host keys in `argocd-ssh-known-hosts-cm` and use the
 matching SSH repoURL in both Applications when choosing SSH authentication.
-The checked-in HTTPS URLs instead require a read-only HTTPS credential.
+The checked-in public HTTPS URLs need no repository credential. Only private HTTPS repositories require a verified read-only HTTPS credential.
 Keep Argo server access on a loopback-only port-forward; remove temporary keys after testing.
 
 The temporary test key could read GitHub, but the repository deploy-key API returned zero keys.
 Its scope was therefore not accepted as verified read-only, and it was not installed in Argo.
 The exact temporary account-level key was removed with explicit user approval and removal was verified. Public Git/GHCR access, dev synchronization and a configuration rollback subsequently passed; [the later report](argocd-validation.md) supersedes that gap. Private-package pulls and production deployment were not tested.
+
+## Verified local dev/prod operation — 2026-10-24
+
+Both actual overlays passed sequential runtime, independent credential/storage, HTTP/login/CRUD and bidirectional database-isolation checks. [Full execution report and reproducible commands](environment-validation.md). No public domain, production certificate or cloud resources were created. The production `.invalid` host and unverified TLS Secret reference remain deliberate placeholders; local browser access used a loopback same-origin proxy over service port-forwards, not production ingress.
+
+Dev configuration uses `ENVIRONMENT=staging`, HTTP dev origin and automatic GitOps policy. Prod uses `ENVIRONMENT=production`, HTTPS placeholder origin and manual sync policy. Secret and PostgreSQL object names can be the same because their namespaces, values and PVCs differ; both actual instances were verified. Do not reuse test credentials for a real service. The temporary cluster and generated credential files were removed after evidence capture.

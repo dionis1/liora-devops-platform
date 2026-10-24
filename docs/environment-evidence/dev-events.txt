@@ -1,0 +1,63 @@
+LAST SEEN   TYPE      REASON                  OBJECT                                    MESSAGE
+7m40s       Normal    SuccessfulCreate        replicaset/backend-d67569cd5              Created pod: backend-d67569cd5-r5v5w
+7m40s       Normal    ScalingReplicaSet       deployment/backend                        Scaled up replica set backend-d67569cd5 from 0 to 1
+7m40s       Normal    Pulling                 pod/backend-d67569cd5-r5v5w               Pulling image "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694"
+7m40s       Normal    SuccessfulCreate        replicaset/frontend-6f7f9878ff            Created pod: frontend-6f7f9878ff-qj274
+7m18s       Normal    ExternalProvisioning    persistentvolumeclaim/dbdata-postgres-0   Waiting for a volume to be created either by the external provisioner 'rancher.io/local-path' or manually by the system administrator. If volume creation is delayed, please verify that the provisioner is running and correctly registered.
+7m40s       Normal    WaitForFirstConsumer    persistentvolumeclaim/dbdata-postgres-0   waiting for first consumer to be created before binding
+7m40s       Normal    Pulling                 pod/frontend-6f7f9878ff-qj274             Pulling image "ghcr.io/dionis1/liora-devops-platform-frontend:sha-ef414490d99151a3640cea6dac56589531816694"
+7m40s       Normal    Scheduled               pod/frontend-6f7f9878ff-qj274             Successfully assigned liora-dev/frontend-6f7f9878ff-qj274 to k3d-liora-env-20261024-server-0
+7m40s       Normal    SuccessfulCreate        statefulset/postgres                      Create Pod postgres-0 in StatefulSet postgres successful
+7m40s       Normal    SuccessfulCreate        statefulset/postgres                      Create Claim dbdata-postgres-0 Pod postgres-0 in StatefulSet postgres success
+48s         Normal    ScalingReplicaSet       deployment/frontend                       Scaled up replica set frontend-6f7f9878ff from 0 to 1
+7m40s       Normal    Scheduled               pod/backend-d67569cd5-r5v5w               Successfully assigned liora-dev/backend-d67569cd5-r5v5w to k3d-liora-env-20261024-server-0
+7m38s       Normal    Provisioning            persistentvolumeclaim/dbdata-postgres-0   External provisioner is provisioning volume for claim "liora-dev/dbdata-postgres-0"
+7m18s       Normal    Created                 pod/frontend-6f7f9878ff-qj274             Container created
+7m18s       Normal    Started                 pod/frontend-6f7f9878ff-qj274             Container started
+7m18s       Normal    Pulled                  pod/frontend-6f7f9878ff-qj274             Successfully pulled image "ghcr.io/dionis1/liora-devops-platform-frontend:sha-ef414490d99151a3640cea6dac56589531816694" in 21.31s (21.31s including waiting). Image size: 27177470 bytes.
+7m14s       Normal    ProvisioningSucceeded   persistentvolumeclaim/dbdata-postgres-0   Successfully provisioned volume pvc-a60127c6-1b6a-4049-a8d3-a962ceb6c711
+7m13s       Normal    Pulling                 pod/postgres-0                            Pulling image "postgres:16.10"
+7m13s       Normal    Scheduled               pod/postgres-0                            Successfully assigned liora-dev/postgres-0 to k3d-liora-env-20261024-server-0
+7m12s       Normal    Pulled                  pod/backend-d67569cd5-r5v5w               Successfully pulled image "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694" in 28.062s (28.062s including waiting). Image size: 65806919 bytes.
+6m22s       Normal    Created                 pod/backend-d67569cd5-r5v5w               Container created
+6m22s       Normal    Started                 pod/backend-d67569cd5-r5v5w               Container started
+6m22s       Normal    Pulled                  pod/backend-d67569cd5-r5v5w               Container image "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694" already present on machine and can be accessed by the pod
+6m50s       Warning   BackOff                 pod/backend-d67569cd5-r5v5w               Back-off restarting failed container migrate in pod backend-d67569cd5-r5v5w_liora-dev(f62e3d1c-bd03-44b5-b06b-04766d137d01)
+6m37s       Normal    Started                 pod/postgres-0                            Container started
+6m37s       Normal    Pulled                  pod/postgres-0                            Successfully pulled image "postgres:16.10" in 35.511s (35.511s including waiting). Image size: 160106005 bytes.
+6m37s       Normal    Created                 pod/postgres-0                            Container created
+48s         Normal    ScalingReplicaSet       deployment/backend                        Scaled up replica set backend-5544b9b894 from 0 to 1
+6m21s       Normal    Scheduled               pod/backend-5544b9b894-hqjw9              Successfully assigned liora-dev/backend-5544b9b894-hqjw9 to k3d-liora-env-20261024-server-0
+6m22s       Normal    SuccessfulCreate        replicaset/backend-5544b9b894             Created pod: backend-5544b9b894-hqjw9
+6m21s       Normal    Created                 pod/backend-5544b9b894-hqjw9              Container created
+6m21s       Normal    Started                 pod/backend-5544b9b894-hqjw9              Container started
+6m21s       Normal    Pulled                  pod/backend-5544b9b894-hqjw9              Container image "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694" already present on machine and can be accessed by the pod
+6m14s       Normal    Started                 pod/backend-d67569cd5-r5v5w               Container started
+6m14s       Normal    Started                 pod/backend-5544b9b894-hqjw9              Container started
+6m14s       Normal    Created                 pod/backend-5544b9b894-hqjw9              Container created
+6m14s       Normal    Pulled                  pod/backend-5544b9b894-hqjw9              Container image "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694" already present on machine and can be accessed by the pod
+6m14s       Normal    Created                 pod/backend-d67569cd5-r5v5w               Container created
+6m14s       Normal    Pulled                  pod/backend-d67569cd5-r5v5w               Container image "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694" already present on machine and can be accessed by the pod
+6m11s       Warning   Unhealthy               pod/backend-5544b9b894-hqjw9              Startup probe failed: Get "http://10.42.0.12:8000/api/v1/utils/health-check/": dial tcp 10.42.0.12:8000: connect: connection refused
+6m6s        Normal    Killing                 pod/backend-d67569cd5-r5v5w               Stopping container backend
+6m6s        Normal    ScalingReplicaSet       deployment/backend                        Scaled down replica set backend-d67569cd5 from 1 to 0
+6m6s        Normal    SuccessfulDelete        replicaset/backend-d67569cd5              Deleted pod: backend-d67569cd5-r5v5w
+3m55s       Normal    SuccessfulDelete        replicaset/frontend-6f7f9878ff            Deleted pod: frontend-6f7f9878ff-qj274
+3m55s       Normal    Killing                 pod/frontend-6f7f9878ff-qj274             Stopping container frontend
+3m55s       Normal    ScalingReplicaSet       deployment/backend                        Scaled down replica set backend-5544b9b894 from 1 to 0
+3m55s       Normal    Killing                 pod/backend-5544b9b894-hqjw9              Stopping container backend
+3m55s       Normal    ScalingReplicaSet       deployment/frontend                       Scaled down replica set frontend-6f7f9878ff from 1 to 0
+3m55s       Normal    SuccessfulDelete        replicaset/backend-5544b9b894             Deleted pod: backend-5544b9b894-hqjw9
+48s         Normal    SuccessfulCreate        replicaset/frontend-6f7f9878ff            Created pod: frontend-6f7f9878ff-47477
+48s         Normal    SuccessfulCreate        replicaset/backend-5544b9b894             Created pod: backend-5544b9b894-ksznt
+47s         Normal    Scheduled               pod/frontend-6f7f9878ff-47477             Successfully assigned liora-dev/frontend-6f7f9878ff-47477 to k3d-liora-env-20261024-server-0
+47s         Normal    Scheduled               pod/backend-5544b9b894-ksznt              Successfully assigned liora-dev/backend-5544b9b894-ksznt to k3d-liora-env-20261024-server-0
+47s         Normal    Pulled                  pod/frontend-6f7f9878ff-47477             Container image "ghcr.io/dionis1/liora-devops-platform-frontend:sha-ef414490d99151a3640cea6dac56589531816694" already present on machine and can be accessed by the pod
+47s         Normal    Created                 pod/frontend-6f7f9878ff-47477             Container created
+47s         Normal    Started                 pod/backend-5544b9b894-ksznt              Container started
+47s         Normal    Created                 pod/backend-5544b9b894-ksznt              Container created
+47s         Normal    Pulled                  pod/backend-5544b9b894-ksznt              Container image "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694" already present on machine and can be accessed by the pod
+47s         Normal    Started                 pod/frontend-6f7f9878ff-47477             Container started
+41s         Normal    Started                 pod/backend-5544b9b894-ksznt              Container started
+41s         Normal    Created                 pod/backend-5544b9b894-ksznt              Container created
+41s         Normal    Pulled                  pod/backend-5544b9b894-ksznt              Container image "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694" already present on machine and can be accessed by the pod

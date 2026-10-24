@@ -1,0 +1,18 @@
+INFO[0000] Prep: Network
+INFO[0000] Created network 'k3d-liora-env-20261024'
+INFO[0000] Created image volume k3d-liora-env-20261024-images
+INFO[0000] Starting new tools node...
+INFO[0000] Starting node 'k3d-liora-env-20261024-tools'
+INFO[0001] Creating node 'k3d-liora-env-20261024-server-0'
+INFO[0001] Using the k3d-tools node to gather environment information
+INFO[0001] HostIP: using network gateway 172.28.0.1 address
+INFO[0001] Starting cluster 'liora-env-20261024'
+INFO[0001] Starting servers...
+INFO[0001] Starting node 'k3d-liora-env-20261024-server-0'
+INFO[0007] All agents already running.
+INFO[0007] All helpers already running.
+INFO[0007] Injecting records for hostAliases (incl. host.k3d.internal) and for 1 network members into CoreDNS configmap...
+INFO[0009] Cluster 'liora-env-20261024' created successfully!
+INFO[0009] You can now use it like this:
+export KUBECONFIG=$(k3d kubeconfig write liora-env-20261024)
+kubectl cluster-info

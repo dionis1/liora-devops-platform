@@ -1,0 +1,60 @@
+{
+  "result": "PASSED",
+  "source_revision": "4f50b067ec33df85888e178c49932fef48156757 plus the recorded environment-overlay diff",
+  "checks": [
+    "Both overlays render without bootstrap workload images",
+    "Migration init container matches backend image",
+    "Namespace-local ConfigMap/Secret/service/storage references",
+    "Five network policies in each namespace",
+    "Dev automatic deploy/dev; prod manual main policy unchanged",
+    "Public DNS/TLS placeholders intentionally retained; not validated"
+  ],
+  "environments": {
+    "dev": {
+      "namespace": "liora-dev",
+      "render_sha256": "caa02dcd73d4990a80bb73d15c84d7d4d5feafa621d3192c01d85a97d4f6a429",
+      "config": {
+        "BACKEND_CORS_ORIGINS": "http://dev.example.invalid",
+        "ENVIRONMENT": "staging",
+        "FRONTEND_HOST": "http://dev.example.invalid",
+        "POSTGRES_DB": "app",
+        "POSTGRES_PORT": "5432",
+        "POSTGRES_SERVER": "postgres",
+        "POSTGRES_USER": "app",
+        "PROJECT_NAME": "DataScientest FastAPI",
+        "SENTRY_DSN": "",
+        "SMTP_HOST": ""
+      },
+      "images": {
+        "backend/migrate": "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694",
+        "backend/backend": "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694",
+        "frontend/frontend": "ghcr.io/dionis1/liora-devops-platform-frontend:sha-ef414490d99151a3640cea6dac56589531816694",
+        "postgres/postgres": "postgres:16.10"
+      },
+      "checks": "namespace, services, deployment/statefulset, PVC, ingress, probes/resources/security and migration image replacement checked"
+    },
+    "prod": {
+      "namespace": "liora-prod",
+      "render_sha256": "9ca9dff1f8ef543b3138bcf384a14aca46d5d9d74e907c2dba8e6836f9faad5d",
+      "config": {
+        "BACKEND_CORS_ORIGINS": "https://app.example.invalid",
+        "ENVIRONMENT": "production",
+        "FRONTEND_HOST": "https://app.example.invalid",
+        "POSTGRES_DB": "app",
+        "POSTGRES_PORT": "5432",
+        "POSTGRES_SERVER": "postgres",
+        "POSTGRES_USER": "app",
+        "PROJECT_NAME": "DataScientest FastAPI",
+        "SENTRY_DSN": "",
+        "SMTP_HOST": ""
+      },
+      "images": {
+        "backend/migrate": "ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b",
+        "backend/backend": "ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b",
+        "frontend/frontend": "ghcr.io/dionis1/liora-devops-platform-frontend@sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e",
+        "postgres/postgres": "postgres:16.10"
+      },
+      "checks": "namespace, services, deployment/statefulset, PVC, ingress, probes/resources/security and migration image replacement checked"
+    }
+  }
+}

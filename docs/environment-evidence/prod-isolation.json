@@ -1,0 +1,12 @@
+{
+  "credential_values_are_distinct": true,
+  "database_tcp": {
+    "own": "CONNECTED",
+    "other": "BLOCKED_REFUSED"
+  },
+  "other_environment_item_http": 404,
+  "other_environment_credentials_http": 400,
+  "environment": "prod",
+  "result": "PASSED",
+  "scope": "Same-namespace DB connection allowed; other namespace DB connection blocked; other environment credentials and record rejected. No shared-node failure isolation claim."
+}

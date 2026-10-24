@@ -1,5 +1,6 @@
 # Backend security gate remediation — 2026-10-23
 
+Later observation (2026-10-24): [both dev/prod overlays now pass sequential local runtime and isolation](environment-validation.md); latest main ef41449 passed publication and dev promotion. Earlier results below retain their original scope. Production Argo sync/public HTTPS/cloud remain untested.
 ## 8. Think About Security (DevSecOps)
 
 The Debian backend at revision `211199d` had **0 CRITICAL / 44 HIGH** package findings and correctly failed the release gate. The rebuilt backend uses **Python 3.12.15 on Alpine 3.24.3**, with the official base pinned by digest, and passes Trivy 0.76.1 with **0 CRITICAL / 0 HIGH** findings. Both OS and Python package results are included. No CVEs are ignored and unfixed findings remain included. This states the HIGH/CRITICAL result at scan time, not immunity from future vulnerabilities.

@@ -10,3 +10,4 @@
 - [E15 — Running containers and health checks](E15.jpg) — PASSED; see [metadata](../README.md).
 - [E49 — Public GHCR package exposes the secure release tag](E49.jpg) — PASSED; see [metadata](../README.md).
 - [E51 — Anonymous registry reads match the actual running image digests](E51.jpg) — PASSED; see [metadata](../README.md).
+- [E60 — Published image digests match dev and production pods](E60.jpg) — PASSED; see [metadata](../README.md).

@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><title>Dev workloads Ready — current hardened manifests</title><style>body{font:16px Arial;background:#eef3f8;color:#132c43;margin:24px}header,pre{background:white;padding:22px;border:1px solid #b5c5d4}h1{font-size:27px}pre{font:15px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}</style><header><b>ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</b><h1>Dev workloads Ready — current hardened manifests</h1><p>PASSED: actual Kubernetes output saved immediately before capture. Services are local; no cloud or public TLS claim.</p><p>Observed and captured 2026-10-24 · disposable local k3s · source: docs/environment-evidence/dev-ready.txt</p></header><pre>NAME                            READY   STATUS    RESTARTS   AGE
+pod/backend-5544b9b894-hqjw9    1/1     Running   0          41s
+pod/frontend-6f7f9878ff-qj274   1/1     Running   0          119s
+pod/postgres-0                  1/1     Running   0          119s
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend    1/1     1            1           119s
+deployment.apps/frontend   1/1     1            1           119s
+
+NAME                        READY   AGE
+statefulset.apps/postgres   1/1     119s
+
+NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/backend    ClusterIP   10.43.8.181    &lt;none&gt;        8000/TCP   119s
+service/frontend   ClusterIP   10.43.45.96    &lt;none&gt;        80/TCP     119s
+service/postgres   ClusterIP   10.43.176.80   &lt;none&gt;        5432/TCP   119s
+
+NAME                                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/dbdata-postgres-0   Bound    pvc-a60127c6-1b6a-4049-a8d3-a962ceb6c711   8Gi        RWO            local-path     &lt;unset&gt;                 119s
+
+NAME                                   CLASS     HOSTS                 ADDRESS      PORTS   AGE
+ingress.networking.k8s.io/course-app   traefik   dev.example.invalid   172.28.0.2   80      119s
+</pre>

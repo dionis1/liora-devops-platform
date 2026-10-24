@@ -40,6 +40,16 @@ assert actual=={a['file']for a in x['screenshots']},'Unindexed or missing screen
 old=json.loads((ROOT/'docs/presentation-evidence/raw/original-screenshot-manifest.json').read_text())
 oldhash={s['sha256']for s in old['screenshots']};newhash={s['sha256']for s in x['screenshots']}
 assert oldhash<=newhash,'A reused original image changed'
+preserved=ROOT/'docs/presentation-evidence/raw/screenshot-manifest-through-E51.json'
+if preserved.exists():
+ prior=json.loads(preserved.read_text())['screenshots']
+ current={item['id']:item for item in x['screenshots']}
+ for item in prior:
+  assert current[item['id']]['file']==item['file'],item['id']
+  assert current[item['id']]['sha256']==item['sha256'],item['id']
+  for field in ['capture_date','observed_date','result','command','scope','kind']:
+   assert current[item['id']][field]==item[field],(item['id'],field)
+ print('PASS all',len(prior),'earlier screenshots and dated observation metadata preserved')
 for file in ['docs/presentation-evidence.md','docs/requirements-validation-checklist.md','docs/final-compliance-report.md']:
  text=(ROOT/file).read_text();positions=[text.index(f'{i+1}. {title}')for i,title in enumerate(expected)];assert positions==sorted(positions),file
 # Check local links in the evidence documents/indexes. External URLs and anchors

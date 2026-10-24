@@ -1,0 +1,2 @@
+NAME                              STATUS   ROLES           AGE     VERSION
+k3d-liora-env-20261024-server-0   Ready    control-plane   9m51s   v1.35.5+k3s1

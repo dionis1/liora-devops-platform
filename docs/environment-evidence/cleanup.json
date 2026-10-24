@@ -1,0 +1,11 @@
+{
+  "temporary_cluster_removed": true,
+  "generated_secret_files_removed": true,
+  "running_containers_preserved": [
+    "infra-agent-1",
+    "infra-docker-1",
+    "infra-jenkins-1"
+  ],
+  "no_billable_resources_created": true,
+  "public_services_exposed": false
+}

@@ -1,0 +1,14 @@
+namespace/liora-prod unchanged
+configmap/course-app-config created
+service/backend created
+service/frontend created
+service/postgres created
+deployment.apps/backend created
+deployment.apps/frontend created
+statefulset.apps/postgres created
+ingress.networking.k8s.io/course-app created
+networkpolicy.networking.k8s.io/allow-cluster-dns created
+networkpolicy.networking.k8s.io/backend-traffic created
+networkpolicy.networking.k8s.io/default-deny created
+networkpolicy.networking.k8s.io/frontend-ingress created
+networkpolicy.networking.k8s.io/postgres-ingress created

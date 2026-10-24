@@ -1,0 +1,16 @@
+{
+  "environment": "dev",
+  "result": "PASSED",
+  "access": "loopback port-forwards plus temporary same-origin HTTP proxy; not public ingress/TLS",
+  "frontend_http": 200,
+  "health_http": 200,
+  "health_body": true,
+  "database_readiness_http": 200,
+  "login_and_jwt": "PASSED",
+  "create_and_read_item": "PASSED",
+  "item": {
+    "id": "47a9e7c4-e71e-439a-9673-3fc37c6fc76c",
+    "title": "DEV environment isolation record"
+  },
+  "visible_item_count": 1
+}

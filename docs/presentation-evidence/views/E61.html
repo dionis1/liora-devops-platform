@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><title>Separate dev and prod configuration, credentials and storage</title><style>body{font:16px Arial;background:#eef3f8;color:#132c43;margin:24px}header,pre{background:white;padding:22px;border:1px solid #b5c5d4}h1{font-size:27px}pre{font:15px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}</style><header><b>ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</b><h1>Separate dev and prod configuration, credentials and storage</h1><p>Actual runtime ConfigMaps and non-secret object metadata. Credential values were compared only in memory and are omitted.</p><p>Observed and captured 2026-10-24 · disposable local k3s · source: docs/environment-evidence/environment-separation.txt</p></header><pre>Actual environment separation — 2026-10-24
+Sequential web deployments; both database instances retained briefly for isolation tests.
+
+DEV: namespace liora-dev
+ENVIRONMENT=staging
+FRONTEND_HOST=http://dev.example.invalid
+CORS_ORIGINS=http://dev.example.invalid
+Secret object UID: 383e20ec-fd7f-444a-8027-baaf00234615
+PVC volume: pvc-a60127c6-1b6a-4049-a8d3-a962ceb6c711
+
+PROD: namespace liora-prod
+ENVIRONMENT=production
+FRONTEND_HOST=https://app.example.invalid
+CORS_ORIGINS=https://app.example.invalid
+Secret object UID: 3f0b6398-d865-41d2-a083-3eb007b4c5d2
+PVC volume: pvc-89254776-f193-4831-aba6-55fc8eb52d56
+
+PASS distinct namespace-scoped ConfigMaps, Secrets and bound storage.
+Credential values are never printed or saved in evidence.
+Services use namespace-local postgres/backend/frontend DNS.
+Full dev/prod web stacks were NOT run concurrently.
+No cloud, public DNS/TLS, or production Argo sync claim.
+</pre>

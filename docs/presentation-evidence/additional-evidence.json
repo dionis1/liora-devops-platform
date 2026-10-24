@@ -1,0 +1,295 @@
+[
+  {
+    "id": "E52",
+    "requirement": 5,
+    "supports": [
+      1,
+      3,
+      5,
+      6,
+      8
+    ],
+    "title": "Latest main tests, scans, publication and dev promotion all pass",
+    "file": "05-automate-deployment-ci-cd-pipeline/E52.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-23",
+    "environment": "GitHub Actions",
+    "software": "Main ef41449 / release sha-ef414490d99151a3640cea6dac56589531816694",
+    "result": "PASSED",
+    "scope": "Actual successful hosted main run at ef41449. Not the earlier failed db2efa8 run; does not prove prod Argo synchronization.",
+    "command": "Open main workflow 39939061134",
+    "kind": "actual-ui",
+    "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39939061134",
+    "source_commit": "ef414490d99151a3640cea6dac56589531816694",
+    "source_revision_scope": "Release workflow source commit",
+    "source_paths": [
+      "docs/environment-evidence/release-jobs.json"
+    ]
+  },
+  {
+    "id": "E53",
+    "requirement": 2,
+    "supports": [
+      2,
+      3,
+      4
+    ],
+    "title": "Dev browser shows its own persisted record",
+    "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E53.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Actual authenticated dev application, backed by its own Kubernetes PostgreSQL. Temporary same-origin proxy; no public ingress/TLS claim.",
+    "command": "Sign in to dev through localhost port-forward proxy; open Items",
+    "kind": "actual-ui",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/dev-http.json",
+      "docs/environment-evidence/dev-runtime.json"
+    ]
+  },
+  {
+    "id": "E54",
+    "requirement": 2,
+    "supports": [
+      2,
+      4
+    ],
+    "title": "Current dev Kubernetes workloads and storage are Ready",
+    "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E54.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Saved real output, captured before stopping dev web pods. Three ready pods and independent bound PVC; local cluster only.",
+    "command": "kubectl -n liora-dev get pods,deploy,sts,svc,pvc,ingress",
+    "kind": "archived-output",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/dev-ready.txt"
+    ],
+    "view": "views/E54.html"
+  },
+  {
+    "id": "E55",
+    "requirement": 2,
+    "supports": [
+      2,
+      3
+    ],
+    "title": "Dev frontend, API health, readiness and CRUD pass",
+    "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E55.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Saved actual smoke-test output. Loopback service port-forwards plus a temporary proxy; not public ingress/TLS.",
+    "command": "python smoke.py dev; HTTP health, readiness, JWT login, create/read item",
+    "kind": "archived-output",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/dev-http.json"
+    ],
+    "view": "views/E55.html"
+  },
+  {
+    "id": "E56",
+    "requirement": 2,
+    "supports": [
+      2,
+      3,
+      4
+    ],
+    "title": "Production browser shows a separate persisted record",
+    "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E56.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Actual authenticated production-mode app, independently migrated Kubernetes PostgreSQL and separate Secret. Not cloud/public HTTPS or Argo prod sync.",
+    "command": "Sign in to prod through localhost port-forward proxy; open Items",
+    "kind": "actual-ui",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/prod-http.json",
+      "docs/environment-evidence/prod-runtime.json"
+    ]
+  },
+  {
+    "id": "E57",
+    "requirement": 2,
+    "supports": [
+      2,
+      4
+    ],
+    "title": "Production Kubernetes workloads and storage are Ready",
+    "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E57.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Saved actual production-overlay readiness, three ready pods and a distinct bound PVC. Ingress shown as configuration; public TLS not tested.",
+    "command": "Manually apply prod-rendered.yaml; wait for rollouts; kubectl get resources",
+    "kind": "archived-output",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/prod-ready.txt"
+    ],
+    "view": "views/E57.html"
+  },
+  {
+    "id": "E58",
+    "requirement": 2,
+    "supports": [
+      2,
+      3
+    ],
+    "title": "Production HTTP, database readiness and authenticated CRUD pass",
+    "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E58.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Saved actual production-mode execution through localhost service port-forwards and proxy. Public DNS, TLS and cloud not exercised.",
+    "command": "python smoke.py prod; HTTP health, readiness, JWT login, create/read item",
+    "kind": "archived-output",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/prod-http.json"
+    ],
+    "view": "views/E58.html"
+  },
+  {
+    "id": "E59",
+    "requirement": 2,
+    "supports": [
+      2,
+      4,
+      8
+    ],
+    "title": "Cross-environment isolation is verified in both directions",
+    "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E59.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Own DB TCP succeeds, cross-namespace DB connection rejected, wrong-environment credentials HTTP 400 and records HTTP 404. Both target DBs live. No node-level failure separation.",
+    "command": "python isolate.py prod; stop prod web; restore dev; python isolate.py dev",
+    "kind": "archived-output",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/isolation-summary.txt",
+      "docs/environment-evidence/dev-isolation.json",
+      "docs/environment-evidence/prod-isolation.json",
+      "docs/environment-evidence/dev-recheck.json"
+    ],
+    "view": "views/E59.html"
+  },
+  {
+    "id": "E60",
+    "requirement": 1,
+    "supports": [
+      1,
+      2,
+      5,
+      8
+    ],
+    "title": "Published image digests match dev and production pods",
+    "file": "01-dockerize-your-application/E60.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Both actual running imageIDs match public registry digests. Prod migration and backend share the immutable reference; no image rebuild for screenshots.",
+    "command": "Anonymous GHCR manifest GET; compare published digest to both environments imageIDs",
+    "kind": "archived-output",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/running-image-proof.txt",
+      "docs/environment-evidence/registry-release.json",
+      "docs/environment-evidence/dev-runtime.json",
+      "docs/environment-evidence/prod-runtime.json"
+    ],
+    "view": "views/E60.html"
+  },
+  {
+    "id": "E61",
+    "requirement": 2,
+    "supports": [
+      2,
+      8
+    ],
+    "title": "Runtime configuration, Secret objects and storage are separated",
+    "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E61.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Actual namespace-local configuration/Secret/PVC metadata; no secret values. Full web stacks tested sequentially, not concurrently.",
+    "command": "Inspect ConfigMaps, Secret UIDs/keys and PVC volume names; compare values only in memory",
+    "kind": "archived-output",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/environment-separation.txt",
+      "docs/environment-evidence/dev-runtime.json",
+      "docs/environment-evidence/prod-runtime.json"
+    ],
+    "view": "views/E61.html"
+  },
+  {
+    "id": "E62",
+    "requirement": 2,
+    "supports": [
+      2,
+      4,
+      5
+    ],
+    "title": "Both overlays render and production approval policy is preserved",
+    "file": "02-deploy-the-application-in-multiple-environments-dev-prod/E62.jpg",
+    "capture_date": "2026-10-24",
+    "observed_date": "2026-10-24",
+    "environment": "Disposable local k3d; sequential dev/prod",
+    "software": "k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair",
+    "result": "PASSED",
+    "scope": "Static evidence only: zero rendered bootstrap references, migration image matches backend, dev auto-sync and prod manual main policy unchanged. Runtime evidence separate.",
+    "command": "kubectl kustomize both overlays; verify image replacement and GitOps policies",
+    "kind": "archived-output",
+    "workflow_url": null,
+    "source_commit": "4f50b067ec33df85888e178c49932fef48156757",
+    "source_revision_scope": "4f50b06 plus recorded overlay-changes.patch; exact rendered YAML and hashes preserved",
+    "source_paths": [
+      "docs/environment-evidence/render-summary.txt",
+      "docs/environment-evidence/manifest-validation.json",
+      "docs/environment-evidence/overlay-changes.patch"
+    ],
+    "view": "views/E62.html"
+  }
+]

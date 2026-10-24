@@ -1,0 +1,18 @@
+Verified release: ef414490d99151a3640cea6dac56589531816694
+Anonymous GHCR manifest HTTP 200 for backend and frontend.
+Workflow: tests, strict scans, publication and dev promotion all PASSED.
+
+Component: backend
+Registry digest: sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b
+dev running imageID: ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b
+prod running imageID: ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b
+PASS registry digest equals BOTH running image IDs.
+
+Component: frontend
+Registry digest: sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e
+dev running imageID: ghcr.io/dionis1/liora-devops-platform-frontend@sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e
+prod running imageID: ghcr.io/dionis1/liora-devops-platform-frontend@sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e
+PASS registry digest equals BOTH running image IDs.
+
+Prod migration init-container image also matches backend digest.
+Prod uses immutable @sha256 references; dev retains CI-managed SHA tags.

@@ -1,0 +1,17 @@
+<!doctype html><meta charset="utf-8"><title>Prod HTTP, login and database CRUD pass</title><style>body{font:16px Arial;background:#eef3f8;color:#132c43;margin:24px}header,pre{background:white;padding:22px;border:1px solid #b5c5d4}h1{font-size:27px}pre{font:15px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}</style><header><b>ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</b><h1>Prod HTTP, login and database CRUD pass</h1><p>PASSED through loopback-only port-forwards and a temporary same-origin proxy. No public ingress or HTTPS claim.</p><p>Observed and captured 2026-10-24 · disposable local k3s · source: docs/environment-evidence/prod-http.json</p></header><pre>{
+  &quot;environment&quot;: &quot;prod&quot;,
+  &quot;result&quot;: &quot;PASSED&quot;,
+  &quot;access&quot;: &quot;loopback port-forwards plus temporary same-origin HTTP proxy; not public ingress/TLS&quot;,
+  &quot;frontend_http&quot;: 200,
+  &quot;health_http&quot;: 200,
+  &quot;health_body&quot;: true,
+  &quot;database_readiness_http&quot;: 200,
+  &quot;login_and_jwt&quot;: &quot;PASSED&quot;,
+  &quot;create_and_read_item&quot;: &quot;PASSED&quot;,
+  &quot;item&quot;: {
+    &quot;id&quot;: &quot;6d417890-4bad-4ad4-a100-20c67b46736b&quot;,
+    &quot;title&quot;: &quot;PROD environment isolation record&quot;
+  },
+  &quot;visible_item_count&quot;: 1
+}
+</pre>

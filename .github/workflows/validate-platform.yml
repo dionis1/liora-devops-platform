@@ -50,6 +50,20 @@ jobs:
         run: kubectl kustomize monitoring > /tmp/monitoring.yaml
       - name: Render production
         run: kubectl kustomize kubernetes/overlays/prod > /tmp/prod.yaml
+      - name: Require immutable production release images
+        run: |
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          import re
+          text = Path('/tmp/prod.yaml').read_text()
+          assert 'sha-bootstrap' not in text, 'Production still contains placeholder images'
+          images = re.findall(r'^\s+(?:- )?image: (\S+)', text, re.MULTILINE)
+          app = [image for image in images if image.startswith('ghcr.io/dionis1/liora-devops-platform-')]
+          assert len(app) == 3, 'Expected migration, backend and frontend images'
+          assert all(re.fullmatch(r'ghcr.io/dionis1/liora-devops-platform-(backend|frontend)@sha256:[0-9a-f]{64}', image) for image in app), 'Production app images must use verified digests'
+          assert len(set(image for image in app if '-backend@' in image)) == 1, 'Migration and backend must match'
+          print('PASS immutable production backend, migration and frontend references')
+          PYCODE
       - name: Check safe GitOps promotion and conflict handling
         run: python3 -m unittest discover -s tests -p test_promote_dev.py -v
 

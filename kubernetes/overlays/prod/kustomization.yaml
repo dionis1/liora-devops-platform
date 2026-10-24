@@ -6,9 +6,9 @@ resources:
 - namespace.yaml
 images:
 - name: ghcr.io/dionis1/liora-devops-platform-backend
-  newTag: sha-bootstrap
+  digest: sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b
 - name: ghcr.io/dionis1/liora-devops-platform-frontend
-  newTag: sha-bootstrap
+  digest: sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e
 patches:
 - target:
     kind: ConfigMap

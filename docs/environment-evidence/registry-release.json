@@ -1,0 +1,144 @@
+{
+  "source_commit": "ef414490d99151a3640cea6dac56589531816694",
+  "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39939061134",
+  "tag": "sha-ef414490d99151a3640cea6dac56589531816694",
+  "authentication": "anonymous public registry read",
+  "images": [
+    {
+      "component": "backend",
+      "repository": "dionis1/liora-devops-platform-backend",
+      "status": 200,
+      "digest": "sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b",
+      "reference": "ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b",
+      "manifest": {
+        "schemaVersion": 2,
+        "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+        "config": {
+          "mediaType": "application/vnd.docker.container.image.v1+json",
+          "size": 7740,
+          "digest": "sha256:7597b6ba712e2bfa0a69f65617dbf928c119beeb9d49f3b18e24adda9f8c75ed"
+        },
+        "layers": [
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 3853109,
+            "digest": "sha256:7b229517ed222597277036d94892173207d01a731ab3a88eeb1de2e963a2c788"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 412017,
+            "digest": "sha256:6505b46c81c2f2e17de7ef7fcfe645c68e055dc0a7573a3a5e610b1e2e4a299f"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 13777079,
+            "digest": "sha256:37737182bc17ec146b765dac3e7b5796ff774014fd61ac969bf177241d04a819"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 247,
+            "digest": "sha256:39a526054cd95b7ad4bb7cce9c5c6d27dcc22e8e82e6b71d96e4d7093e776af3"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 532621,
+            "digest": "sha256:b147d6a9584f7b30aaa48682a09ec4816f3549a54eb4dc25ea26204e87212e63"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 93,
+            "digest": "sha256:55c5fa626bcdb70afb5c0988c11305943ffb09703382d501e56080426f763af6"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 47222228,
+            "digest": "sha256:32674a47943e16067ca1eab246aa5101cce7867a6e017d1d2678ad71649e237d"
+          }
+        ]
+      }
+    },
+    {
+      "component": "frontend",
+      "repository": "dionis1/liora-devops-platform-frontend",
+      "status": 200,
+      "digest": "sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e",
+      "reference": "ghcr.io/dionis1/liora-devops-platform-frontend@sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e",
+      "manifest": {
+        "schemaVersion": 2,
+        "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+        "config": {
+          "mediaType": "application/vnd.docker.container.image.v1+json",
+          "size": 15876,
+          "digest": "sha256:2876895638851f16877511f2de3133185e2e38e337270898dfa40bac8c157c45"
+        },
+        "layers": [
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 3849738,
+            "digest": "sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 4358516,
+            "digest": "sha256:618365c073173c14719b1175033543c9185a5b93aa837004b92993c9d28cce43"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 2795,
+            "digest": "sha256:a13df183ba7f55b6feb80b286c9028f1c64432c5aeffa748f6c530e0abf4770e"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 628,
+            "digest": "sha256:a13b501623601157699cbc90849b0c6c89c00d01ccaf41f038157454b44c2c9a"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 964,
+            "digest": "sha256:0513567031b18f3d5d8fc07e4ce48950f2a51d493a05045755763fb41f76076f"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 404,
+            "digest": "sha256:3cbf0502908f3bd4ec5e5dc3aeb3da0bc1c6690ac394a16fecebb8af91ae1c1f"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 1202,
+            "digest": "sha256:511976c6ab3d18f06369d88a401beb8fa48862cb60d8a025a4dd51cc092a5565"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 1397,
+            "digest": "sha256:911bd3a49d26bae1ce395def8d5e3c2b306275ffbbfd47355bac30d2e095935e"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 17350618,
+            "digest": "sha256:ff3fbed5e913226bf2387e1f4d75e910ef4959d6149f1e8fed749e924227e07e"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 272524,
+            "digest": "sha256:9a2a1d2ccfb781f34cc62977343cd3197ff3d4573fcaeb1582426b53b8c8bcdc"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 312,
+            "digest": "sha256:6220290d975e26b9b3a768d380aa39329fa487c63d639e28d5c9a36248a76175"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 253,
+            "digest": "sha256:e0c20c2ee341e9cab7fd20f5b05b2199cd956adf5467c9e779fa76c768d992b8"
+          },
+          {
+            "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+            "size": 1319211,
+            "digest": "sha256:b2cd70115a3da97e418e112cb0fa293dc911a860cb3334ffb01aff9e595076fd"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><title>Prod workloads Ready — verified immutable images</title><style>body{font:16px Arial;background:#eef3f8;color:#132c43;margin:24px}header,pre{background:white;padding:22px;border:1px solid #b5c5d4}h1{font-size:27px}pre{font:15px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}</style><header><b>ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</b><h1>Prod workloads Ready — verified immutable images</h1><p>PASSED: manually applied production overlay, real ready pods and bound independent storage. Ingress configuration exists; public TLS was not tested.</p><p>Observed and captured 2026-10-24 · disposable local k3s · source: docs/environment-evidence/prod-ready.txt</p></header><pre>NAME                           READY   STATUS    RESTARTS   AGE
+pod/backend-86468cf4f-cr7jv    1/1     Running   0          43s
+pod/frontend-9d88c4b9d-qj2ks   1/1     Running   0          43s
+pod/postgres-0                 1/1     Running   0          43s
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend    1/1     1            1           43s
+deployment.apps/frontend   1/1     1            1           43s
+
+NAME                        READY   AGE
+statefulset.apps/postgres   1/1     43s
+
+NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/backend    ClusterIP   10.43.34.205   &lt;none&gt;        8000/TCP   43s
+service/frontend   ClusterIP   10.43.39.23    &lt;none&gt;        80/TCP     43s
+service/postgres   ClusterIP   10.43.43.182   &lt;none&gt;        5432/TCP   43s
+
+NAME                                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/dbdata-postgres-0   Bound    pvc-89254776-f193-4831-aba6-55fc8eb52d56   8Gi        RWO            local-path     &lt;unset&gt;                 43s
+
+NAME                                   CLASS     HOSTS                 ADDRESS      PORTS     AGE
+ingress.networking.k8s.io/course-app   traefik   app.example.invalid   172.28.0.2   80, 443   43s
+</pre>
