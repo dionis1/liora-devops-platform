@@ -30,7 +30,7 @@ Export the snapshot directory `/var/lib/rancher/k3s/server/db/snapshots/` secure
 ## Server failure
 1. Record the last available Git SHA, container image digests, database backup timestamps and incident time.
 2. Recreate the VM with Terraform from a securely saved state; re-run Ansible k3s setup.
-3. Reinstall Argo CD, restore its private Git repository credentials and namespace secrets.
+3. Reinstall Argo CD and restore namespace application secrets. Public GitHub/GHCR sources need no repository/registry credential; restore externally managed read-only credentials only when those sources are private.
 4. Restore persistent PostgreSQL data from off-host backups; then reconcile the GitOps manifests.
 5. Validate health-check endpoint, UI/login, data consistency, Grafana alerts, and backups.
 
@@ -44,3 +44,7 @@ Capture screenshots/logs of backup creation, a restored record on a temporary da
 ## Local validation evidence
 
 The second pass tested the atomic backup script against disposable PostgreSQL 16.10 with UID/GID 999, a read-only root filesystem, dropped capabilities and temporary writable data/socket directories. A real custom-format dump restored three matching rows into a fresh database. Failed dumps and invalid namespaces produced no completed backup. This exercised the actual script through an explicitly documented kubectl-to-Docker test adapter; it does not prove a cloud PVC or embedded-etcd restore. See [remediation evidence](remediation-evidence/disaster-recovery.txt).
+
+## Verified local GitOps rollback — 2026-10-23
+
+A controlled backend template change and `git revert` were pushed to a separate real GitHub validation branch. Argo auto-sync restored the original template hash and ReplicaSet, reached Synced + Healthy, and the same database item remained accessible. The disposable Application was then returned to `deploy/dev`, verified healthy and removed with its cluster. [Full proof, revisions and limitations](argocd-validation.md). This was a configuration rollback with an unchanged secure image tag; image-version and schema downgrades, k3s snapshots and off-site/cloud recovery remain untested.

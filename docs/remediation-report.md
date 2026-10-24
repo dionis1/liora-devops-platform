@@ -1,5 +1,7 @@
 # Second validation result — 2026-10-23
 
+**Later Argo validation supersedes the historical synchronization gap:** [Public Git/GHCR, real dev Synced + Healthy, and controlled Git-revert rollback passed](argocd-validation.md). The release published secure images but initially failed promotion; the guarded helper recovered the real dev branch. Its next hosted main execution, production and cloud work remain pending.
+
 **Superseded backend security result:** The later [Alpine backend remediation](backend-security-remediation.md) passes the strict local image gate with 0 HIGH / 0 CRITICAL and exact-image PostgreSQL integration checks. The results below describe the earlier Debian pass and are preserved as historical evidence. Cloud/Kubernetes/Argo gaps remain.
 
 This pass preserved the first validation, fixed dependencies and delivery gates, and captured five real UI screenshots. No Hetzner resources were provisioned. The project is **not ready for public production deployment**: the backend OS image still violates the HIGH security policy, and hardened cluster/GitOps/cloud checks remain incomplete.

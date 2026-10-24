@@ -62,7 +62,7 @@ bash scripts/create-secrets.example.sh liora-dev
 bash scripts/create-secrets.example.sh liora-prod
 ```
 
-For private GHCR images, create a **read:packages** registry token and a `ghcr-pull` docker-registry secret in **both namespaces**. Do not commit the token. The k3s API must be able to pull the SHA-tagged images from GHCR.
+Both project GHCR packages are now public. Anonymous reads and actual Kubernetes pulls of the secure release were verified separately from Git repository access; see [the Argo validation](argocd-validation.md). The base workloads therefore do not reference a registry Secret. If packages become private, create a **read:packages** registry credential outside Git and add `imagePullSecrets: [{name: ghcr-pull}]` to the backend and frontend pod specs through explicit dev/prod Kustomize patches. Never commit the token.
 
 ## 4. Argo CD and GitOps
 
@@ -73,17 +73,17 @@ kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 helm upgrade --install argocd argo/argo-cd -n argocd --wait
 ```
 
-Use a reviewed chart version for the demonstration (add `--version <version>`); document it. The user made the repository **public on 2026-10-23**. Argo CD can be configured to read its public HTTPS source without a repository credential; a successful new reconciliation has not yet been tested. If the repository is made private again, use a verified read-only token or repository-specific deploy key through an externally managed Secret. Never put a token or private key into YAML in this repository.
+Use a reviewed chart version for the demonstration (add `--version <version>`); document it. The user made the repository **public on 2026-10-23**. Argo CD can be configured to read its public HTTPS source without a repository credential; public HTTPS reconciliation and a controlled Git-revert rollback have now passed in a disposable local cluster; see [the execution report](argocd-validation.md). If the repository is made private again, use a verified read-only token or repository-specific deploy key through an externally managed Secret. Never put a token or private key into YAML in this repository.
 
 The `deploy/dev` branch is created by CI after a successful image publish on main. Make sure it exists before applying:
 
 ```bash
 kubectl apply -f gitops/applications.yaml
 kubectl -n argocd get applications
-kubectl -n argocd port-forward svc/argocd-server 8080:443
+kubectl -n argocd port-forward --address 127.0.0.1 svc/argocd-server 8080:443
 ```
 
-Development tracks `deploy/dev` and automatically syncs. Production tracks `main` and requires a manual Argo CD sync.
+Development tracks `deploy/dev` and automatically syncs. Production tracks `main` and requires a manual Argo CD sync. For the bounded local demonstration use [the pinned local Helm values and checks](argocd-validation.md); keep its HTTP server on a localhost-only port-forward, not public ingress.
 
 ## 5. Ingress, DNS, HTTPS and image releases
 
@@ -125,4 +125,4 @@ Keep Argo server access on a loopback-only port-forward; remove temporary keys a
 
 The temporary test key could read GitHub, but the repository deploy-key API returned zero keys.
 Its scope was therefore not accepted as verified read-only, and it was not installed in Argo.
-The exact temporary account-level key was removed with explicit user approval and removal was verified. Dev synchronization, private GHCR pulls, and rollback still require a separate live test.
+The exact temporary account-level key was removed with explicit user approval and removal was verified. Public Git/GHCR access, dev synchronization and a configuration rollback subsequently passed; [the later report](argocd-validation.md) supersedes that gap. Private-package pulls and production deployment were not tested.

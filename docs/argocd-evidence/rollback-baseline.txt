@@ -1,0 +1,155 @@
+{"application": "liora-dev", "repository": "https://github.com/dionis1/liora-devops-platform.git", "target": "testing/argocd-rollback-2026-10-23", "path": "kubernetes/overlays/dev", "sync": "Synced", "health": "Healthy", "revision": "1b0ffd5c5dddbc88f5286d96e653858f2e525b20", "operation": "Succeeded", "operation_revision": "1b0ffd5c5dddbc88f5286d96e653858f2e525b20", "conditions": []}
+{"application": "liora-dev", "repository": "https://github.com/dionis1/liora-devops-platform.git", "target": "testing/argocd-rollback-2026-10-23", "path": "kubernetes/overlays/dev", "sync": "Synced", "health": "Progressing", "revision": "11075069eb775789de7eefd4a63861751c3b90ef", "operation": "Succeeded", "operation_revision": "11075069eb775789de7eefd4a63861751c3b90ef", "conditions": []}
+{"application": "liora-dev", "repository": "https://github.com/dionis1/liora-devops-platform.git", "target": "testing/argocd-rollback-2026-10-23", "path": "kubernetes/overlays/dev", "sync": "Synced", "health": "Healthy", "revision": "11075069eb775789de7eefd4a63861751c3b90ef", "operation": "Succeeded", "operation_revision": "11075069eb775789de7eefd4a63861751c3b90ef", "conditions": []}
+{
+  "result": "PASSED",
+  "observed_at": "2026-10-23T11:35:55+0200",
+  "application": "liora-dev",
+  "repository": "https://github.com/dionis1/liora-devops-platform.git",
+  "target": "testing/argocd-rollback-2026-10-23",
+  "path": "kubernetes/overlays/dev",
+  "sync": "Synced",
+  "health": "Healthy",
+  "revision": "11075069eb775789de7eefd4a63861751c3b90ef",
+  "operation": "Succeeded",
+  "operation_revision": "11075069eb775789de7eefd4a63861751c3b90ef",
+  "conditions": [],
+  "resources": [
+    {
+      "kind": "ConfigMap",
+      "name": "course-app-config",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "kind": "Namespace",
+      "name": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "kind": "Service",
+      "name": "backend",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "kind": "Service",
+      "name": "frontend",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "kind": "Service",
+      "name": "postgres",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "group": "apps",
+      "kind": "Deployment",
+      "name": "backend",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "group": "apps",
+      "kind": "Deployment",
+      "name": "frontend",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "group": "apps",
+      "kind": "StatefulSet",
+      "name": "postgres",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "group": "networking.k8s.io",
+      "kind": "Ingress",
+      "name": "course-app",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "group": "networking.k8s.io",
+      "kind": "NetworkPolicy",
+      "name": "allow-cluster-dns",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "group": "networking.k8s.io",
+      "kind": "NetworkPolicy",
+      "name": "backend-traffic",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "group": "networking.k8s.io",
+      "kind": "NetworkPolicy",
+      "name": "default-deny",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "group": "networking.k8s.io",
+      "kind": "NetworkPolicy",
+      "name": "frontend-ingress",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    },
+    {
+      "group": "networking.k8s.io",
+      "kind": "NetworkPolicy",
+      "name": "postgres-ingress",
+      "namespace": "liora-dev",
+      "status": "Synced",
+      "version": "v1"
+    }
+  ],
+  "history": [
+    {
+      "deployStartedAt": "2026-10-23T09:28:36Z",
+      "deployedAt": "2026-10-23T09:28:38Z",
+      "id": 0,
+      "initiatedBy": {
+        "automated": true
+      },
+      "revision": "1b0ffd5c5dddbc88f5286d96e653858f2e525b20",
+      "source": {
+        "path": "kubernetes/overlays/dev",
+        "repoURL": "https://github.com/dionis1/liora-devops-platform.git",
+        "targetRevision": "deploy/dev"
+      }
+    },
+    {
+      "deployStartedAt": "2026-10-23T09:35:25Z",
+      "deployedAt": "2026-10-23T09:35:26Z",
+      "id": 1,
+      "initiatedBy": {
+        "automated": true
+      },
+      "revision": "11075069eb775789de7eefd4a63861751c3b90ef",
+      "source": {
+        "path": "kubernetes/overlays/dev",
+        "repoURL": "https://github.com/dionis1/liora-devops-platform.git",
+        "targetRevision": "testing/argocd-rollback-2026-10-23"
+      }
+    }
+  ]
+}

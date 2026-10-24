@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>E45 · Current hardened dev workloads, node and PVC are ready</title><style>*{box-sizing:border-box}body{margin:0;background:#f0f3f7;color:#142338;font-family:Arial,sans-serif}main{max-width:1400px;margin:auto;padding:24px 32px}header{border-top:7px solid #176b8a;background:white;padding:18px 24px}h1{font-size:26px;line-height:1.15;margin:9px 0}h2{font-size:19px;margin:10px 0}.eyebrow{font-size:12px;font-weight:bold;letter-spacing:1.3px;color:#176b8a}.status{font-size:13px;font-weight:bold;color:#8a4200}.scope{font-size:15px;line-height:1.4;margin:10px 0}.command{font:13px monospace;overflow-wrap:anywhere}.panel{background:white;padding:18px 24px;margin-top:12px;border:1px solid #d4dee8}pre{font:15px/1.42 'DejaVu Sans Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#142338}footer{font-size:11px;line-height:1.5;overflow-wrap:anywhere;padding:12px 4px;color:#47566a}.flow{display:flex;gap:12px;align-items:stretch;margin:15px 0}.box{background:#e9f2f7;border:1px solid #9dbbcb;flex:1;padding:15px;font-size:16px;line-height:1.45}.future{background:#fff4e0;border-color:#dcb568}a{color:#176b8a}img{max-width:100%;border:1px solid #d4dee8}.card{background:white;margin:18px 0;padding:20px}.metadata{font-size:14px;line-height:1.5}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px}@media print{.card{break-inside:avoid}}</style><main><header><div class="eyebrow">ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</div><h1>E45 · Current hardened dev workloads, node and PVC are ready</h1><div class="status">PASSED · Local</div><p class="scope">Real local output: node Ready, all three app pods 1/1, deployments/statefulset ready, 8 GiB PVC Bound and Traefik Ingress. No cloud/production claim.</p><div class="command">kubectl get nodes; kubectl -n liora-dev get pods,deploy,sts,pvc,ingress</div></header><section class="panel"><pre>NAME                                           STATUS   ROLES           AGE   VERSION
+k3d-liora-argocd-priority2-20261023-server-0   Ready    control-plane   23m   v1.35.5+k3s1
+NAME                            READY   STATUS    RESTARTS   AGE
+pod/backend-5ddd687669-26nfw    1/1     Running   0          2m6s
+pod/frontend-6965bbf59c-hgxg2   1/1     Running   0          2m6s
+pod/postgres-0                  1/1     Running   0          14m
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend    1/1     1            1           14m
+deployment.apps/frontend   1/1     1            1           14m
+
+NAME                        READY   AGE
+statefulset.apps/postgres   1/1     14m
+
+NAME                                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/dbdata-postgres-0   Bound    pvc-664d008f-f154-48be-aeab-fb2a9c53154c   8Gi        RWO            local-path     &lt;unset&gt;                 14m
+
+NAME                                   CLASS     HOSTS                 ADDRESS      PORTS   AGE
+ingress.networking.k8s.io/course-app   traefik   dev.example.invalid   172.28.0.2   80      14m
+</pre></section><footer>Requirement 4. Container Orchestration with Kubernetes<br>Observed: 2026-10-23 · Screenshot capture: 2026-10-23 · Software: k3d 5.9.0 / k3s 1.35.5-k3s1 / PostgreSQL 16.10<br>docs/argocd-evidence/ready-summary.txt<br>SHA-256 ccad876d4f25f959fc8cfc95d19e6891d766d12b8f6747c9dc12817ed49129e5</footer></main></html>

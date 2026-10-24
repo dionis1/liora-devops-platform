@@ -1,0 +1,24 @@
+{
+  "observed_at": "2026-10-23T09:41:49.031094+00:00",
+  "authenticated_credential_used": false,
+  "tag": "sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2",
+  "images": [
+    {
+      "repository": "dionis1/liora-devops-platform-backend",
+      "http_status": 200,
+      "digest": "sha256:e03a323897fc77aa932293e91e3fbc21dcdb9e4d7ea06b325c5c0f46b8f3c841",
+      "media_type": "application/vnd.docker.distribution.manifest.v2+json",
+      "kubernetes_image_id": "ghcr.io/dionis1/liora-devops-platform-backend@sha256:e03a323897fc77aa932293e91e3fbc21dcdb9e4d7ea06b325c5c0f46b8f3c841",
+      "matches_registry_digest": true
+    },
+    {
+      "repository": "dionis1/liora-devops-platform-frontend",
+      "http_status": 200,
+      "digest": "sha256:1acc82944a365383dabf765b4556045519958b756eceb5d5307d3fa02ebfe75b",
+      "media_type": "application/vnd.docker.distribution.manifest.v2+json",
+      "kubernetes_image_id": "ghcr.io/dionis1/liora-devops-platform-frontend@sha256:1acc82944a365383dabf765b4556045519958b756eceb5d5307d3fa02ebfe75b",
+      "matches_registry_digest": true
+    }
+  ],
+  "result": "PASSED"
+}

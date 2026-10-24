@@ -1,0 +1,8 @@
+test_first_promotion_starts_from_validated_source (test_promote_dev.PromotionTests.test_first_promotion_starts_from_validated_source) ... ok
+test_generated_tag_conflict_is_resolved_and_not_pushed_implicitly (test_promote_dev.PromotionTests.test_generated_tag_conflict_is_resolved_and_not_pushed_implicitly) ... ok
+test_manual_manifest_edits_are_preserved_and_conflict_is_rejected (test_promote_dev.PromotionTests.test_manual_manifest_edits_are_preserved_and_conflict_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.417s
+
+OK

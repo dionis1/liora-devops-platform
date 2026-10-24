@@ -1,0 +1,8 @@
+PASS three Git promotion regression tests, including refusal to overwrite manual dev edits
+PASS dev and prod Kustomize renders
+PASS Trivy HIGH/CRITICAL Kubernetes configuration scan: zero failures in eight targets
+PASS Trivy evidence secret scan: no detected secrets
+PASS 51 screenshot/source hashes, original-image preservation, official titles/order and offline links
+PASS live and screenshot-only demonstration plans: 600 seconds each
+PASS local Argo exact-revision sync, controlled Git-revert rollback and data continuity
+PASS cleanup: only the disposable cluster and credentials removed; pre-existing apps/clusters preserved

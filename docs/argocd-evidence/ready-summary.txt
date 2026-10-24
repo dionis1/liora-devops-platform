@@ -1,0 +1,19 @@
+NAME                                           STATUS   ROLES           AGE   VERSION
+k3d-liora-argocd-priority2-20261023-server-0   Ready    control-plane   23m   v1.35.5+k3s1
+NAME                            READY   STATUS    RESTARTS   AGE
+pod/backend-5ddd687669-26nfw    1/1     Running   0          2m6s
+pod/frontend-6965bbf59c-hgxg2   1/1     Running   0          2m6s
+pod/postgres-0                  1/1     Running   0          14m
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend    1/1     1            1           14m
+deployment.apps/frontend   1/1     1            1           14m
+
+NAME                        READY   AGE
+statefulset.apps/postgres   1/1     14m
+
+NAME                                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/dbdata-postgres-0   Bound    pvc-664d008f-f154-48be-aeab-fb2a9c53154c   8Gi        RWO            local-path     <unset>                 14m
+
+NAME                                   CLASS     HOSTS                 ADDRESS      PORTS   AGE
+ingress.networking.k8s.io/course-app   traefik   dev.example.invalid   172.28.0.2   80      14m

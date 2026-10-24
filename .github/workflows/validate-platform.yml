@@ -50,6 +50,8 @@ jobs:
         run: kubectl kustomize monitoring > /tmp/monitoring.yaml
       - name: Render production
         run: kubectl kustomize kubernetes/overlays/prod > /tmp/prod.yaml
+      - name: Check safe GitOps promotion and conflict handling
+        run: python3 -m unittest discover -s tests -p test_promote_dev.py -v
 
   ansible:
     runs-on: ubuntu-latest

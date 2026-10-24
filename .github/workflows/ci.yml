@@ -132,21 +132,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Update dev in Git; production remains manual
-        env:
-          IMAGE_TAG: sha-${{ github.sha }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git ls-remote --exit-code --heads origin deploy/dev >/dev/null; then
-            git fetch origin deploy/dev
-            git switch -c deploy/dev --track origin/deploy/dev
-            git merge --no-edit "$GITHUB_SHA"
-          else
-            git switch -c deploy/dev
-          fi
-          sed -i -E "s/(newTag: )sha-[a-z0-9]+/\\1$IMAGE_TAG/g" kubernetes/overlays/dev/kustomization.yaml
-          git add kubernetes/overlays/dev/kustomization.yaml
-          if ! git diff --cached --quiet; then
-            git commit -m "chore(gitops): promote scanned dev images to $IMAGE_TAG"
-            git push origin HEAD:refs/heads/deploy/dev
-          fi
+          # Switching to an older deploy branch may remove this checkout's script.
+          cp scripts/promote-dev.sh "$RUNNER_TEMP/promote-dev.sh"
+          bash "$RUNNER_TEMP/promote-dev.sh" "$GITHUB_SHA" --push

@@ -2,6 +2,7 @@
   "capture_date": "2026-10-23",
   "timezone": "Europe/Tirane",
   "source_commit": "211199da8c52caf07199b155fb6baf28deb5b1f4",
+  "source_commit_scope": "Initial remediation baseline only; later entries carry source_commit overrides and exact revisions in their source artifacts.",
   "requirements": [
     {
       "number": 1,
@@ -81,7 +82,7 @@
       "sources": [
         {
           "path": "docs/remediation-report.md",
-          "sha256": "c4832437e01fc86972bba37cc2d9a9a70783d7ee82389b00e7ad54338645130b"
+          "sha256": "33c313d09c65cc30731bdbe8d762f47ac5c275440f44af6db0bc07e513957d0f"
         }
       ],
       "sha256": "a13cac067cbcb8d1ef41ecaaee520019711a7fa9109941e61386709540c6511a"
@@ -106,7 +107,7 @@
       "sources": [
         {
           "path": "docs/remediation-report.md",
-          "sha256": "c4832437e01fc86972bba37cc2d9a9a70783d7ee82389b00e7ad54338645130b"
+          "sha256": "33c313d09c65cc30731bdbe8d762f47ac5c275440f44af6db0bc07e513957d0f"
         }
       ],
       "sha256": "054ecbf539b63d0583ce8b8d8e41c8cbed77ac3443dac0f46931d31f64ca48b9"
@@ -993,7 +994,7 @@
       "sources": [
         {
           "path": "docs/architecture.md",
-          "sha256": "0f8474872e20e6611a2e7d0a785fae067e9797af3212dca78b63cd47143e1e4e"
+          "sha256": "e5220972cc7148594b5922e7caf548012419575312b3c34cdc8d97247f789f94"
         }
       ],
       "view": "views/E36.html",
@@ -1081,6 +1082,7 @@
         }
       ],
       "view": "views/E39.html",
+      "source_commit": "34bf33ecc47e0490a144a75974df08f64992fdc2",
       "sha256": "6a6c861c17a619a8efd524b907514697b64d73f8acc26938261e76310d52336d"
     },
     {
@@ -1110,6 +1112,7 @@
         }
       ],
       "view": "views/E40.html",
+      "source_commit": "34bf33ecc47e0490a144a75974df08f64992fdc2",
       "sha256": "43c182a6ebe57abcc8b7d88ab25f6ab64503b86951950f065635cb257b40d7b0"
     },
     {
@@ -1169,6 +1172,269 @@
       ],
       "source_commit": "34bf33ecc47e0490a144a75974df08f64992fdc2",
       "sha256": "de2d3b515cf0d6759a09ff77b448a0957f1a8aabfb2a37a2635bbdd9c1240f36"
+    },
+    {
+      "id": "E43",
+      "requirement": 5,
+      "supports": [
+        1,
+        4,
+        5
+      ],
+      "title": "Argo development Application is Synced and Healthy",
+      "file": "05-automate-deployment-ci-cd-pipeline/E43.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Argo CD 3.5.5 / chart 10.10.5 / k3s 1.35.5-k3s1",
+      "result": "PASSED",
+      "scope": "Actual disposable local Argo UI, public GitHub deploy/dev at 1b0ffd5, real anonymous GHCR pulls; not a production/cloud deployment.",
+      "command": "Apply gitops/applications.yaml dev Application; wait for exact promoted revision",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/argocd-evidence/dev-sync.json",
+          "sha256": "98546ab7c3096e16c7590d2d3feb7c8a8273977f474f167ed1e4ec6580bb03d0"
+        }
+      ],
+      "source_commit": "1b0ffd5c5dddbc88f5286d96e653858f2e525b20",
+      "sha256": "b57b25e67b3e6134285f478693e455a4cae5dc53f89b1c15df51a871782078e2"
+    },
+    {
+      "id": "E44",
+      "requirement": 5,
+      "supports": [
+        4,
+        5,
+        9
+      ],
+      "title": "Canonical dev branch restored after successful rollback test",
+      "file": "05-automate-deployment-ci-cd-pipeline/E44.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Argo CD 3.5.5 / dev revision 1b0ffd5",
+      "result": "PASSED",
+      "scope": "Actual final dev state after the isolated Git-revert drill. Auto-sync enabled; rollback test did not modify deploy/dev. Cluster removed after evidence capture.",
+      "command": "Restore targetRevision deploy/dev; check exact 1b0ffd5 Synced/Healthy/Succeeded",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/argocd-evidence/final-dev-sync.json",
+          "sha256": "0b31a85177e5df51d38fbf0a51814f12db7caf95bd882f1d352710a88fe31637"
+        }
+      ],
+      "source_commit": "1b0ffd5c5dddbc88f5286d96e653858f2e525b20",
+      "sha256": "2e24e6eeb74f03ef71e89ca21f174caafaf5f063df7797e426de7b0c8b63009f"
+    },
+    {
+      "id": "E45",
+      "requirement": 4,
+      "supports": [
+        2,
+        4,
+        5
+      ],
+      "title": "Current hardened dev workloads, node and PVC are ready",
+      "file": "04-container-orchestration-with-kubernetes/E45.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "k3d 5.9.0 / k3s 1.35.5-k3s1 / PostgreSQL 16.10",
+      "result": "PASSED",
+      "scope": "Real local output: node Ready, all three app pods 1/1, deployments/statefulset ready, 8 GiB PVC Bound and Traefik Ingress. No cloud/production claim.",
+      "command": "kubectl get nodes; kubectl -n liora-dev get pods,deploy,sts,pvc,ingress",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/argocd-evidence/ready-summary.txt",
+          "sha256": "ccad876d4f25f959fc8cfc95d19e6891d766d12b8f6747c9dc12817ed49129e5"
+        }
+      ],
+      "view": "views/E45.html",
+      "source_commit": "1b0ffd5c5dddbc88f5286d96e653858f2e525b20",
+      "sha256": "0fdfb576f8fc1d76dba64c71cf79189cdefdb909a78ae31789b40e41a697daf3"
+    },
+    {
+      "id": "E46",
+      "requirement": 5,
+      "supports": [
+        4,
+        5,
+        9
+      ],
+      "title": "Argo rolls out the controlled changed Git revision",
+      "file": "05-automate-deployment-ci-cd-pipeline/E46.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Argo CD 3.5.5 / changed revision 0c279d4",
+      "result": "PASSED",
+      "scope": "Actual changed backend template reached Synced/Healthy with a new ReplicaSet. Secure image tag unchanged; same database record remained accessible.",
+      "command": "Push 0c279d4 to isolated rollback branch; hard refresh; auto-sync and readiness checks",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/argocd-evidence/rollback-changed.json",
+          "sha256": "69c314b43671142fca16ad6e0d0453f46b941c3f85bb9b98c36d4c9fa359b489"
+        }
+      ],
+      "source_commit": "0c279d4f4fbbf64f3a48c6fce8bb7f6f1b228ad2",
+      "sha256": "cc8f6ad9ca05ca4d5968fb65a0f06fd4b8175b29532d64f674225c934374bb41"
+    },
+    {
+      "id": "E47",
+      "requirement": 9,
+      "supports": [
+        4,
+        5,
+        9
+      ],
+      "title": "Git revert restores a healthy backend deployment",
+      "file": "09-think-about-disaster-recovery/E47.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Argo CD 3.5.5 / revert bf1a495 / PostgreSQL 16.10",
+      "result": "PASSED",
+      "scope": "Actual configuration rollback on isolated GitHub branch: original template hash and ReplicaSet restored; record unchanged. Not an image-version or schema downgrade.",
+      "command": "git revert 0c279d4; push bf1a495; Argo auto-sync; compare template hashes",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/argocd-evidence/rollback-reverted.json",
+          "sha256": "fb17462ed54f43179ecccf90edc96bf0bd7b59591e61954bdaf0fe5c011c7f4d"
+        },
+        {
+          "path": "docs/argocd-evidence/rollback-proof.txt",
+          "sha256": "b152849ea715b522da28bc4fc47403a46f0cc62217beaaf4b3d823e4734a01c5"
+        }
+      ],
+      "source_commit": "bf1a495ae11be36f88bd0aeb9513dd02da102b16",
+      "sha256": "798d3e925d1c337d9433683e5b2965f5e5c0dec684113f48fe30fa6f365cdf32"
+    },
+    {
+      "id": "E48",
+      "requirement": 9,
+      "supports": [
+        5,
+        9
+      ],
+      "title": "Argo history records changed revision and Git revert",
+      "file": "09-think-about-disaster-recovery/E48.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Argo CD 3.5.5 / baseline 1107506, change 0c279d4, revert bf1a495",
+      "result": "PASSED",
+      "scope": "Actual auto-sync history, with revert and prior change visible. Full baseline/change/revert history is preserved in JSON; native rollback button was not used.",
+      "command": "Argo HISTORY AND ROLLBACK after successful Git revert",
+      "kind": "actual-ui",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/argocd-evidence/rollback-reverted.json",
+          "sha256": "fb17462ed54f43179ecccf90edc96bf0bd7b59591e61954bdaf0fe5c011c7f4d"
+        }
+      ],
+      "source_commit": "bf1a495ae11be36f88bd0aeb9513dd02da102b16",
+      "sha256": "03639edadd38bc97a63db808e563912695340256f7fe2d77e74ea923e4c291ae"
+    },
+    {
+      "id": "E49",
+      "requirement": 1,
+      "supports": [
+        1,
+        5
+      ],
+      "title": "Public GHCR package exposes the secure release tag",
+      "file": "01-dockerize-your-application/E49.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "Backend release sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2",
+      "result": "PASSED",
+      "scope": "Actual signed-out GitHub package UI: Public badge and current secure image tag. Both backend and frontend anonymous access and running digests are proved separately in E51.",
+      "command": "Open public backend GHCR package page",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/pkgs/container/liora-devops-platform-backend",
+      "sources": [
+        {
+          "path": "docs/argocd-evidence/registry-proof.json",
+          "sha256": "9b8baf7f24a75256470210a1beff3e52dd2b6cbe0c273b37fa8424703dca38f8"
+        }
+      ],
+      "source_commit": "db2efa81c1037f3b38c4cc615fb7f65d958259c2",
+      "sha256": "5ad22e03752b1649cf335c10f9d0ae4768e17033d074dafdecee023e0bb40399"
+    },
+    {
+      "id": "E50",
+      "requirement": 5,
+      "supports": [
+        1,
+        5
+      ],
+      "title": "Secure image publication succeeds; promotion initially fails",
+      "file": "05-automate-deployment-ci-cd-pipeline/E50.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "GitHub Actions",
+      "software": "Main db2efa8 / workflow run 39931016209",
+      "result": "PASSED",
+      "scope": "Publication job PASSED. Overall run FAILED on the later merge conflict; reviewed script recovered promotion separately. This screenshot does not claim the complete main workflow passed.",
+      "command": "Open successful Publish only scanned images job",
+      "kind": "actual-ui",
+      "workflow_url": "https://github.com/dionis1/liora-devops-platform/actions/runs/39931016209/job/120340274170",
+      "sources": [
+        {
+          "path": "docs/argocd-evidence/release-jobs.json",
+          "sha256": "2ce74bd20e93c17bc5ce540027c1982ba5399be5486449b987c41d8054daed98"
+        }
+      ],
+      "source_commit": "db2efa81c1037f3b38c4cc615fb7f65d958259c2",
+      "sha256": "a6670300f4d16796f0eda0b121f4c2377c5eb4d6c2b120899b7da2f88ead9133"
+    },
+    {
+      "id": "E51",
+      "requirement": 1,
+      "supports": [
+        1,
+        5,
+        8
+      ],
+      "title": "Anonymous registry reads match the actual running image digests",
+      "file": "01-dockerize-your-application/E51.jpg",
+      "capture_date": "2026-10-23",
+      "observed_date": "2026-10-23",
+      "environment": "Local",
+      "software": "GHCR / k3s 1.35.5-k3s1",
+      "result": "PASSED",
+      "scope": "Actual HTTP 200 for both released SHA tags; published digests exactly match running pods. Public Git repository visibility and GHCR package visibility were checked independently.",
+      "command": "Anonymous GHCR manifest GET; compare with Kubernetes containerStatuses.imageID",
+      "kind": "archived-output",
+      "workflow_url": null,
+      "sources": [
+        {
+          "path": "docs/argocd-evidence/registry-proof.json",
+          "sha256": "9b8baf7f24a75256470210a1beff3e52dd2b6cbe0c273b37fa8424703dca38f8"
+        },
+        {
+          "path": "docs/argocd-evidence/running-images.json",
+          "sha256": "43a4bf440cffd6179bf12f91cfe7bbedfd74a45539adc9d2fff9fbcc25c6713f"
+        },
+        {
+          "path": "docs/argocd-evidence/credential-scope.json",
+          "sha256": "9515a70d763c1e92aaf4d1625d510d8ede8549a0274ce55121bf879f8f7e4a21"
+        }
+      ],
+      "view": "views/E51.html",
+      "source_commit": "1b0ffd5c5dddbc88f5286d96e653858f2e525b20",
+      "sha256": "3a5e8381db5e694922e4da3e6349efcbc57e09778a73bcbd42db647051774b8f"
     }
   ]
 }

@@ -8,3 +8,5 @@
 - [E13 — Backend image build completed](E13.jpg) — PASSED; see [metadata](../README.md).
 - [E14 — Frontend TypeScript and production bundle completed](E14.jpg) — PASSED; see [metadata](../README.md).
 - [E15 — Running containers and health checks](E15.jpg) — PASSED; see [metadata](../README.md).
+- [E49 — Public GHCR package exposes the secure release tag](E49.jpg) — PASSED; see [metadata](../README.md).
+- [E51 — Anonymous registry reads match the actual running image digests](E51.jpg) — PASSED; see [metadata](../README.md).

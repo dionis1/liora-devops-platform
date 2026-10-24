@@ -1,0 +1,15 @@
+{
+  "result": "PASSED_STATIC_ONLY",
+  "application": "liora-prod",
+  "source": {
+    "repoURL": "https://github.com/dionis1/liora-devops-platform.git",
+    "targetRevision": "main",
+    "path": "kubernetes/overlays/prod"
+  },
+  "syncPolicy": {
+    "syncOptions": [
+      "CreateNamespace=true"
+    ]
+  },
+  "runtime_deployment": "NOT_YET_TESTED"
+}

@@ -1,0 +1,15 @@
+{
+  "validation_cluster_removed": true,
+  "remaining_preexisting_clusters": [
+    "flagship-platform",
+    "gitlab-gitops"
+  ],
+  "generated_credential_files_removed": true,
+  "preexisting_applications_running": [
+    "simple-admin-worker-1",
+    "simple-admin-app-1",
+    "simple-admin-postgres-1",
+    "simple-admin-redis-1"
+  ],
+  "rollback_git_branch_retained_for_provenance": "testing/argocd-rollback-2026-10-23"
+}

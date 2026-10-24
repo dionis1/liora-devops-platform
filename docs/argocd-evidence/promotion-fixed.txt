@@ -1,0 +1,11 @@
+From github.com:dionis1/liora-devops-platform
+ * [new branch]      deploy/dev -> origin/deploy/dev
+Switched to a new branch 'deploy/dev'
+Auto-merging kubernetes/overlays/dev/kustomization.yaml
+CONFLICT (content): Merge conflict in kubernetes/overlays/dev/kustomization.yaml
+Automatic merge failed; fix conflicts and then commit the result.
+[deploy/dev c188aec] Merge commit 'db2efa81c1037f3b38c4cc615fb7f65d958259c2' into deploy/dev
+Resolved only generated image-tag conflict; validated manifest retained
+[deploy/dev 1b0ffd5] chore(gitops): promote scanned dev images to sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+Prepared development promotion; review before an explicit push
