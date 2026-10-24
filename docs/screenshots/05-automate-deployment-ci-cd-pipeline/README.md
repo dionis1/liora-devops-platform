@@ -10,3 +10,4 @@
 - [E44 — Canonical dev branch restored after successful rollback test](E44.jpg) — PASSED; see [metadata](../README.md).
 - [E46 — Argo rolls out the controlled changed Git revision](E46.jpg) — PASSED; see [metadata](../README.md).
 - [E50 — Secure image publication succeeds; promotion initially fails](E50.jpg) — PASSED; see [metadata](../README.md).
+- [E52 — Latest main tests, scans, publication and dev promotion all pass](E52.jpg) — PASSED; see [metadata](../README.md).

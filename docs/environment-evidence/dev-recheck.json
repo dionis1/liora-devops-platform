@@ -1,0 +1,14 @@
+{
+  "result": "PASSED",
+  "after": "prod web stack stopped and dev restored",
+  "checks": {
+    "frontend": 200,
+    "health": 200,
+    "readiness": 200,
+    "original_record": 200
+  },
+  "item": {
+    "id": "47a9e7c4-e71e-439a-9673-3fc37c6fc76c",
+    "title": "DEV environment isolation record"
+  }
+}

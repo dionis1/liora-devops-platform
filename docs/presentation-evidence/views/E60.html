@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8"><title>Published digests match both environments</title><style>body{font:16px Arial;background:#eef3f8;color:#132c43;margin:24px}header,pre{background:white;padding:22px;border:1px solid #b5c5d4}h1{font-size:27px}pre{font:15px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}</style><header><b>ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</b><h1>Published digests match both environments</h1><p>Actual anonymous registry response and Kubernetes imageIDs. Production migration image replacement was verified. No images were rebuilt for screenshots.</p><p>Observed and captured 2026-10-24 · disposable local k3s · source: docs/environment-evidence/running-image-proof.txt</p></header><pre>Verified release: ef414490d99151a3640cea6dac56589531816694
+Anonymous GHCR manifest HTTP 200 for backend and frontend.
+Workflow: tests, strict scans, publication and dev promotion all PASSED.
+
+Component: backend
+Registry digest: sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b
+dev running imageID: ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b
+prod running imageID: ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b
+PASS registry digest equals BOTH running image IDs.
+
+Component: frontend
+Registry digest: sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e
+dev running imageID: ghcr.io/dionis1/liora-devops-platform-frontend@sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e
+prod running imageID: ghcr.io/dionis1/liora-devops-platform-frontend@sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e
+PASS registry digest equals BOTH running image IDs.
+
+Prod migration init-container image also matches backend digest.
+Prod uses immutable @sha256 references; dev retains CI-managed SHA tags.
+</pre>

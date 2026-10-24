@@ -1,0 +1,27 @@
+LAST SEEN   TYPE      REASON                  OBJECT                                    MESSAGE
+2m48s       Normal    ScalingReplicaSet       deployment/backend                        Scaled up replica set backend-86468cf4f from 0 to 1
+2m48s       Normal    ExternalProvisioning    persistentvolumeclaim/dbdata-postgres-0   Waiting for a volume to be created either by the external provisioner 'rancher.io/local-path' or manually by the system administrator. If volume creation is delayed, please verify that the provisioner is running and correctly registered.
+2m48s       Normal    Created                 pod/backend-86468cf4f-cr7jv               Container created
+2m48s       Normal    Started                 pod/backend-86468cf4f-cr7jv               Container started
+2m48s       Normal    SuccessfulCreate        statefulset/postgres                      Create Pod postgres-0 in StatefulSet postgres successful
+2m48s       Normal    SuccessfulCreate        statefulset/postgres                      Create Claim dbdata-postgres-0 Pod postgres-0 in StatefulSet postgres success
+2m48s       Normal    ScalingReplicaSet       deployment/frontend                       Scaled up replica set frontend-9d88c4b9d from 0 to 1
+2m48s       Normal    SuccessfulCreate        replicaset/backend-86468cf4f              Created pod: backend-86468cf4f-cr7jv
+2m48s       Normal    Pulled                  pod/backend-86468cf4f-cr7jv               Container image "ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b" already present on machine and can be accessed by the pod
+2m48s       Normal    SuccessfulCreate        replicaset/frontend-9d88c4b9d             Created pod: frontend-9d88c4b9d-qj2ks
+2m48s       Normal    WaitForFirstConsumer    persistentvolumeclaim/dbdata-postgres-0   waiting for first consumer to be created before binding
+2m48s       Normal    Provisioning            persistentvolumeclaim/dbdata-postgres-0   External provisioner is provisioning volume for claim "liora-prod/dbdata-postgres-0"
+2m48s       Normal    Scheduled               pod/backend-86468cf4f-cr7jv               Successfully assigned liora-prod/backend-86468cf4f-cr7jv to k3d-liora-env-20261024-server-0
+2m48s       Normal    Scheduled               pod/frontend-9d88c4b9d-qj2ks              Successfully assigned liora-prod/frontend-9d88c4b9d-qj2ks to k3d-liora-env-20261024-server-0
+2m48s       Normal    Pulled                  pod/frontend-9d88c4b9d-qj2ks              Container image "ghcr.io/dionis1/liora-devops-platform-frontend@sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e" already present on machine and can be accessed by the pod
+2m48s       Normal    Created                 pod/frontend-9d88c4b9d-qj2ks              Container created
+2m48s       Normal    Started                 pod/frontend-9d88c4b9d-qj2ks              Container started
+2m48s       Warning   Unhealthy               pod/frontend-9d88c4b9d-qj2ks              Readiness probe failed: Get "http://10.42.0.13:8080/": dial tcp 10.42.0.13:8080: connect: connection refused
+2m45s       Normal    ProvisioningSucceeded   persistentvolumeclaim/dbdata-postgres-0   Successfully provisioned volume pvc-89254776-f193-4831-aba6-55fc8eb52d56
+2m44s       Normal    Scheduled               pod/postgres-0                            Successfully assigned liora-prod/postgres-0 to k3d-liora-env-20261024-server-0
+2m44s       Normal    Pulled                  pod/postgres-0                            Container image "postgres:16.10" already present on machine and can be accessed by the pod
+2m44s       Normal    Created                 pod/postgres-0                            Container created
+2m44s       Normal    Started                 pod/postgres-0                            Container started
+2m33s       Normal    Started                 pod/backend-86468cf4f-cr7jv               Container started
+2m33s       Normal    Created                 pod/backend-86468cf4f-cr7jv               Container created
+2m33s       Normal    Pulled                  pod/backend-86468cf4f-cr7jv               Container image "ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b" already present on machine and can be accessed by the pod

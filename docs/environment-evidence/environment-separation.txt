@@ -1,0 +1,22 @@
+Actual environment separation — 2026-10-24
+Sequential web deployments; both database instances retained briefly for isolation tests.
+
+DEV: namespace liora-dev
+ENVIRONMENT=staging
+FRONTEND_HOST=http://dev.example.invalid
+CORS_ORIGINS=http://dev.example.invalid
+Secret object UID: 383e20ec-fd7f-444a-8027-baaf00234615
+PVC volume: pvc-a60127c6-1b6a-4049-a8d3-a962ceb6c711
+
+PROD: namespace liora-prod
+ENVIRONMENT=production
+FRONTEND_HOST=https://app.example.invalid
+CORS_ORIGINS=https://app.example.invalid
+Secret object UID: 3f0b6398-d865-41d2-a083-3eb007b4c5d2
+PVC volume: pvc-89254776-f193-4831-aba6-55fc8eb52d56
+
+PASS distinct namespace-scoped ConfigMaps, Secrets and bound storage.
+Credential values are never printed or saved in evidence.
+Services use namespace-local postgres/backend/frontend DNS.
+Full dev/prod web stacks were NOT run concurrently.
+No cloud, public DNS/TLS, or production Argo sync claim.

@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8"><title>Both environment renders and deployment policies verified</title><style>body{font:16px Arial;background:#eef3f8;color:#132c43;margin:24px}header,pre{background:white;padding:22px;border:1px solid #b5c5d4}h1{font-size:27px}pre{font:15px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}</style><header><b>ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</b><h1>Both environment renders and deployment policies verified</h1><p>Static validation only in this view; actual runtime readiness and application checks have separate evidence.</p><p>Observed and captured 2026-10-24 · disposable local k3s · source: docs/environment-evidence/render-summary.txt</p></header><pre>Both kubectl kustomize commands completed successfully.
+
+PASS Both overlays render without bootstrap workload images
+PASS Migration init container matches backend image
+PASS Namespace-local ConfigMap/Secret/service/storage references
+PASS Five network policies in each namespace
+PASS Dev automatic deploy/dev; prod manual main policy unchanged
+
+dev: liora-dev / staging
+Rendered SHA256: caa02dcd73d4990a80bb73d15c84d7d4d5feafa621d3192c01d85a97d4f6a429
+prod: liora-prod / production
+Rendered SHA256: 9ca9dff1f8ef543b3138bcf384a14aca46d5d9d74e907c2dba8e6836f9faad5d
+
+Prod renders immutable backend/frontend digests; zero sha-bootstrap workload references.
+Backend migration init-container equals backend runtime image.
+Prod tracks main with NO automated synchronization.
+Dev tracks deploy/dev with prune and self-heal enabled.
+DNS .invalid and unverified TLS reference retained; no public HTTPS assertion.
+</pre>

@@ -9,6 +9,7 @@ import hashlib
 import html
 import json
 import re
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'docs/presentation-evidence'
@@ -164,6 +165,40 @@ rows+=['','Actual Git repository credential secrets: 0','Actual namespace regist
 add('E51',1,'Anonymous registry reads match the actual running image digests',[p,'docs/argocd-evidence/running-images.json','docs/argocd-evidence/credential-scope.json'],'Anonymous GHCR manifest GET; compare with Kubernetes containerStatuses.imageID',version='GHCR / k3s 1.35.5-k3s1',also=[1,5,8],scope='Actual HTTP 200 for both released SHA tags; published digests exactly match running pods. Public Git repository visibility and GHCR package visibility were checked independently.',content='\n'.join(rows))
 
 
+# Preserve dated evidence metadata and source bytes when current documentation evolves.
+# New captures are declared in the extension catalog; existing image files are never rewritten.
+previous_path = OUT / 'raw/screenshot-manifest-through-E51.json'
+if previous_path.exists():
+    previous = json.loads(previous_path.read_text())
+    originals = {item['id']: item for item in previous['screenshots']}
+    for index, item in enumerate(CATALOG):
+        if item['id'] not in originals:
+            continue
+        old = json.loads(json.dumps(originals[item['id']]))
+        for source in old['sources']:
+            current = ROOT / source['path']
+            if hashlib.sha256(current.read_bytes()).hexdigest() != source['sha256']:
+                original_path = source['path']
+                frozen = OUT / 'historical-sources' / source['sha256'] / Path(original_path).name
+                if not frozen.exists():
+                    data = subprocess.check_output(['git', 'show', '4f50b067ec33df85888e178c49932fef48156757:' + original_path], cwd=ROOT)
+                    assert hashlib.sha256(data).hexdigest() == source['sha256'], original_path
+                    frozen.parent.mkdir(parents=True, exist_ok=True)
+                    frozen.write_bytes(data)
+                assert hashlib.sha256(frozen.read_bytes()).hexdigest() == source['sha256']
+                source['original_path'] = original_path
+                source['path'] = str(frozen.relative_to(ROOT))
+        CATALOG[index] = old
+extension = OUT / 'additional-evidence.json'
+if extension.exists():
+    for item in json.loads(extension.read_text()):
+        item = json.loads(json.dumps(item))
+        item['sources'] = [dict(path=path, sha256=hashlib.sha256((ROOT/path).read_bytes()).hexdigest())
+                           for path in item.pop('source_paths')]
+        CATALOG.append(item)
+assert len({item['id'] for item in CATALOG}) == len(CATALOG), 'Duplicate evidence ID'
+LATEST_DATE = max(item['capture_date'] for item in CATALOG)
+
 CSS = '''*{box-sizing:border-box}body{margin:0;background:#f0f3f7;color:#142338;font-family:Arial,sans-serif}main{max-width:1400px;margin:auto;padding:24px 32px}header{border-top:7px solid #176b8a;background:white;padding:18px 24px}h1{font-size:26px;line-height:1.15;margin:9px 0}h2{font-size:19px;margin:10px 0}.eyebrow{font-size:12px;font-weight:bold;letter-spacing:1.3px;color:#176b8a}.status{font-size:13px;font-weight:bold;color:#8a4200}.scope{font-size:15px;line-height:1.4;margin:10px 0}.command{font:13px monospace;overflow-wrap:anywhere}.panel{background:white;padding:18px 24px;margin-top:12px;border:1px solid #d4dee8}pre{font:15px/1.42 'DejaVu Sans Mono',monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#142338}footer{font-size:11px;line-height:1.5;overflow-wrap:anywhere;padding:12px 4px;color:#47566a}.flow{display:flex;gap:12px;align-items:stretch;margin:15px 0}.box{background:#e9f2f7;border:1px solid #9dbbcb;flex:1;padding:15px;font-size:16px;line-height:1.45}.future{background:#fff4e0;border-color:#dcb568}a{color:#176b8a}img{max-width:100%;border:1px solid #d4dee8}.card{background:white;margin:18px 0;padding:20px}.metadata{font-size:14px;line-height:1.5}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px}@media print{.card{break-inside:avoid}}'''
 
 (OUT/'views').mkdir(exist_ok=True)
@@ -206,11 +241,11 @@ for item in CATALOG:
 for item in CATALOG:
     p=SHOTS/item['file']
     item['sha256']=hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None
-manifest={'capture_date':DATE,'timezone':'Europe/Tirane','source_commit':'211199da8c52caf07199b155fb6baf28deb5b1f4','source_commit_scope':'Initial remediation baseline only; later entries carry source_commit overrides and exact revisions in their source artifacts.','requirements':REQUIREMENTS,'status_legend':{'PASSED':'The narrow observed check passed, not the entire requirement.','FAILED':'The shown policy/integration failed; no success is implied.','PARTIALLY_VALIDATED':'Configuration/static evidence, with stated runtime gaps.','NOT_YET_TESTED':'No execution proof; use the missing-evidence register.'},'screenshots':CATALOG}
+manifest={'capture_date':LATEST_DATE,'timezone':'Europe/Tirane','source_commit':'211199da8c52caf07199b155fb6baf28deb5b1f4','source_commit_scope':'Initial remediation baseline only; later entries carry source_commit overrides and exact revisions in their source artifacts.','requirements':REQUIREMENTS,'status_legend':{'PASSED':'The narrow observed check passed, not the entire requirement.','FAILED':'The shown policy/integration failed; no success is implied.','PARTIALLY_VALIDATED':'Configuration/static evidence, with stated runtime gaps.','NOT_YET_TESTED':'No execution proof; use the missing-evidence register.'},'screenshots':CATALOG}
 (SHOTS/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 
-index=['# Visual evidence index','',f'Capture date: {DATE} (Europe/Tirane). Original observation dates and software versions are recorded for every image.','', '**Actual UI** screenshots show real application, monitoring or GitHub pages. **Archived-output** screenshots show real saved command/API output in a labeled evidence viewer; they are not screenshots taken during the original run. **Configuration/design** views never prove deployment success. All full source artifacts and hashes are preserved.','', 'The exact ten official headings below are the primary organization. [Presentation plans](../presentation-evidence.md) · [Validation checklist](../requirements-validation-checklist.md) · [Machine-readable provenance](manifest.json) · [Offline gallery](../presentation-evidence/index.html) · [Capture protocol](capture-protocol.md)','']
-gallery=[f'<!doctype html><html lang="en"><meta charset="utf-8"><title>Liora graduation evidence</title><style>{CSS}</style><main><header><h1>Graduation presentation evidence</h1><p>Actual UI captures and clearly labeled archived-output/configuration views. Captured {DATE}. No cloud deployment or completed Argo sync is claimed.</p><p>Use the ten-minute plan in presentation-evidence.md. All image links work offline; no external scripts or assets are required.</p></header>']
+index=['# Visual evidence index','',f'Captures through: {LATEST_DATE} (Europe/Tirane). Original observation dates and software versions are recorded for every image.','', '**Actual UI** screenshots show real application, monitoring or GitHub pages. **Archived-output** screenshots show real saved command/API output in a labeled evidence viewer; they are not screenshots taken during the original run. **Configuration/design** views never prove deployment success. All full source artifacts and hashes are preserved.','', 'The exact ten official headings below are the primary organization. [Presentation plans](../presentation-evidence.md) · [Validation checklist](../requirements-validation-checklist.md) · [Machine-readable provenance](manifest.json) · [Offline gallery](../presentation-evidence/index.html) · [Capture protocol](capture-protocol.md)','']
+gallery=[f'<!doctype html><html lang="en"><meta charset="utf-8"><title>Liora graduation evidence</title><style>{CSS}</style><main><header><h1>Graduation presentation evidence</h1><p>Actual UI captures and clearly labeled archived-output/configuration views. Captures through {LATEST_DATE}. Local dev/prod runtime and earlier Argo proof are dated; no cloud or public HTTPS deployment is claimed.</p><p>Use the ten-minute plan in presentation-evidence.md. All image links work offline; no external scripts or assets are required.</p></header>']
 for req in REQUIREMENTS:
     heading=f"{req['number']}. {req['title']}";index+=['## '+heading,''];cards=[];sub=['# '+heading,'']
     for s in CATALOG:

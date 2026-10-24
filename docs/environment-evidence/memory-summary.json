@@ -1,0 +1,8 @@
+{
+  "samples": 167,
+  "minimum_available_mib": 1667,
+  "node_memory_cap_mib": 2048,
+  "strategy": "Sequential web deployments, both DBs retained briefly for isolation; no Argo or monitoring installed",
+  "guard_abort_file_present": false,
+  "limitation": "Memory sampling was restarted when its process ended; samples are observations, not a claim of uninterrupted coverage."
+}

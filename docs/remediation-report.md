@@ -1,5 +1,6 @@
 # Second validation result — 2026-10-23
 
+Later observation (2026-10-24): [both dev/prod overlays now pass sequential local runtime and isolation](environment-validation.md); latest main ef41449 passed publication and dev promotion. Earlier results below retain their original scope. Production Argo sync/public HTTPS/cloud remain untested.
 **Later Argo validation supersedes the historical synchronization gap:** [Public Git/GHCR, real dev Synced + Healthy, and controlled Git-revert rollback passed](argocd-validation.md). The release published secure images but initially failed promotion; the guarded helper recovered the real dev branch. Its next hosted main execution, production and cloud work remain pending.
 
 **Superseded backend security result:** The later [Alpine backend remediation](backend-security-remediation.md) passes the strict local image gate with 0 HIGH / 0 CRITICAL and exact-image PostgreSQL integration checks. The results below describe the earlier Debian pass and are preserved as historical evidence. Cloud/Kubernetes/Argo gaps remain.

@@ -1,0 +1,32 @@
+diff --git a/kubernetes/overlays/dev/kustomization.yaml b/kubernetes/overlays/dev/kustomization.yaml
+index a7ae53e..3f58c1f 100644
+--- a/kubernetes/overlays/dev/kustomization.yaml
++++ b/kubernetes/overlays/dev/kustomization.yaml
+@@ -6,9 +6,9 @@ resources:
+ - namespace.yaml
+ images:
+ - name: ghcr.io/dionis1/liora-devops-platform-backend
+-  newTag: sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2
++  newTag: sha-ef414490d99151a3640cea6dac56589531816694
+ - name: ghcr.io/dionis1/liora-devops-platform-frontend
+-  newTag: sha-db2efa81c1037f3b38c4cc615fb7f65d958259c2
++  newTag: sha-ef414490d99151a3640cea6dac56589531816694
+ patches:
+ - target:
+     kind: ConfigMap
+diff --git a/kubernetes/overlays/prod/kustomization.yaml b/kubernetes/overlays/prod/kustomization.yaml
+index 64dc8ef..23aab9f 100644
+--- a/kubernetes/overlays/prod/kustomization.yaml
++++ b/kubernetes/overlays/prod/kustomization.yaml
+@@ -6,9 +6,9 @@ resources:
+ - namespace.yaml
+ images:
+ - name: ghcr.io/dionis1/liora-devops-platform-backend
+-  newTag: sha-bootstrap
++  digest: sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b
+ - name: ghcr.io/dionis1/liora-devops-platform-frontend
+-  newTag: sha-bootstrap
++  digest: sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e
+ patches:
+ - target:
+     kind: ConfigMap

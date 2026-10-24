@@ -1,6 +1,6 @@
 # Visual evidence index
 
-Capture date: 2026-10-23 (Europe/Tirane). Original observation dates and software versions are recorded for every image.
+Captures through: 2026-10-24 (Europe/Tirane). Original observation dates and software versions are recorded for every image.
 
 **Actual UI** screenshots show real application, monitoring or GitHub pages. **Archived-output** screenshots show real saved command/API output in a labeled evidence viewer; they are not screenshots taken during the original run. **Configuration/design** views never prove deployment success. All full source artifacts and hashes are preserved.
 
@@ -10,7 +10,7 @@ The exact ten official headings below are the primary organization. [Presentatio
 
 **E01 — FastAPI Swagger documentation** · **PASSED** · `actual-ui`
 
-[Screenshot](01-dockerize-your-application/fastapi-swagger.jpg) · [remediation-report.md](../../docs/remediation-report.md)
+[Screenshot](01-dockerize-your-application/fastapi-swagger.jpg) · [remediation-report.md](../../docs/presentation-evidence/historical-sources/33c313d09c65cc30731bdbe8d762f47ac5c275440f44af6db0bc07e513957d0f/remediation-report.md)
 
 - Demonstrates: Original patched upstream app; screenshot fixture had no database.
 - Supports official requirement(s): 1.
@@ -20,7 +20,7 @@ The exact ten official headings below are the primary organization. [Presentatio
 
 **E02 — Original React login page** · **PASSED** · `actual-ui`
 
-[Screenshot](01-dockerize-your-application/react-login.jpg) · [remediation-report.md](../../docs/remediation-report.md)
+[Screenshot](01-dockerize-your-application/react-login.jpg) · [remediation-report.md](../../docs/presentation-evidence/historical-sources/33c313d09c65cc30731bdbe8d762f47ac5c275440f44af6db0bc07e513957d0f/remediation-report.md)
 
 - Demonstrates: Login form rendering only. Authenticated functionality is proved separately by E06–E07.
 - Supports official requirement(s): 1.
@@ -108,6 +108,16 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Software: GHCR / k3s 1.35.5-k3s1.
 - Command/page: `Anonymous GHCR manifest GET; compare with Kubernetes containerStatuses.imageID`
 
+**E60 — Published image digests match dev and production pods** · **PASSED** · `archived-output`
+
+[Screenshot](01-dockerize-your-application/E60.jpg) · [running-image-proof.txt](../../docs/environment-evidence/running-image-proof.txt); [registry-release.json](../../docs/environment-evidence/registry-release.json); [dev-runtime.json](../../docs/environment-evidence/dev-runtime.json); [prod-runtime.json](../../docs/environment-evidence/prod-runtime.json)
+
+- Demonstrates: Both actual running imageIDs match public registry digests. Prod migration and backend share the immutable reference; no image rebuild for screenshots.
+- Supports official requirement(s): 1, 2, 5, 8.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `Anonymous GHCR manifest GET; compare published digest to both environments imageIDs`
+
 ## 2. Deploy the Application in Multiple Environments (Dev & Prod)
 
 **E19 — Dev and prod separation: static manifests** · **PARTIALLY VALIDATED** · `archived-output`
@@ -119,6 +129,96 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Captured: 2026-10-23; original observation: 2026-10-23; environment: Local.
 - Software: kubectl 1.35.9 / Kustomize 5.7.1.
 - Command/page: `kubectl kustomize kubernetes/overlays/dev; kubectl kustomize kubernetes/overlays/prod`
+
+**E53 — Dev browser shows its own persisted record** · **PASSED** · `actual-ui`
+
+[Screenshot](02-deploy-the-application-in-multiple-environments-dev-prod/E53.jpg) · [dev-http.json](../../docs/environment-evidence/dev-http.json); [dev-runtime.json](../../docs/environment-evidence/dev-runtime.json)
+
+- Demonstrates: Actual authenticated dev application, backed by its own Kubernetes PostgreSQL. Temporary same-origin proxy; no public ingress/TLS claim.
+- Supports official requirement(s): 2, 3, 4.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `Sign in to dev through localhost port-forward proxy; open Items`
+
+**E54 — Current dev Kubernetes workloads and storage are Ready** · **PASSED** · `archived-output`
+
+[Screenshot](02-deploy-the-application-in-multiple-environments-dev-prod/E54.jpg) · [dev-ready.txt](../../docs/environment-evidence/dev-ready.txt)
+
+- Demonstrates: Saved real output, captured before stopping dev web pods. Three ready pods and independent bound PVC; local cluster only.
+- Supports official requirement(s): 2, 4.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `kubectl -n liora-dev get pods,deploy,sts,svc,pvc,ingress`
+
+**E55 — Dev frontend, API health, readiness and CRUD pass** · **PASSED** · `archived-output`
+
+[Screenshot](02-deploy-the-application-in-multiple-environments-dev-prod/E55.jpg) · [dev-http.json](../../docs/environment-evidence/dev-http.json)
+
+- Demonstrates: Saved actual smoke-test output. Loopback service port-forwards plus a temporary proxy; not public ingress/TLS.
+- Supports official requirement(s): 2, 3.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `python smoke.py dev; HTTP health, readiness, JWT login, create/read item`
+
+**E56 — Production browser shows a separate persisted record** · **PASSED** · `actual-ui`
+
+[Screenshot](02-deploy-the-application-in-multiple-environments-dev-prod/E56.jpg) · [prod-http.json](../../docs/environment-evidence/prod-http.json); [prod-runtime.json](../../docs/environment-evidence/prod-runtime.json)
+
+- Demonstrates: Actual authenticated production-mode app, independently migrated Kubernetes PostgreSQL and separate Secret. Not cloud/public HTTPS or Argo prod sync.
+- Supports official requirement(s): 2, 3, 4.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `Sign in to prod through localhost port-forward proxy; open Items`
+
+**E57 — Production Kubernetes workloads and storage are Ready** · **PASSED** · `archived-output`
+
+[Screenshot](02-deploy-the-application-in-multiple-environments-dev-prod/E57.jpg) · [prod-ready.txt](../../docs/environment-evidence/prod-ready.txt)
+
+- Demonstrates: Saved actual production-overlay readiness, three ready pods and a distinct bound PVC. Ingress shown as configuration; public TLS not tested.
+- Supports official requirement(s): 2, 4.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `Manually apply prod-rendered.yaml; wait for rollouts; kubectl get resources`
+
+**E58 — Production HTTP, database readiness and authenticated CRUD pass** · **PASSED** · `archived-output`
+
+[Screenshot](02-deploy-the-application-in-multiple-environments-dev-prod/E58.jpg) · [prod-http.json](../../docs/environment-evidence/prod-http.json)
+
+- Demonstrates: Saved actual production-mode execution through localhost service port-forwards and proxy. Public DNS, TLS and cloud not exercised.
+- Supports official requirement(s): 2, 3.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `python smoke.py prod; HTTP health, readiness, JWT login, create/read item`
+
+**E59 — Cross-environment isolation is verified in both directions** · **PASSED** · `archived-output`
+
+[Screenshot](02-deploy-the-application-in-multiple-environments-dev-prod/E59.jpg) · [isolation-summary.txt](../../docs/environment-evidence/isolation-summary.txt); [dev-isolation.json](../../docs/environment-evidence/dev-isolation.json); [prod-isolation.json](../../docs/environment-evidence/prod-isolation.json); [dev-recheck.json](../../docs/environment-evidence/dev-recheck.json)
+
+- Demonstrates: Own DB TCP succeeds, cross-namespace DB connection rejected, wrong-environment credentials HTTP 400 and records HTTP 404. Both target DBs live. No node-level failure separation.
+- Supports official requirement(s): 2, 4, 8.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `python isolate.py prod; stop prod web; restore dev; python isolate.py dev`
+
+**E61 — Runtime configuration, Secret objects and storage are separated** · **PASSED** · `archived-output`
+
+[Screenshot](02-deploy-the-application-in-multiple-environments-dev-prod/E61.jpg) · [environment-separation.txt](../../docs/environment-evidence/environment-separation.txt); [dev-runtime.json](../../docs/environment-evidence/dev-runtime.json); [prod-runtime.json](../../docs/environment-evidence/prod-runtime.json)
+
+- Demonstrates: Actual namespace-local configuration/Secret/PVC metadata; no secret values. Full web stacks tested sequentially, not concurrently.
+- Supports official requirement(s): 2, 8.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `Inspect ConfigMaps, Secret UIDs/keys and PVC volume names; compare values only in memory`
+
+**E62 — Both overlays render and production approval policy is preserved** · **PASSED** · `archived-output`
+
+[Screenshot](02-deploy-the-application-in-multiple-environments-dev-prod/E62.jpg) · [render-summary.txt](../../docs/environment-evidence/render-summary.txt); [manifest-validation.json](../../docs/environment-evidence/manifest-validation.json); [overlay-changes.patch](../../docs/environment-evidence/overlay-changes.patch)
+
+- Demonstrates: Static evidence only: zero rendered bootstrap references, migration image matches backend, dev auto-sync and prod manual main policy unchanged. Runtime evidence separate.
+- Supports official requirement(s): 2, 4, 5.
+- Captured: 2026-10-24; original observation: 2026-10-24; environment: Disposable local k3d; sequential dev/prod.
+- Software: k3s 1.35.5+k3s1 / PostgreSQL 16.10 / secure ef41449 image pair.
+- Command/page: `kubectl kustomize both overlays; verify image replacement and GitOps policies`
 
 ## 3. Run Tests on the Application
 
@@ -295,6 +395,16 @@ The exact ten official headings below are the primary organization. [Presentatio
 - Captured: 2026-10-23; original observation: 2026-10-23; environment: GitHub Actions.
 - Software: Main db2efa8 / workflow run 39931016209.
 - Command/page: `Open successful Publish only scanned images job` · [workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39931016209/job/120340274170)
+
+**E52 — Latest main tests, scans, publication and dev promotion all pass** · **PASSED** · `actual-ui`
+
+[Screenshot](05-automate-deployment-ci-cd-pipeline/E52.jpg) · [release-jobs.json](../../docs/environment-evidence/release-jobs.json)
+
+- Demonstrates: Actual successful hosted main run at ef41449. Not the earlier failed db2efa8 run; does not prove prod Argo synchronization.
+- Supports official requirement(s): 1, 3, 5, 6, 8.
+- Captured: 2026-10-24; original observation: 2026-10-23; environment: GitHub Actions.
+- Software: Main ef41449 / release sha-ef414490d99151a3640cea6dac56589531816694.
+- Command/page: `Open main workflow 39939061134` · [workflow](https://github.com/dionis1/liora-devops-platform/actions/runs/39939061134)
 
 ## 6. Create IaC (Infrastructure as Code) Templates
 
@@ -528,7 +638,7 @@ The exact ten official headings below are the primary organization. [Presentatio
 
 **E36 — Architecture and engineering boundaries** · **PASSED** · `design`
 
-[Screenshot](10-documentation/E36.jpg) · [architecture.md](../../docs/architecture.md)
+[Screenshot](10-documentation/E36.jpg) · [architecture.md](../../docs/presentation-evidence/historical-sources/e5220972cc7148594b5922e7caf548012419575312b3c34cdc8d97247f789f94/architecture.md)
 
 - Demonstrates: Design diagram, not proof of a Hetzner deployment. Future cloud and manual production steps are labeled.
 - Supports official requirement(s): 10.

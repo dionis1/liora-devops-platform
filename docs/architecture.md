@@ -1,6 +1,6 @@
 # Architecture and environment boundaries
 
-The diagram describes the target Hetzner architecture. A disposable local k3s cluster has now verified public Git/GHCR access, Argo Synced + Healthy, hardened dev workloads and a controlled Git-revert rollback; [dated execution proof](argocd-validation.md). Hetzner and production deployment remain untested.
+The diagram describes the target Hetzner architecture. A disposable local k3s cluster has now verified public Git/GHCR access, Argo Synced + Healthy, hardened dev workloads and a controlled Git-revert rollback; [dated execution proof](argocd-validation.md). Both dev/prod overlays subsequently passed sequential local runtime and isolation checks on 2026-10-24; [current execution proof](environment-validation.md). Hetzner, public HTTPS and canonical production Argo sync remain untested.
 
 ```mermaid
 flowchart TD

@@ -1,0 +1,21 @@
+<!doctype html><meta charset="utf-8"><title>Dev and prod isolation tests pass in both directions</title><style>body{font:16px Arial;background:#eef3f8;color:#132c43;margin:24px}header,pre{background:white;padding:22px;border:1px solid #b5c5d4}h1{font-size:27px}pre{font:15px/1.5 monospace;white-space:pre-wrap;overflow-wrap:anywhere}</style><header><b>ARCHIVED ACTUAL OUTPUT — NOT A LIVE TERMINAL</b><h1>Dev and prod isolation tests pass in both directions</h1><p>Actual successful positive and negative controls. Cross-namespace TCP is rejected; each environment retains its own data and credentials.</p><p>Observed and captured 2026-10-24 · disposable local k3s · source: docs/environment-evidence/isolation-summary.txt</p></header><pre>Environment isolation checks — real k3s network and API tests
+Both target database instances were live; same-namespace connections were positive controls.
+
+DEV: PASSED
+Own DB TCP: CONNECTED
+Other namespace DB TCP: BLOCKED_REFUSED
+Other environment record: HTTP 404
+Other environment credentials: HTTP 400
+
+PROD: PASSED
+Own DB TCP: CONNECTED
+Other namespace DB TCP: BLOCKED_REFUSED
+Other environment record: HTTP 404
+Other environment credentials: HTTP 400
+
+Distinct database passwords, signing keys, admin emails and admin passwords: PASSED
+Distinct Secret UIDs and bound PVCs: PASSED
+Readiness and own records verified again after sequential rollout.
+Network rejection returned connection refused (k3s reject), not an assumed timeout.
+No claim of node-level failure isolation; namespaces share one disposable node.
+</pre>

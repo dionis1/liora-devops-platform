@@ -1,0 +1,99 @@
+{
+  "environment": "dev",
+  "namespace": "liora-dev",
+  "pods": [
+    {
+      "name": "backend-5544b9b894-hqjw9",
+      "phase": "Running",
+      "ready": true,
+      "restarts": 0,
+      "images": [
+        {
+          "name": "backend",
+          "requested_image": "ghcr.io/dionis1/liora-devops-platform-backend:sha-ef414490d99151a3640cea6dac56589531816694",
+          "image_id": "ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b"
+        }
+      ],
+      "init_containers": [
+        {
+          "name": "migrate",
+          "image_id": "ghcr.io/dionis1/liora-devops-platform-backend@sha256:1b5a8045185f9caae6d293c5d8d6398d4a1bbc6b8e23979b26cf871fac56738b",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "name": "frontend-6f7f9878ff-qj274",
+      "phase": "Running",
+      "ready": true,
+      "restarts": 0,
+      "images": [
+        {
+          "name": "frontend",
+          "requested_image": "ghcr.io/dionis1/liora-devops-platform-frontend:sha-ef414490d99151a3640cea6dac56589531816694",
+          "image_id": "ghcr.io/dionis1/liora-devops-platform-frontend@sha256:eeebf408bc90040dbf581d98d5092ecbe8d751d2398b82e8471e439ad406310e"
+        }
+      ],
+      "init_containers": []
+    },
+    {
+      "name": "postgres-0",
+      "phase": "Running",
+      "ready": true,
+      "restarts": 0,
+      "images": [
+        {
+          "name": "postgres",
+          "requested_image": "docker.io/library/postgres:16.10",
+          "image_id": "docker.io/library/postgres@sha256:21f6013073bc6b92830a2129570e2f5ec42a6c734b5a985a41e83aa58f54c3c1"
+        }
+      ],
+      "init_containers": []
+    }
+  ],
+  "configuration": {
+    "BACKEND_CORS_ORIGINS": "http://dev.example.invalid",
+    "ENVIRONMENT": "staging",
+    "FRONTEND_HOST": "http://dev.example.invalid",
+    "POSTGRES_DB": "app",
+    "POSTGRES_PORT": "5432",
+    "POSTGRES_SERVER": "postgres",
+    "POSTGRES_USER": "app",
+    "PROJECT_NAME": "DataScientest FastAPI",
+    "SENTRY_DSN": "",
+    "SMTP_HOST": ""
+  },
+  "services": [
+    {
+      "name": "backend",
+      "cluster_ip": "10.43.8.181"
+    },
+    {
+      "name": "frontend",
+      "cluster_ip": "10.43.45.96"
+    },
+    {
+      "name": "postgres",
+      "cluster_ip": "10.43.176.80"
+    }
+  ],
+  "storage": [
+    {
+      "name": "dbdata-postgres-0",
+      "phase": "Bound",
+      "volume": "pvc-a60127c6-1b6a-4049-a8d3-a962ceb6c711"
+    }
+  ],
+  "secret_metadata": {
+    "namespace": "liora-dev",
+    "name": "course-app-secrets",
+    "uid": "383e20ec-fd7f-444a-8027-baaf00234615",
+    "keys": [
+      "FIRST_SUPERUSER",
+      "FIRST_SUPERUSER_PASSWORD",
+      "POSTGRES_PASSWORD",
+      "SECRET_KEY"
+    ]
+  },
+  "published_digests_match_running_images": true
+}

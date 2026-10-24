@@ -1,5 +1,6 @@
 # Argo CD synchronization and GitOps rollback — 2026-10-23
 
+Later observation (2026-10-24): [both dev/prod overlays now pass sequential local runtime and isolation](environment-validation.md); latest main ef41449 passed publication and dev promotion. Earlier results below retain their original scope. Production Argo sync/public HTTPS/cloud remain untested.
 **Local validation: PASSED.** The real `liora-dev` Application reached **Synced + Healthy**, with a **Succeeded** operation at the exact promoted Git revision. A subsequent Git revert restored the previous backend template and ReplicaSet, while the same database record remained accessible through Traefik. The disposable cluster was removed after evidence capture; this is not a permanently running or cloud deployment.
 
 ## 1. Dockerize Your Application

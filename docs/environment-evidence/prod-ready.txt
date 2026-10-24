@@ -1,0 +1,22 @@
+NAME                           READY   STATUS    RESTARTS   AGE
+pod/backend-86468cf4f-cr7jv    1/1     Running   0          43s
+pod/frontend-9d88c4b9d-qj2ks   1/1     Running   0          43s
+pod/postgres-0                 1/1     Running   0          43s
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend    1/1     1            1           43s
+deployment.apps/frontend   1/1     1            1           43s
+
+NAME                        READY   AGE
+statefulset.apps/postgres   1/1     43s
+
+NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/backend    ClusterIP   10.43.34.205   <none>        8000/TCP   43s
+service/frontend   ClusterIP   10.43.39.23    <none>        80/TCP     43s
+service/postgres   ClusterIP   10.43.43.182   <none>        5432/TCP   43s
+
+NAME                                      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/dbdata-postgres-0   Bound    pvc-89254776-f193-4831-aba6-55fc8eb52d56   8Gi        RWO            local-path     <unset>                 43s
+
+NAME                                   CLASS     HOSTS                 ADDRESS      PORTS     AGE
+ingress.networking.k8s.io/course-app   traefik   app.example.invalid   172.28.0.2   80, 443   43s
